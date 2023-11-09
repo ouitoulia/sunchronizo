@@ -1,0 +1,8 @@
+id: scuola_user
+label: Scuola - Ruoli e utenti di esempio
+description: Gruppo di migrazioni che importa i ruoli e le persone di esempio delle scuole.
+source_type: JSON
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
