@@ -11,3 +11,8 @@ dependencies:
   - drupal:migrate_plus
   - drupal:migrate_tools
 
+# Information added by GitHub Action packaging script on 2023-11-09
+version: '1.0.0'
+project: 'Sunchronizo'
+datestamp: 1699531042
+message: ' first release'
