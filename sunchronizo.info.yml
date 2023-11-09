@@ -12,7 +12,7 @@ dependencies:
   - drupal:migrate_tools
 
 # Information added by GitHub Action packaging script on 2023-11-09
-version: '1.0.2'
+version: '1.0.3'
 project: 'Sunchronizo'
-datestamp: 1699536310
-message: ' Update docs and migrations'
+datestamp: 1699546159
+message: ' fix deps'
