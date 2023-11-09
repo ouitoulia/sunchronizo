@@ -20,7 +20,7 @@
     "require": {
         "drupal/core-recommended": "^10",
         "ouitoulia/lexika": "^1",
-        "ouitoulia/themethla": "^1",
+        "ouitoulia/themethla": "^2",
         "drupal/migrate_plus": "^6",
         "drupal/migrate_tools": "^6"
     }
