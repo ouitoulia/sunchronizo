@@ -4,8 +4,8 @@ migration_group: scuola_demo
 migration_tags:
   - json
   - scuola
-  - node
   - demo
+  - node_demo
 
 source:
   plugin: url
