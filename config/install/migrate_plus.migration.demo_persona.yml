@@ -155,7 +155,7 @@ process:
     method: process
   field_data_fine:
     plugin: skip_on_empty
-    source: data_nascita
+    source: data_fine_incarico
     method: process
   field_materie:
     - plugin: skip_on_empty
