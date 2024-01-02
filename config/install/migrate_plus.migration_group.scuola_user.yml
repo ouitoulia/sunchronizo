@@ -1,6 +1,6 @@
 id: scuola_user
-label: Scuola - Ruoli e utenti di esempio
-description: Gruppo di migrazioni che importa i ruoli e le persone di esempio delle scuole.
+label: Scuola - Ruoli e utenti
+description: Gruppo di migrazioni che importa i ruoli e gli utenti.
 source_type: JSON
 dependencies:
   enforced:

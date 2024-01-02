@@ -1,0 +1,170 @@
+id: demo_persona
+label: Tipo di contenuto Persona
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - node
+  - demo
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/persona.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: nid
+      label: 'ID del nodo'
+      selector: id
+    - name: type
+      label: 'Il tipo di contenuto'
+      selector: type
+    - name: title
+      label: 'Il titolo del contenuto'
+      selector: attributes/title
+    - name: cognome
+      label: 'Cognome'
+      selector: attributes/cognome
+    - name: nome
+      label: 'Nome'
+      selector: attributes/nome
+    - name: abstract
+      label: 'Descrizione breve'
+      selector: attributes/abstract
+    - name: telefono
+      label: 'Telefono'
+      selector: attributes/telefono
+    - name: email
+      label: 'Email'
+      selector: attributes/email
+    - name: codice_fiscale
+      label: 'Il codice fiscale della persona'
+      selector: attributes/codice_fiscale
+    - name: data_nascita
+      label: 'Data di nascita della persona'
+      selector: attributes/birthdate
+    - name: genere
+      label: 'Il genere della persona'
+      selector: attributes/genere
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: attributes/language
+    - name: published
+      label: 'Se il contenuto è pubblicato o meno'
+      selector: attributes/published
+    - name: ritratto_url
+      label: 'URL foto della persona'
+      selector: relationships/ritratto/data/url
+    - name: ritratto
+      label: 'Foto della persona'
+      selector: relationships/ritratto
+    - name: ruolo_persona
+      label: 'Il ruolo della persona'
+      selector: relationships/ruolo_persona/data/id
+    - name: tipologia_incarico
+      label: 'Determinato/Indeterminato'
+      selector: relationships/tipologia_incarico/data/id
+    - name: tipologia_posto
+      label: 'Posto comune o sostegno'
+      selector: relationships/tipologia_posto/data/id
+    - name: materie
+      label: 'Le materie che insegna la persona'
+      selector: relationships/materie/data
+
+  ids:
+    nid:
+      type: integer
+
+  constants:
+    ritratto_path: 'public://persona/ritratto/'
+
+process:
+  nid: nid
+#  status:
+#    plugin: default_value
+#    source: published
+#    default_value: 1
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  type: type
+  title: title
+  field_cognome: cognome
+  field_nome: nome
+  field_abstract: abstract
+  field_telefono: telefono
+  field_email: email
+  field_codice_fiscale: codice_fiscale
+  field_data_nascita:
+    - plugin: skip_on_empty
+      source: data_nascita
+      method: process
+  field_genere:
+    - plugin: skip_on_empty
+      source: genere
+      method: process
+  _file_uid:
+    plugin: default_value
+    default_value: 1
+  field_ritratto/target_id:
+    plugin: file_import
+    source: ritratto_url
+    destination: constants/ritratto_path
+    uid: '@_file_uid'
+    file_exists: 'replace'
+    skip_on_missing_source: true
+    id_only: true
+  field_ritratto/alt: ritratto/data/description
+  field_ruolo_persona/target_id: ruolo_persona
+  field_tipologia_incarico: tipologia_incarico
+  field_tipologia_posto: tipologia_posto
+  field_materie:
+    - plugin: skip_on_empty
+      source: materie
+      method: process
+      debug:
+        message: 'Questa persona non ha materie associate'
+    - plugin: sub_process
+      source: materie
+      process:
+        target_id: id
+
+destination:
+  plugin: entity:node
+  default_bundle: persona
+  translations: true
+
+migration_dependencies:
+  required:
+    - taxonomy_common
+    - taxonomy_materie_secondaria_primo_grado
+    - taxonomy_materie_secondaria_secondo_grado
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+
