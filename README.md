@@ -11,7 +11,7 @@ Questo modulo usa `drupal/migrate` per importare i dati presenti nel repository 
 ## Requisiti
 - Drupal: >= 10
 - Profilo Drupal: `minimal`
-- Moduli contrib: `migrate_plus`, `migrate_tools`
+- Moduli contrib: `migrate_plus`, `migrate_tools`, `migrate_file`
 - Moduli Ouitoulìa: `lexika`, `themethla`
 
 ## Installazione

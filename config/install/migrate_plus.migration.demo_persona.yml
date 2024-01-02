@@ -44,54 +44,70 @@ source:
     - name: title
       label: 'Il titolo del contenuto'
       selector: attributes/title
-    - name: cognome
-      label: 'Cognome'
-      selector: attributes/cognome
-    - name: nome
-      label: 'Nome'
-      selector: attributes/nome
-    - name: abstract
-      label: 'Descrizione breve'
-      selector: attributes/abstract
-    - name: telefono
-      label: 'Telefono'
-      selector: attributes/telefono
-    - name: email
-      label: 'Email'
-      selector: attributes/email
-    - name: codice_fiscale
-      label: 'Il codice fiscale della persona'
-      selector: attributes/codice_fiscale
-    - name: data_nascita
-      label: 'Data di nascita della persona'
-      selector: attributes/birthdate
-    - name: genere
-      label: 'Il genere della persona'
-      selector: attributes/genere
-    - name: language
-      label: 'La lingua del contenuto'
-      selector: attributes/language
-    - name: published
-      label: 'Se il contenuto è pubblicato o meno'
-      selector: attributes/published
+
+    # Scheda biografia
     - name: ritratto_url
       label: 'URL foto della persona'
       selector: relationships/ritratto/data/url
     - name: ritratto
       label: 'Foto della persona'
       selector: relationships/ritratto
+    - name: nome
+      label: 'Nome'
+      selector: attributes/nome
+    - name: cognome
+      label: 'Cognome'
+      selector: attributes/cognome
+    - name: abstract
+      label: 'Descrizione breve'
+      selector: attributes/abstract
+
+    # Scheda Contatti
+    - name: telefono
+      label: 'Telefono'
+      selector: attributes/telefono
+    - name: email
+      label: 'Email'
+      selector: attributes/email
+
+    # Scheda Contratto
     - name: ruolo_persona
       label: 'Il ruolo della persona'
       selector: relationships/ruolo_persona/data/id
-    - name: tipologia_incarico
-      label: 'Determinato/Indeterminato'
-      selector: relationships/tipologia_incarico/data/id
     - name: tipologia_posto
       label: 'Posto comune o sostegno'
       selector: relationships/tipologia_posto/data/id
+    - name: tipologia_incarico
+      label: 'Determinato/Indeterminato'
+      selector: relationships/tipologia_incarico/data/id
+    - name: tipologia_supplenza
+      label: 'La tipologia di supplenza'
+      selector: relationships/tipologia_supplenza/data/id
+    - name: data_fine_incarico
+      label: 'La data di fine incarico'
+      selector: relationships/data_fine_incarico/data/id
     - name: materie
       label: 'Le materie che insegna la persona'
       selector: relationships/materie/data
+
+    # Scheda Anagrafica
+    - name: data_nascita
+      label: 'Data di nascita della persona'
+      selector: attributes/birthdate
+    - name: genere
+      label: 'Il genere della persona'
+      selector: attributes/genere
+    - name: codice_fiscale
+      label: 'Il codice fiscale della persona'
+      selector: attributes/codice_fiscale
+
+    # Footer
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: attributes/language
+    - name: published
+      label: 'Se il contenuto è pubblicato o meno'
+      selector: attributes/published
 
   ids:
     nid:
@@ -102,30 +118,10 @@ source:
 
 process:
   nid: nid
-#  status:
-#    plugin: default_value
-#    source: published
-#    default_value: 1
-  langcode:
-    plugin: default_value
-    source: language
-    default_value: "und"
   type: type
   title: title
-  field_cognome: cognome
-  field_nome: nome
-  field_abstract: abstract
-  field_telefono: telefono
-  field_email: email
-  field_codice_fiscale: codice_fiscale
-  field_data_nascita:
-    - plugin: skip_on_empty
-      source: data_nascita
-      method: process
-  field_genere:
-    - plugin: skip_on_empty
-      source: genere
-      method: process
+
+  # Scheda biografia
   _file_uid:
     plugin: default_value
     default_value: 1
@@ -138,19 +134,58 @@ process:
     skip_on_missing_source: true
     id_only: true
   field_ritratto/alt: ritratto/data/description
-  field_ruolo_persona/target_id: ruolo_persona
+  field_nome: nome
+  field_cognome: cognome
+  field_abstract: abstract
+
+  # Scheda Contatti
+  field_telefono: telefono
+  field_email: email
+
+  # Scheda Contratto
+  field_ruolo_persona: ruolo_persona
+  field_tipologia_posto:
+    plugin: skip_on_empty
+    source: tipologia_posto
+    method: process
   field_tipologia_incarico: tipologia_incarico
-  field_tipologia_posto: tipologia_posto
+  field_tipologia_supplenza:
+    plugin: skip_on_empty
+    source: tipologia_supplenza
+    method: process
+  field_data_fine:
+    plugin: skip_on_empty
+    source: data_nascita
+    method: process
   field_materie:
     - plugin: skip_on_empty
       source: materie
       method: process
-      debug:
-        message: 'Questa persona non ha materie associate'
     - plugin: sub_process
       source: materie
       process:
         target_id: id
+
+  # Scheda Anagrafica
+  field_data_nascita:
+    plugin: skip_on_empty
+    source: data_nascita
+    method: process
+  field_genere:
+    plugin: skip_on_empty
+    source: genere
+    method: process
+  field_codice_fiscale: codice_fiscale
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  status:
+    plugin: default_value
+    source: published
+    default_value: 0
 
 destination:
   plugin: entity:node
