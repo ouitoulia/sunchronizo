@@ -78,9 +78,9 @@ process:
     default_value: 0
     source: '@parent_id'
   weight:
-    - plugin: skip_on_empty
-      method: process
-      source: weight
+    plugin: default_value
+    source: weight
+    default_value: 0
   description:
     - plugin: skip_on_empty
       method: process

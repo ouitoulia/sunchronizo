@@ -19,6 +19,7 @@
     "prefer-stable": true,
     "require": {
         "drupal/core-recommended": "^10",
+        "drupal/migrate_file": ">=2.1",
         "ouitoulia/lexika": "^1",
         "ouitoulia/themethla": "^2",
         "drupal/migrate_plus": "^6",
