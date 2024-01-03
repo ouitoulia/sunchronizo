@@ -58,12 +58,12 @@ source:
     - name: document
       label: "I metadata del documento"
       selector: relationships/document
-    - name: audio_file_url
+    - name: audio_url
       label: "URL del file audio"
-      selector: relationships/audio_file/data/url
-    - name: audio_file
+      selector: relationships/audio/data/url
+    - name: audio
       label: "I metadata del file audio"
-      selector: relationships/audio_file
+      selector: relationships/audio
 
     # Campi comuni
     - name: icona
@@ -133,17 +133,17 @@ process:
     method: process
 
   # Bundle audio_file
-  field_audio_file/target_id:
+  field_media_audio_file/target_id:
     plugin: file_import
-    source: audio_file_url
+    source: audio_url
     destination: constants/audios_media_path
     uid: '@_file_uid'
     file_exists: 'replace'
     skip_on_missing_source: true
     id_only: true
-  field_audio_file/description:
+  field_media_audio_file/description:
     plugin: skip_on_empty
-    source: audio_file/data/description
+    source: audio/data/description
     method: process
 
   # Bundle remote_video
