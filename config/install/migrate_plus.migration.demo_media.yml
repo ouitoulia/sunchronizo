@@ -69,6 +69,9 @@ source:
     - name: icona
       label: 'Eventuale icona del media'
       selector: attributes/icon
+    - name: embed_video
+      label: "L'URL del video da incorporare"
+      selector: attributes/embed_video_url
     - name: trascrizione
       label: 'Eventuale trascrizione del video'
       selector: attributes/transcription
@@ -141,6 +144,12 @@ process:
   field_audio_file/description:
     plugin: skip_on_empty
     source: audio_file/data/description
+    method: process
+
+  # Bundle remote_video
+  field_media_oembed_video/value:
+    plugin: skip_on_empty
+    source: embed_video
     method: process
 
   # Campi comuni
