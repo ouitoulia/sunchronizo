@@ -1,0 +1,176 @@
+id: demo_media
+label: Media demo
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - demo
+  - demo_media
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/media.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: mid
+      label: 'ID del media'
+      selector: id
+    - name: bundle
+      label: 'Il tipo di media'
+      selector: type
+    - name: name
+      label: 'Il nome del media'
+      selector: attributes/title
+
+    # File da importare
+    - name: image_url
+      label: "URL dell'immagine"
+      selector: relationships/image/data/url
+    - name: image
+      label: "I metadata dell'immagine"
+      selector: relationships/image
+    - name: document_url
+      label: "URL del documento"
+      selector: relationships/document/data/url
+    - name: document
+      label: "I metadata del documento"
+      selector: relationships/document
+    - name: audio_file_url
+      label: "URL del file audio"
+      selector: relationships/audio_file/data/url
+    - name: audio_file
+      label: "I metadata del file audio"
+      selector: relationships/audio_file
+
+    # Campi comuni
+    - name: icona
+      label: 'Eventuale icona del media'
+      selector: attributes/icon
+    - name: trascrizione
+      label: 'Eventuale trascrizione del video'
+      selector: attributes/transcription
+
+    # Footer
+    - name: language
+      label: 'La lingua del media'
+      selector: attributes/language
+    - name: published
+      label: 'Se il media è pubblicato o meno'
+      selector: attributes/published
+
+  ids:
+    mid:
+      type: integer
+
+  constants:
+    images_media_path: 'public://demo/images/'
+    documents_media_path: 'public://demo/documents/'
+    audios_media_path: 'public://demo/audios/'
+
+process:
+  mid: mid
+  uid:
+    plugin: default_value
+    default_value: 1
+  bundle: bundle
+  name: name
+  _file_uid:
+    plugin: default_value
+    default_value: 1
+
+  # Bundle image
+  field_media_image/target_id:
+    plugin: file_import
+    source: image_url
+    destination: constants/images_media_path
+    uid: '@_file_uid'
+    file_exists: 'replace'
+    skip_on_missing_source: true
+    id_only: true
+  field_media_image/alt:
+    plugin: skip_on_empty
+    source: image/data/description
+    method: process
+
+  # Bundle document
+  field_media_document/target_id:
+    plugin: file_import
+    source: document_url
+    destination: constants/documents_media_path
+    uid: '@_file_uid'
+    file_exists: 'replace'
+    skip_on_missing_source: true
+    id_only: true
+  field_media_document/description:
+    plugin: skip_on_empty
+    source: document/data/description
+    method: process
+
+  # Bundle audio_file
+  field_audio_file/target_id:
+    plugin: file_import
+    source: audio_file_url
+    destination: constants/audios_media_path
+    uid: '@_file_uid'
+    file_exists: 'replace'
+    skip_on_missing_source: true
+    id_only: true
+  field_audio_file/description:
+    plugin: skip_on_empty
+    source: audio_file/data/description
+    method: process
+
+  # Campi comuni
+  field_icona:
+    plugin: skip_on_empty
+    source: icona
+    method: process
+  field_trascrizione:
+    plugin: skip_on_empty
+    source: trascrizione
+    method: process
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  status:
+    plugin: default_value
+    source: published
+    default_value: 0
+
+destination:
+  plugin: entity:media
+  translations: true
+
+migration_dependencies: { }
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+

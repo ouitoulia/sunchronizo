@@ -1,12 +1,12 @@
-id: demo_persona
-label: Tipo di contenuto Persona
+id: demo_luogo
+label: Tipo di contenuto Luogo
 migration_group: scuola_demo
 migration_tags:
   - json
   - scuola
   - demo
   - demo_node
-  - demo_persona
+  - demo_luogo
 
 source:
   plugin: url
@@ -30,7 +30,7 @@ source:
   # track_changes: false
 
   urls:
-    - 'https://ouitoulia.github.io/krene/demo/persona.json'
+    - 'https://ouitoulia.github.io/krene/demo/luogo.json'
 
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
@@ -115,7 +115,7 @@ source:
       type: integer
 
   constants:
-    ritratto_path: 'public://demo/persona/ritratto/'
+    ritratto_path: 'public://demo/luogo/'
 
 process:
   nid: nid
@@ -201,6 +201,7 @@ migration_dependencies:
     - taxonomy_common
     - taxonomy_materie_secondaria_primo_grado
     - taxonomy_materie_secondaria_secondo_grado
+    - demo_media
 
 dependencies:
   enforced:
