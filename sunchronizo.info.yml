@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-01-03
-version: '1.2.6'
+version: '1.2.7'
 project: 'Sunchronizo'
-datestamp: 1704275568
-message: ' demo media e pof demo luoghi'
+datestamp: 1704296005
+message: ' fix media demo'
