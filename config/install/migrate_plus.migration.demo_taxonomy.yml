@@ -1,5 +1,5 @@
 id: demo_taxonomy
-label: Voci di tassonomia demo
+label: Voci di tassonomia
 migration_group: scuola_demo
 migration_tags:
   - json
