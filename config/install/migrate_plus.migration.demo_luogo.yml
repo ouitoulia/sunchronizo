@@ -44,63 +44,91 @@ source:
       selector: type
     - name: title
       label: 'Il titolo del contenuto'
-      selector: attributes/title
-
-    # Scheda biografia
-    - name: ritratto_url
-      label: 'URL foto della persona'
-      selector: relationships/ritratto/data/url
-    - name: ritratto
-      label: 'Foto della persona'
-      selector: relationships/ritratto
-    - name: nome
-      label: 'Nome'
       selector: attributes/nome
-    - name: cognome
-      label: 'Cognome'
-      selector: attributes/cognome
+
+    # Scheda descrizione
     - name: abstract
       label: 'Descrizione breve'
       selector: attributes/abstract
+    - name: argomenti
+      label: 'Argomenti'
+      selector: relationships/argomenti/data
+    - name: tipologia_luogo
+      label: 'Il tipo di luogo'
+      selector: relationships/tipologia_luogo/data/id
+    - name: copertina
+      label: 'Immagine di copertina'
+      selector: relationships/copertina/data/id
+    - name: video
+      label: 'Video del luogo'
+      selector: relationships/video/data/id
+    - name: galleria_immagini
+      label: 'Galleria di immagini'
+      selector: relationships/galleria_immagini/data
+    - name: body
+      label: 'Descrizione estesa'
+      selector: attributes/descrizione_estesa
 
-    # Scheda Contatti
-    - name: telefono
-      label: 'Telefono'
-      selector: attributes/telefono
+    # Scheda dove si trova
+    - name: fa_parte_di
+      label: 'Se il luogo fa parte di un altro luogo'
+      selector: relationships/fa_parte_di/data/id
+    - name: indirizzo
+      label: 'Indirizzo del luogo'
+      selector: attributes/indirizzo
+    - name: coordinate_geografiche
+      label: 'Coordinate geografiche del luogo'
+      selector: attributes/coordinate_geografiche
+    - name: orario_pubblico
+      label: 'Gli orari di apertura del luogo'
+      selector: attributes/orario_pubblico
     - name: email
       label: 'Email'
       selector: attributes/email
+    - name: telefono
+      label: 'Telefono'
+      selector: attributes/telefono
+    - name: attributi_luogo
+      label: 'Modalità di accesso'
+      selector: relationships/attributi_luogo/data
 
-    # Scheda Contratto
-    - name: ruolo_persona
-      label: 'Il ruolo della persona'
-      selector: relationships/ruolo_persona/data/id
-    - name: tipologia_posto
-      label: 'Posto comune o sostegno'
-      selector: relationships/tipologia_posto/data/id
-    - name: tipologia_incarico
-      label: 'Determinato/Indeterminato'
-      selector: relationships/tipologia_incarico/data/id
-    - name: tipologia_supplenza
-      label: 'La tipologia di supplenza'
-      selector: relationships/tipologia_supplenza/data/id
-    - name: data_fine_incarico
-      label: 'La data di fine incarico'
-      selector: relationships/data_fine_incarico/data/id
-    - name: materie
-      label: 'Le materie che insegna la persona'
-      selector: relationships/materie/data
-
-    # Scheda Anagrafica
-    - name: data_nascita
-      label: 'Data di nascita della persona'
-      selector: attributes/birthdate
-    - name: genere
-      label: 'Il genere della persona'
-      selector: attributes/genere
-    - name: codice_fiscale
-      label: 'Il codice fiscale della persona'
-      selector: attributes/codice_fiscale
+    # Scheda ulteriori informazioni
+    - name: prenotabile
+      label: 'Se il luogo è prenotabile'
+      selector: attributes/prenotabile
+    - name: posti
+      label: 'Posti a sedere'
+      selector: attributes/posti
+    - name: anno_costruzione
+      label: "L'anno di costruzione"
+      selector: attributes/anno_costruzione
+    - name: numero_piani
+      label: "Numero di piani"
+      selector: attributes/numero_piani
+    - name: codice_identificativo
+      label: "Il codice identificativo"
+      selector: attributes/codice_identificativo
+    - name: codice_catastale_comune
+      label: "Codice comune"
+      selector: attributes/codice_catastale_comune
+    - name: uso_scolastico
+      label: "Se il luogo è ad uso scolastico"
+      selector: attributes/uso_scolastico
+    - name: destinazione_uso
+      label: 'Destinazione uso'
+      selector: relationships/destinazione_uso/data
+    - name: anno_adattamento
+      label: "Anno di adattamento"
+      selector: attributes/anno_adattamento
+    - name: superficie_area_totale
+      label: "Superficie area totale"
+      selector: attributes/superficie_area_totale
+    - name: superficie_area_libera
+      label: "Superficie area libera"
+      selector: attributes/superficie_area_libera
+    - name: volume
+      label: "Volume"
+      selector: attributes/volume
 
     # Footer
     - name: language
@@ -114,9 +142,6 @@ source:
     nid:
       type: integer
 
-  constants:
-    ritratto_path: 'public://demo/luogo/'
-
 process:
   nid: nid
   uid:
@@ -125,61 +150,100 @@ process:
   type: type
   title: title
 
-  # Scheda biografia
-  _file_uid:
-    plugin: default_value
-    default_value: 1
-  field_ritratto/target_id:
-    plugin: file_import
-    source: ritratto_url
-    destination: constants/ritratto_path
-    uid: '@_file_uid'
-    file_exists: 'replace'
-    skip_on_missing_source: true
-    id_only: true
-  field_ritratto/alt: ritratto/data/description
-  field_nome: nome
-  field_cognome: cognome
+  # Scheda descrizione
   field_abstract: abstract
-
-  # Scheda Contatti
-  field_telefono: telefono
-  field_email: email
-
-  # Scheda Contratto
-  field_ruolo_persona: ruolo_persona
-  field_tipologia_posto:
-    plugin: skip_on_empty
-    source: tipologia_posto
-    method: process
-  field_tipologia_incarico: tipologia_incarico
-  field_tipologia_supplenza:
-    plugin: skip_on_empty
-    source: tipologia_supplenza
-    method: process
-  field_data_fine:
-    plugin: skip_on_empty
-    source: data_fine_incarico
-    method: process
-  field_materie:
+  field_argomenti:
     - plugin: skip_on_empty
-      source: materie
+      source: argomenti
       method: process
     - plugin: sub_process
-      source: materie
+      source: argomenti
+      process:
+        target_id: id
+  field_tipologia_luogo: tipologia_luogo
+  field_copertina: copertina
+  field_video:
+    plugin: skip_on_empty
+    source: video
+    method: process
+  field_galleria_immagini:
+    - plugin: skip_on_empty
+      source: galleria_immagini
+      method: process
+    - plugin: sub_process
+      source: galleria_immagini
+      process:
+       target_id: id
+  body/value: body
+
+  # Scheda dove si trova
+  field_luoghi:
+    plugin: skip_on_empty
+    source: fa_parte_di
+    method: process
+  field_indirizzo:
+    - plugin: skip_on_empty
+      source: indirizzo
+      method: process
+    - plugin: sub_process
+      source: indirizzo
+      process:
+        country_code: nazione
+        administrative_area: provincia
+        locality: comune
+        postal_code: cap
+        address_line1: indirizzo
+  field_coordinate_geografiche:
+    - plugin: skip_on_empty
+      source: coordinate_geografiche
+      method: process
+    - plugin: sub_process
+      source: coordinate_geografiche
+      process:
+        value: value
+        geo_type: geo_type
+        lat: lat
+        lon: lon
+        left: left
+        top: top
+        right: right
+        bottom: bottom
+        geohash: geohash
+  field_orario_pubblico:
+    plugin: skip_on_empty
+    source: orario_pubblico
+    method: process
+  field_email: email
+  field_telefono: telefono
+  field_attributi_luogo:
+    - plugin: skip_on_empty
+      source: attributi_luogo
+      method: process
+    - plugin: sub_process
+      source: attributi_luogo
       process:
         target_id: id
 
-  # Scheda Anagrafica
-  field_data_nascita:
-    plugin: skip_on_empty
-    source: data_nascita
-    method: process
-  field_genere:
-    plugin: skip_on_empty
-    source: genere
-    method: process
-  field_codice_fiscale: codice_fiscale
+  # Scheda ulteriori informazioni
+  field_prenotabile: prenotabile
+  field_posti: posti
+  field_anno_costruzione: anno_costruzione
+  field_numero_piani: numero_piani
+  field_codice_identificativo: codice_identificativo
+  field_codice_catastale_comune: codice_catastale_comune
+  field_uso_scolastico: uso_scolastico
+  field_destinazione_uso:
+    - plugin: skip_on_empty
+      source: destinazione_uso
+      method: process
+    - plugin: sub_process
+      source: destinazione_uso
+      process:
+        target_id: id
+  field_anno_adattamento: anno_adattamento
+  field_superficie_area_totale: superficie_area_totale
+  field_superficie_area_libera: superficie_area_libera
+  field_volume: volume
 
   # Footer
   langcode:
@@ -193,15 +257,14 @@ process:
 
 destination:
   plugin: entity:node
-  default_bundle: persona
+  default_bundle: luogo
   translations: true
 
 migration_dependencies:
   required:
     - taxonomy_common
-    - taxonomy_materie_secondaria_primo_grado
-    - taxonomy_materie_secondaria_secondo_grado
     - demo_media
+    - demo_taxonomy
 
 dependencies:
   enforced:
