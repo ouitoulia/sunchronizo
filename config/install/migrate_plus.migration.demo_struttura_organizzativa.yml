@@ -1,0 +1,205 @@
+id: demo_struttura_organizzativa
+label: Tipo di contenuto Struttura organizzativa
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - demo
+  - demo_node
+  - demo_struttura_organizzativa
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/struttura_organizzativa.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: nid
+      label: 'ID del nodo'
+      selector: id
+    - name: type
+      label: 'Il tipo di contenuto'
+      selector: type
+    - name: title
+      label: 'Il titolo del contenuto'
+      selector: attributes/nome
+
+    # Scheda descrizione
+    - name: tipologia_struttura
+      label: 'La tipologia della struttura organizzativa'
+      selector: relationships/tipologia_struttura/data/id
+    - name: copertina
+      label: 'Immagine di copertina'
+      selector: relationships/copertina/data/id
+    - name: abstract
+      label: 'Descrizione breve'
+      selector: attributes/abstract
+    - name: argomenti
+      label: 'Argomenti'
+      selector: relationships/argomenti/data
+    - name: cosa_fa
+      label: 'Cosa fa'
+      selector: attributes/cosa_fa
+
+    # Scheda organizzazione
+    - name: struttura_organizzativa
+      label: 'Eventualmente la struttura o le strutture da cui dipende'
+      selector: relationships/struttura_organizzativa/data
+    - name: persona_responsabile
+      label: 'La persona responsabile della struttura organizzativa'
+      selector: relationships/persona_responsabile/data
+    - name: persone
+      label: 'Le persone che fanno parte della struttura organizzativa'
+      selector: relationships/persone/data
+    - name: persone_esterne
+      label: 'Altre persone che fano parte della struttura organizzativa ma che non hanno una scheda registrata.'
+      selector: attributes/persone_esterne
+    - name: luoghi_gestiti
+      label: 'I luoghi gestiti dalla struttura organizzativa'
+      selector: relationships/luoghi_gestiti/data
+
+    # Scheda contatti
+    - name: luoghi
+      label: 'I luoghi in cui ha sede la struttura organizzativa'
+      selector: relationships/luoghi/data
+    - name: telefono
+      label: 'Telefono'
+      selector: attributes/telefono
+    - name: email
+      label: 'Email'
+      selector: attributes/email
+
+    # Footer
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: attributes/language
+    - name: published
+      label: 'Se il contenuto è pubblicato o meno'
+      selector: attributes/published
+
+  ids:
+    nid:
+      type: integer
+
+process:
+  nid: nid
+  uid:
+    plugin: default_value
+    default_value: 1
+  type: type
+  title: title
+
+  # Scheda descrizione
+  field_tipologia_struttura: tipologia_struttura
+  field_copertina:
+    plugin: skip_on_empty
+    source: copertina
+    method: process
+  field_abstract: abstract
+  field_argomenti:
+    - plugin: skip_on_empty
+      source: argomenti
+      method: process
+    - plugin: sub_process
+      source: argomenti
+      process:
+        target_id: id
+  body/value: cosa_fa
+
+  # Scheda organizzazione
+  field_struttura_organizzativa:
+    - plugin: skip_on_empty
+      source: struttura_organizzativa
+      method: process
+    - plugin: sub_process
+      source: struttura_organizzativa
+      process:
+        target_id: id
+  field_persona_responsabile:
+    - plugin: skip_on_empty
+      source: persona_responsabile
+      method: process
+    - plugin: sub_process
+      source: persona_responsabile
+      process:
+        target_id: id
+  field_persone:
+    - plugin: skip_on_empty
+      source: persone
+      method: process
+    - plugin: sub_process
+      source: persone
+      process:
+        target_id: id
+  field_persone_esterne: persone_esterne
+  field_luoghi_gestiti:
+    - plugin: skip_on_empty
+      source: luoghi_gestiti
+      method: process
+    - plugin: sub_process
+      source: luoghi_gestiti
+      process:
+        target_id: id
+
+  # Scheda contatti
+  field_luoghi:
+    - plugin: skip_on_empty
+      source: luoghi
+      method: process
+    - plugin: sub_process
+      source: luoghi
+      process:
+        target_id: id
+  field_telefono: telefono
+  field_email: email
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  status:
+    plugin: default_value
+    source: published
+    default_value: 0
+
+destination:
+  plugin: entity:node
+  default_bundle: luogo
+  translations: true
+
+migration_dependencies:
+  required:
+    - taxonomy_common
+    - demo_media
+    - demo_taxonomy
+    - demo_persona
+    - demo_luogo
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+
