@@ -1,0 +1,284 @@
+id: demo_evento
+label: Tipo di contenuto Evento
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - demo
+  - demo_node
+  - demo_evento
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/evento.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: nid
+      label: 'ID del nodo'
+      selector: id
+    - name: type
+      label: 'Il tipo di contenuto'
+      selector: type
+    - name: title
+      label: 'Il titolo del contenuto'
+      selector: attributes/titolo
+
+    # Scheda apertura
+    - name: tipologia_evento
+      label: "La tipologia dell'evento"
+      selector: relationships/tipologia_evento/data/id
+    - name: abstract
+      label: 'Descrizione breve'
+      selector: attributes/abstract
+    - name: argomenti
+      label: 'Argomenti'
+      selector: relationships/argomenti/data
+    - name: copertina
+      label: 'Immagine di copertina'
+      selector: relationships/copertina/data/id
+
+    # Scheda cos'è
+    - name: descrizione_estesa
+      label: 'Descrizione estesa'
+      selector: attributes/descrizione_estesa
+
+    # Scheda Dove e quando
+    - name: luoghi
+      label: 'I luoghi gestiti dalla struttura organizzativa'
+      selector: relationships/luoghi/data
+    - name: data_ora_inizio
+      label: "La data e l'ora di inizio"
+      selector: attributes/data_ora_inizio
+    - name: data_ora_fine
+      label: "La data e l'ora di fine"
+      selector: attributes/data_ora_fine
+
+    # Scheda contatti
+    - name: struttura_organizzativa
+      label: 'La struttura organizzativa responsabile'
+      selector: relationships/struttura_organizzativa/data
+    - name: collaborazioni
+      label: 'Collaborazioni con altri enti, associazioni, ecc'
+      selector: relationships/collaborazioni/data
+    - name: link
+      label: "Eventuali siti web collegati all'evento"
+      selector: attributes/link
+    - name: email
+      label: 'Email'
+      selector: attributes/email
+    - name: telefono
+      label: 'Telefono'
+      selector: attributes/telefono
+
+    # Scheda persone
+    - name: destinatari
+      label: 'Destinatari evento'
+      selector: relationships/destinatari/data
+    - name: descrizione_destinatari
+      label: 'Descrizione Destinatari evento'
+      selector: attributes/descrizione_destinatari
+    - name: persone
+      label: "Le persone che parteciperanno all'evento"
+      selector: relationships/persone/data
+    - name: patrocini
+      label: 'Eventuali patrocini'
+      selector: relationships/patrocini/data
+    - name: sponsor
+      label: 'Eventuali sponsor'
+      selector: relationships/sponsor/data
+
+    # Scheda costi
+    - name: gratuito
+      label: "Se l'evento è gratuito o meno"
+      selector: attributes/gratuito
+    - name: prezzo
+      label: "L'eventuale prezzo dell'evento"
+      selector: attributes/prezzo
+
+    # Footer
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: attributes/language
+    - name: published
+      label: 'Se il contenuto è pubblicato o meno'
+      selector: attributes/published
+
+  ids:
+    nid:
+      type: integer
+
+process:
+  nid: nid
+  uid:
+    plugin: default_value
+    default_value: 1
+  type: type
+  title: title
+
+  # Scheda apertura
+  field_tipologia_evento: tipologia_evento
+  field_abstract: abstract
+  field_argomenti:
+    - plugin: skip_on_empty
+      source: argomenti
+      method: process
+    - plugin: sub_process
+      source: argomenti
+      process:
+        target_id: id
+  field_copertina:
+    plugin: skip_on_empty
+    source: copertina
+    method: process
+
+  # Scheda cos'è
+  body/value: descrizione_estesa
+
+  # Scheda Dove e quando
+  field_luoghi:
+    - plugin: skip_on_empty
+      source: luoghi
+      method: process
+    - plugin: sub_process
+      source: luoghi
+      process:
+        target_id: id
+  field_data_inizio:
+    plugin: skip_on_empty
+    source: data_ora_inizio
+    method: process
+  field_data_fine:
+    plugin: skip_on_empty
+    source: data_ora_fine
+    method: process
+
+  # Scheda contatti
+  field_struttura_responsabile:
+    - plugin: skip_on_empty
+      source: struttura_organizzativa
+      method: process
+    - plugin: sub_process
+      source: struttura_organizzativa
+      process:
+        target_id: id
+  field_collaborazioni:
+    - plugin: skip_on_empty
+      source: collaborazioni
+      method: process
+    - plugin: sub_process
+      source: collaborazioni
+      process:
+        target_id: id
+  field_link:
+    plugin: skip_on_empty
+    source: link
+    method: process
+  field_email:
+    plugin: skip_on_empty
+    source: email
+    method: process
+  field_telefono:
+    plugin: skip_on_empty
+    source: telefono
+    method: process
+
+  # Scheda persone
+  field_destinatari:
+    - plugin: skip_on_empty
+      source: destinatari
+      method: process
+    - plugin: sub_process
+      source: destinatari
+      process:
+        target_id: id
+  field_descrizione_destinatari:
+    plugin: skip_on_empty
+    source: descrizione_destinatari
+    method: process
+  field_persone:
+    - plugin: skip_on_empty
+      source: persone
+      method: process
+    - plugin: sub_process
+      source: persone
+      process:
+        target_id: id
+  field_patrocini:
+    - plugin: skip_on_empty
+      source: patrocini
+      method: process
+    - plugin: sub_process
+      source: patrocini
+      process:
+        target_id: id
+  field_sponsor:
+    - plugin: skip_on_empty
+      source: sponsor
+      method: process
+    - plugin: sub_process
+      source: sponsor
+      process:
+        target_id: id
+
+  # Scheda costi
+  field_gratuito:
+    plugin: skip_on_empty
+    source: gratuito
+    method: process
+  field_prezzo:
+    plugin: skip_on_empty
+    source: prezzo
+    method: process
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  status:
+    plugin: default_value
+    source: published
+    default_value: 0
+
+destination:
+  plugin: entity:node
+  default_bundle: partner
+  translations: true
+
+migration_dependencies:
+  required:
+    - taxonomy_common
+    - demo_media
+    - demo_persona
+    - demo_luoghi
+    - demo_struttura_organizzativa
+    - demo_partner
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+

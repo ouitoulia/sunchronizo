@@ -153,7 +153,10 @@ process:
       source: persone
       process:
         target_id: id
-  field_persone_esterne: persone_esterne
+  field_persone_esterne:
+    plugin: skip_on_empty
+    source: persone_esterne
+    method: process
   field_luoghi_gestiti:
     - plugin: skip_on_empty
       source: luoghi_gestiti
@@ -172,8 +175,14 @@ process:
       source: luoghi
       process:
         target_id: id
-  field_telefono: telefono
-  field_email: email
+  field_telefono:
+    plugin: skip_on_empty
+    source: telefono
+    method: process
+  field_email:
+    plugin: skip_on_empty
+    source: email
+    method: process
 
   # Footer
   langcode:
