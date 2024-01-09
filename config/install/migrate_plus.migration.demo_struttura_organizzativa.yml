@@ -46,7 +46,7 @@ source:
       label: 'Il titolo del contenuto'
       selector: attributes/nome
 
-    # Scheda descrizione
+    # Scheda "Descrizione"
     - name: tipologia_struttura
       label: 'La tipologia della struttura organizzativa'
       selector: relationships/tipologia_struttura/data/id
@@ -63,7 +63,7 @@ source:
       label: 'Cosa fa'
       selector: attributes/cosa_fa
 
-    # Scheda organizzazione
+    # Scheda "Organizzazione"
     - name: struttura_organizzativa
       label: 'Eventualmente la struttura o le strutture da cui dipende'
       selector: relationships/struttura_organizzativa/data
@@ -80,7 +80,7 @@ source:
       label: 'I luoghi gestiti dalla struttura organizzativa'
       selector: relationships/luoghi_gestiti/data
 
-    # Scheda contatti
+    # Scheda "Contatti"
     - name: luoghi
       label: 'I luoghi in cui ha sede la struttura organizzativa'
       selector: relationships/luoghi/data
@@ -196,7 +196,7 @@ process:
 
 destination:
   plugin: entity:node
-  default_bundle: luogo
+  default_bundle: struttura_organizzativa
   translations: true
 
 migration_dependencies:
