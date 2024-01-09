@@ -205,17 +205,15 @@ process:
     source: servizio_online
     method: process
   _azione:
-    - plugin: migration_lookup
-      migration: demo_paragraph_call_to_action
-      source: azione
-    - plugin: log
+    plugin: migration_lookup
+    migration: demo_paragraph_call_to_action
+    source: azione
   field_azione:
-    - plugin: sub_process
-      source: '@_azione'
-      process:
-        target_id: '0'
-        target_revision_id: '1'
-    - plugin: log
+    plugin: sub_process
+    source: '@_azione'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
   field_tipologia_autenticazione:
     - plugin: skip_on_empty
       source: tipologia_autenticazione
