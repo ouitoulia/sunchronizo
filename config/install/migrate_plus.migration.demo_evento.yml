@@ -67,7 +67,7 @@ source:
 
     # Scheda Dove e quando
     - name: luoghi
-      label: 'I luoghi gestiti dalla struttura organizzativa'
+      label: "I luoghi in cui si svolge l'evento"
       selector: relationships/luoghi/data
     - name: data_ora_inizio
       label: "La data e l'ora di inizio"
