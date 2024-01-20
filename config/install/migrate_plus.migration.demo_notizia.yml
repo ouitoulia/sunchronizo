@@ -59,6 +59,9 @@ source:
     - name: corpo
       label: 'Corpo della notizia'
       selector: attributes/corpo
+    - name: autori
+      label: "Gli autori della notizia"
+      selector: relationships/autori/data
     - name: persone
       label: "Le persone che parteciperanno all'evento"
       selector: relationships/persone/data
@@ -110,6 +113,14 @@ process:
       method: process
     - plugin: sub_process
       source: persone
+      process:
+        target_id: id
+  field_persona_responsabile:
+    - plugin: skip_on_empty
+      source: autori
+      method: process
+    - plugin: sub_process
+      source: autori
       process:
         target_id: id
   field_luoghi:
