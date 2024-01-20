@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-01-13
-version: '1.7.0'
+# Information added by GitHub Action packaging script on 2024-01-20
+version: '1.7.1'
 project: 'Sunchronizo'
-datestamp: 1705161281
-message: ' demo notizia'
+datestamp: 1705736915
+message: ' aggiunto il campo autori a notizia'
