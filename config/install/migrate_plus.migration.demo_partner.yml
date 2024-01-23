@@ -68,6 +68,9 @@ source:
     - name: coordinate_geografiche
       label: 'Coordinate geografiche del luogo'
       selector: attributes/coordinate_geografiche
+    - name: link
+      label: "Eventuali siti web del partner"
+      selector: attributes/link
 
     # Footer
     - name: language
@@ -123,6 +126,10 @@ process:
         right: right
         bottom: bottom
         geohash: geohash
+  field_link:
+    plugin: skip_on_empty
+    source: link
+    method: process
 
   # Footer
   langcode:
