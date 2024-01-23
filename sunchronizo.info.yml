@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-01-23
-version: '1.7.3'
+version: '1.7.4'
 project: 'Sunchronizo'
-datestamp: 1705997233
-message: ' fix dipendenze migrazione luogo'
+datestamp: 1706000825
+message: ' aggiunto campo ct partner'
