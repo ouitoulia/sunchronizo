@@ -276,6 +276,7 @@ migration_dependencies:
     - taxonomy_common
     - demo_media
     - demo_taxonomy
+    - demo_partner
 
 dependencies:
   enforced:
