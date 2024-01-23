@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-01-23
-version: '1.7.2'
+version: '1.7.3'
 project: 'Sunchronizo'
-datestamp: 1705996802
-message: ' aggiunto gestore esterno a luogo'
+datestamp: 1705997233
+message: ' fix dipendenze migrazione luogo'
