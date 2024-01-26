@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-01-26
-version: '1.7.5'
+version: '1.7.6'
 project: 'Sunchronizo'
-datestamp: 1706279214
-message: ' rename field collaborazioni to struttura esterna'
+datestamp: 1706282137
+message: ' add field struttura esterna to evento'
