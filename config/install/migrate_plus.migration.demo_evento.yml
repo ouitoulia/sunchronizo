@@ -77,6 +77,9 @@ source:
       selector: attributes/data_ora_fine
 
     # Scheda contatti
+    - name: struttura_esterna
+      label: 'La struttura esterna responsabile'
+      selector: relationships/struttura_esterna/data
     - name: struttura_organizzativa
       label: 'La struttura organizzativa responsabile'
       selector: relationships/struttura_organizzativa/data
@@ -182,6 +185,14 @@ process:
       method: process
     - plugin: sub_process
       source: struttura_organizzativa
+      process:
+        target_id: id
+  field_struttura_esterna:
+    - plugin: skip_on_empty
+      source: struttura_esterna
+      method: process
+    - plugin: sub_process
+      source: struttura_esterna
       process:
         target_id: id
   field_collaborazioni:
