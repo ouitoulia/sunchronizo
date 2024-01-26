@@ -93,9 +93,9 @@ source:
       selector: relationships/attributi_luogo/data
 
     # Scheda ulteriori informazioni
-    - name: collaborazioni
+    - name: struttura_esterna
       label: 'Eventuali gestori esterni o terzi'
-      selector: relationships/collaborazioni/data
+      selector: relationships/struttura_esterna/data
     - name: prenotabile
       label: 'Se il luogo è prenotabile'
       selector: attributes/prenotabile
@@ -228,12 +228,12 @@ process:
         target_id: id
 
   # Scheda ulteriori informazioni
-  field_collaborazioni:
+  field_struttura_esterna:
     - plugin: skip_on_empty
-      source: collaborazioni
+      source: struttura_esterna
       method: process
     - plugin: sub_process
-      source: collaborazioni
+      source: struttura_esterna
       process:
         target_id: id
   field_prenotabile: prenotabile
