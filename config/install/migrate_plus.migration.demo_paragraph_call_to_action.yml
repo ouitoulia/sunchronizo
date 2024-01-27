@@ -73,7 +73,7 @@ process:
     plugin: skip_on_empty
     source: call_to_action
     method: process
-  field_icon_name: field_icon_name
+  field_icon_name: icon_name
 
   # Footer
   langcode:
