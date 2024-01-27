@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-01-26
-version: '1.7.6'
+# Information added by GitHub Action packaging script on 2024-01-27
+version: '1.7.8'
 project: 'Sunchronizo'
-datestamp: 1706282137
-message: ' add field struttura esterna to evento'
+datestamp: 1706345511
+message: ' fix paragraph call to action'
