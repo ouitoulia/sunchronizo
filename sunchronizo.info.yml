@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-01-27
-version: '1.7.9'
+version: '1.7.10'
 project: 'Sunchronizo'
-datestamp: 1706346496
+datestamp: 1706347633
 message: ' fix action taxonomies'
