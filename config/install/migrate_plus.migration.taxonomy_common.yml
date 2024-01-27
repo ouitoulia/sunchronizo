@@ -66,6 +66,9 @@ source:
     - name: icon
       label: 'Icona'
       selector: attributes/icon
+    - name: type
+      label: 'Tipologia'
+      selector: attributes/type
     - name: description
       label: 'La descrizione della voce di tassonomia'
       selector: attributes/description
@@ -88,6 +91,10 @@ process:
     - plugin: skip_on_empty
       method: process
       source: icon
+  field_type:
+    - plugin: skip_on_empty
+      method: process
+      source: type
   parent_id:
     - plugin: skip_on_empty
       method: process
