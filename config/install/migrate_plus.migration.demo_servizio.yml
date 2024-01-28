@@ -131,7 +131,7 @@ source:
 
     - name: tipologia_licenza
       label: 'Tipologia di licenza del contenuto'
-      selector: relationships/tipologia_licenza/data
+      selector: relationships/tipologia_licenza/data/id
 
     # Footer
     - name: language
@@ -287,10 +287,6 @@ process:
     - plugin: skip_on_empty
       source: tipologia_licenza
       method: process
-    - plugin: sub_process
-      source: tipologia_licenza
-      process:
-        target_id: id
 
   # Footer
   langcode:
