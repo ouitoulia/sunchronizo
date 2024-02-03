@@ -1,5 +1,5 @@
 id: demo_servizio
-label: Tipo di contenuto Evento
+label: Tipo di contenuto Servizio
 migration_group: scuola_demo
 migration_tags:
   - json
@@ -119,7 +119,7 @@ source:
       label: 'Le persone da contattare'
       selector: relationships/persona_responsabile/data
     - name: struttura_responsabile
-      label: 'Eventualmente la struttura o le strutture da cui dipende'
+      label: 'Eventualmente la struttura o le strutture responsabili'
       selector: relationships/struttura_responsabile/data
     - name: ipa
       label: 'Codice ente erogatore'

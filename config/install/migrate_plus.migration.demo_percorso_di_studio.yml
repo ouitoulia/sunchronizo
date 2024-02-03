@@ -1,0 +1,240 @@
+id: demo_percorso_di_studio
+label: Tipo di contenuto Percorso di studio
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - demo
+  - demo_node
+  - demo_percorso_di_studio
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/percorso_di_studio.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: nid
+      label: 'ID del nodo'
+      selector: id
+    - name: type
+      label: 'Il tipo di contenuto'
+      selector: type
+    - name: title
+      label: 'Il titolo del contenuto'
+      selector: attributes/titolo_indirizzo_di_studio
+    - name: percorso_di_studio
+      label: "Categoria dell'indirizzo di studio"
+      selector: relationships/percorso_di_studio/data/id
+    - name: grado_di_istruzione
+      label: "Il grado d'istruzione"
+      selector: relationships/grado_di_istruzione/data/id
+
+    # Scheda "Apertura"
+    - name: copertina
+      label: 'Logo o immagine del percorso'
+      selector: relationships/copertina/data/id
+    - name: abstract
+      label: 'Descrizione breve'
+      selector: attributes/abstract
+
+    # Scheda "Co'è e cosa serve"
+    - name: cosa_e
+      label: "Illustra cos'è il percorso di studio"
+      selector: attributes/cosa_e
+    - name: a_cosa_serve
+      label: "IIllustra nel dettaglio a cosa serve il percorso di studio"
+      selector: attributes/a_cosa_serve
+
+    # Scheda "Frequentare"
+    - name: struttura_didattica
+      label: 'La struttura didattica responsabile del percorso di studio'
+      selector: relationships/struttura_didattica/data
+
+    # Scheda "Accesso"
+    - name: come_si_accede
+      label: "La procedura da seguire per usufruire del percorso di studio"
+      selector: attributes/come_si_accede
+    - name: cosa_serve
+      label: 'Cosa serve per usufruire del percorso di studio'
+      selector: relationships/cosa_serve/data
+    - name: servizio
+      label: 'I servizi correlati al percorso di studio'
+      selector: relationships/servizio/data
+
+    # Scheda "Contatti"
+    - name: struttura_responsabile
+      label: 'Eventualmente la struttura o le strutture responsabili'
+      selector: relationships/struttura_responsabile/data
+    - name: persona_responsabile
+      label: 'Le persone da contattare'
+      selector: relationships/persona_responsabile/data
+    - name: email
+      label: 'Email'
+      selector: attributes/email
+    - name: telefono
+      label: 'Telefono'
+      selector: attributes/telefono
+
+    # Scheda "Ulteriori informazioni"
+    - name: casi_particolari
+      label: "Eventuali casi particolari riferiti all'ottenimento del servizio."
+      selector: attributes/casi_particolari
+
+    # Footer
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: attributes/language
+    - name: published
+      label: 'Se il contenuto è pubblicato o meno'
+      selector: attributes/published
+
+  ids:
+    nid:
+      type: integer
+
+process:
+  nid: nid
+  uid:
+    plugin: default_value
+    default_value: 1
+  type: type
+  title: title
+  field_percorso_di_studio: percorso_di_studio
+  field_grado_di_istruzione: grado_di_istruzione
+
+  # Scheda "Apertura"
+  field_copertina:
+    plugin: skip_on_empty
+    source: copertina
+    method: process
+  field_abstract: abstract
+
+  # Scheda "Co'è e cosa serve"
+  field_cosa_e:
+    plugin: skip_on_empty
+    source: cosa_e
+    method: process
+  field_a_cosa_serve/value:
+    - plugin: skip_on_empty
+      source: a_cosa_serve
+      method: process
+  field_a_cosa_serve/format:
+    - plugin: default_value
+      default_value: bootstrap_italia_2
+
+  # Scheda "Frequentare"
+  field_struttura_didattica:
+    - plugin: skip_on_empty
+      source: struttura_didattica
+      method: process
+    - plugin: sub_process
+      source: struttura_didattica
+      process:
+        target_id: id
+
+  # Scheda "Accesso"
+  field_come_si_accede:
+    plugin: skip_on_empty
+    source: come_si_accede
+    method: process
+  field_cosa_serve:
+    - plugin: skip_on_empty
+      source: cosa_serve
+      method: process
+    - plugin: sub_process
+      source: cosa_serve
+      process:
+        target_id: id
+  field_servizio:
+    - plugin: skip_on_empty
+      source: servizio
+      method: process
+    - plugin: sub_process
+      source: servizio
+      process:
+        target_id: id
+
+  # Scheda "Contatti"
+  field_struttura_responsabile:
+    - plugin: skip_on_empty
+      source: struttura_responsabile
+      method: process
+    - plugin: sub_process
+      source: struttura_responsabile
+      process:
+        target_id: id
+  field_persona_responsabile:
+    - plugin: skip_on_empty
+      source: persona_responsabile
+      method: process
+    - plugin: sub_process
+      source: persona_responsabile
+      process:
+        target_id: id
+  field_email:
+    plugin: skip_on_empty
+    source: email
+    method: process
+  field_telefono:
+    plugin: skip_on_empty
+    source: telefono
+    method: process
+
+  # Scheda "Ulteriori informazioni"
+  field_casi_particolari:
+    plugin: skip_on_empty
+    source: casi_particolari
+    method: process
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  status:
+    plugin: default_value
+    source: published
+    default_value: 0
+
+destination:
+  plugin: entity:node
+  default_bundle: percorso_di_studio
+  translations: true
+
+migration_dependencies:
+  required:
+    - taxonomy_common
+    - demo_media
+    - demo_persona
+    - demo_luoghi
+    - demo_struttura_organizzativa
+    - demo_servizio
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+
