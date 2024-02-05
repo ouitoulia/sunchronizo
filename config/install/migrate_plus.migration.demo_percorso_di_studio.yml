@@ -59,6 +59,9 @@ source:
     - name: abstract
       label: 'Descrizione breve'
       selector: attributes/abstract
+    - name: struttura_didattica
+      label: 'La struttura didattica responsabile del percorso di studio'
+      selector: relationships/struttura_didattica/data
 
     # Scheda "Co'è e cosa serve"
     - name: cosa_e
@@ -69,9 +72,9 @@ source:
       selector: attributes/a_cosa_serve
 
     # Scheda "Frequentare"
-    - name: struttura_didattica
-      label: 'La struttura didattica responsabile del percorso di studio'
-      selector: relationships/struttura_didattica/data
+    - name: piano_di_studio
+      label: "Il piano di studio associato al percorso"
+      selector: relationships/piano_di_studio/data/paragraph
 
     # Scheda "Accesso"
     - name: come_si_accede
@@ -131,6 +134,14 @@ process:
     source: copertina
     method: process
   field_abstract: abstract
+  field_struttura_didattica:
+    - plugin: skip_on_empty
+      source: struttura_didattica
+      method: process
+    - plugin: sub_process
+      source: struttura_didattica
+      process:
+        target_id: id
 
   # Scheda "Co'è e cosa serve"
   field_cosa_e:
@@ -146,14 +157,16 @@ process:
       default_value: bootstrap_italia_2
 
   # Scheda "Frequentare"
-  field_struttura_didattica:
-    - plugin: skip_on_empty
-      source: struttura_didattica
-      method: process
-    - plugin: sub_process
-      source: struttura_didattica
-      process:
-        target_id: id
+  _piano_di_studio:
+    plugin: migration_lookup
+    migration: demo_paragraph_piano_di_studi
+    source: piano_di_studio
+  field_piano_di_studio:
+    plugin: sub_process
+    source: '@_piano_di_studio'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
 
   # Scheda "Accesso"
   field_come_si_accede:
@@ -232,6 +245,7 @@ migration_dependencies:
     - demo_luoghi
     - demo_struttura_organizzativa
     - demo_servizio
+    - demo_paragraph_piano_di_studi
 
 dependencies:
   enforced:

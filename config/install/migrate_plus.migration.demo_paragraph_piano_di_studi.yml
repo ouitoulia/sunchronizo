@@ -1,12 +1,12 @@
-id: demo_paragraph_call_to_action
-label: Paragrafo Call to action
+id: demo_paragraph_piano_di_studi
+label: Paragrafo piano di studi
 migration_group: scuola_demo
 migration_tags:
   - json
   - scuola
   - demo
   - demo_paragraph
-  - demo_paragraph_call_to_action
+  - demo_paragraph_piano_di_studi
 
 source:
   plugin: url
@@ -30,7 +30,7 @@ source:
   # track_changes: false
 
   urls:
-    - 'https://ouitoulia.github.io/krene/demo/paragraph_call_to_action.json'
+    - 'https://ouitoulia.github.io/krene/demo/paragraph_piano_di_studi.json'
 
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
@@ -44,15 +44,21 @@ source:
       selector: type
 
     # Campi
-    - name: azione
-      label: "L'azione collegata alla tassonomia"
-      selector: relationships/azione/data/id
-    - name: call_to_action
-      label: "L'URL target dell'azione"
-      selector: attributes/call_to_action
-    - name: icon_name
-      label: "L'icona da associare"
-      selector: attributes/icon_name
+    - name: tipo_periodo
+      label: "Il tipo di periodo"
+      selector: attributes/tipo_periodo
+    - name: periodo
+      label: "Il periodo"
+      selector: attributes/periodo
+    - name: kicker
+      label: "L'intestazione'"
+      selector: attributes/kicker
+    - name: text
+      label: "Le note"
+      selector: attributes/text
+    - name: piano_di_studi_item
+      label: "I paragrafi piano di studi item collegati"
+      selector: relationships/piano_di_studi_item/data/paragraph
 
     # Footer
     - name: language
@@ -68,12 +74,20 @@ process:
   type: type
 
   # Campi
-  field_azione: azione
-  field_call_to_action:
-    plugin: skip_on_empty
-    source: call_to_action
-    method: process
-  field_icon_name: icon_name
+  field_tipo_periodo: tipo_periodo
+  field_periodo: periodo
+  field_kicker: kicker
+  field_text: text
+  _piano_di_studi_item:
+    plugin: migration_lookup
+    migration: demo_paragraph_piano_di_studi_item
+    source: piano_di_studi_item
+  field_piano_di_studi_item:
+    plugin: sub_process
+    source: '@_piano_di_studi_item'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
 
   # Footer
   langcode:
@@ -83,11 +97,12 @@ process:
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
-  default_bundle: call_to_action
+  default_bundle: piano_di_studi
 
 migration_dependencies:
   required:
     - taxonomy_common
+    - piano_di_studi_item
 
 dependencies:
   enforced:

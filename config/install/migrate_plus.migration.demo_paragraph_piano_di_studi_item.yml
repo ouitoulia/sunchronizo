@@ -1,12 +1,12 @@
-id: demo_paragraph_call_to_action
-label: Paragrafo Call to action
+id: demo_paragraph_piano_di_studi_item
+label: Paragrafo piano di studi item
 migration_group: scuola_demo
 migration_tags:
   - json
   - scuola
   - demo
   - demo_paragraph
-  - demo_paragraph_call_to_action
+  - demo_paragraph_piano_di_studi_item
 
 source:
   plugin: url
@@ -30,7 +30,7 @@ source:
   # track_changes: false
 
   urls:
-    - 'https://ouitoulia.github.io/krene/demo/paragraph_call_to_action.json'
+    - 'https://ouitoulia.github.io/krene/demo/paragraph_piano_di_studi_item.json'
 
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
@@ -44,15 +44,15 @@ source:
       selector: type
 
     # Campi
-    - name: azione
-      label: "L'azione collegata alla tassonomia"
-      selector: relationships/azione/data/id
-    - name: call_to_action
-      label: "L'URL target dell'azione"
-      selector: attributes/call_to_action
-    - name: icon_name
-      label: "L'icona da associare"
-      selector: attributes/icon_name
+    - name: materia
+      label: "La materia collegata alla tassonomia"
+      selector: relationships/materia/data/id
+    - name: ore_settimanali
+      label: "Le ore settimanali"
+      selector: attributes/ore_settimanali
+    - name: monte_ore
+      label: "Il monte ore annuale"
+      selector: attributes/monte_ore
 
     # Footer
     - name: language
@@ -68,12 +68,9 @@ process:
   type: type
 
   # Campi
-  field_azione: azione
-  field_call_to_action:
-    plugin: skip_on_empty
-    source: call_to_action
-    method: process
-  field_icon_name: icon_name
+  field_materia: materia
+  field_ore_settimanali: ore_settimanali
+  field_monte_ore: monte_ore
 
   # Footer
   langcode:
@@ -83,7 +80,7 @@ process:
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
-  default_bundle: call_to_action
+  default_bundle: piano_di_studi_item
 
 migration_dependencies:
   required:
