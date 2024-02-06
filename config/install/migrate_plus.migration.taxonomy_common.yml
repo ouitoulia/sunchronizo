@@ -38,6 +38,7 @@ source:
     - 'https://ouitoulia.github.io/krene/taxonomy/destinatari.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/destinazione_uso.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/ruoli_persona.json'
+    - 'https://ouitoulia.github.io/krene/taxonomy/stato_progetti.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_autenticazioni.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_eventi.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_incarichi.json'
