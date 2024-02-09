@@ -1,0 +1,214 @@
+id: demo_scheda_didattica
+label: Tipo di contenuto Scheda didattica
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - demo
+  - demo_node
+  - demo_scheda_didattica
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/scheda_didattica.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: nid
+      label: 'ID del nodo'
+      selector: id
+    - name: type
+      label: 'Il tipo di contenuto'
+      selector: type
+    - name: title
+      label: 'Il titolo del contenuto'
+      selector: attributes/titolo
+
+    # Scheda "Apertura"
+    - name: grado_di_istruzione
+      label: "Il livello"
+      selector: relationships/grado_di_istruzione/data/id
+    - name: abstract
+      label: 'Descrizione breve'
+      selector: attributes/abstract
+    - name: persona_responsabile
+      label: 'Insegnanti'
+      selector: relationships/persona_responsabile/data
+    - name: materie
+      label: 'Le materie che insegna la persona'
+      selector: relationships/materie/data
+    - name: copertina
+      label: 'Logo o immagine del percorso'
+      selector: relationships/copertina/data/id
+    - name: argomenti
+      label: 'Argomenti'
+      selector: relationships/argomenti/data
+
+    # Scheda "Obiettivi"
+    - name: obiettivi
+      label: "Obiettivi della scheda"
+      selector: attributes/obiettivi
+    - name: competenze
+      label: 'Competenze'
+      selector: relationships/competenze/data
+    - name: durata
+      label: "Tempo di apprendimento"
+      selector: attributes/durata
+
+    # Scheda "Argomento"
+
+    # Scheda "Attività"
+    - name: descrizione_attivita
+      label: "Tempo di apprendimento"
+      selector: attributes/descrizione_attivita
+
+    # Footer
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: attributes/language
+    - name: published
+      label: 'Se il contenuto è pubblicato o meno'
+      selector: attributes/published
+
+  ids:
+    nid:
+      type: integer
+
+process:
+  nid: nid
+  uid:
+    plugin: default_value
+    default_value: 1
+  type: type
+  title: title
+
+  # Scheda "Apertura"
+  field_grado_di_istruzione: grado_di_istruzione
+  field_abstract: abstract
+  field_persona_responsabile:
+    - plugin: skip_on_empty
+      source: persona_responsabile
+      method: process
+    - plugin: sub_process
+      source: persona_responsabile
+      process:
+        target_id: id
+  field_materie:
+    - plugin: skip_on_empty
+      source: materie
+      method: process
+    - plugin: sub_process
+      source: materie
+      process:
+        target_id: id
+  field_copertina:
+    plugin: skip_on_empty
+    source: copertina
+    method: process
+  field_argomenti:
+    - plugin: skip_on_empty
+      source: argomenti
+      method: process
+    - plugin: sub_process
+      source: argomenti
+      process:
+        target_id: id
+
+  # Scheda "Obiettivi"
+  field_obiettivi/value: obiettivi
+  field_a_cosa_serve/format:
+    - plugin: default_value
+      default_value: bootstrap_italia_2
+  field_competenze:
+    - plugin: skip_on_empty
+      source: competenze
+      method: process
+    - plugin: sub_process
+      source: competenze
+      process:
+        target_id: id
+  _calculate_duration:
+    - plugin: duration_calculate_duration
+      source: durata
+#    - plugin: log
+  _calculate_seconds:
+    - plugin: duration_calculate_seconds
+      source: durata
+#    - plugin: log
+  field_durata:
+    - plugin: skip_on_empty
+      source: durata
+      method: process
+    - plugin: sub_process
+      source: durata
+      process:
+        duration: '@_calculate_duration'
+        seconds: '@_calculate_seconds'
+#    - plugin: log
+#  field_durata/duration:
+#    - plugin: skip_on_empty
+#      source: '@_calculate_duration'
+#      method: process
+#    - plugin: log
+#  field_durata/seconds:
+#    - plugin: skip_on_empty
+#      source: '@_calculate_seconds'
+#      method: process
+#    - plugin: log
+
+  # Scheda "Argomento"
+
+  # Scheda "Attività"
+  body/value: descrizione_attivita
+  body/format:
+    - plugin: default_value
+      default_value: bootstrap_italia_2
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  status:
+    plugin: default_value
+    source: published
+    default_value: 0
+
+destination:
+  plugin: entity:node
+  default_bundle: scheda_didattica
+  translations: true
+
+migration_dependencies:
+  required:
+    - taxonomy_common
+    - demo_media
+    - demo_persona
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+
