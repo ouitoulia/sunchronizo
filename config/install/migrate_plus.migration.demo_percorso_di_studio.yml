@@ -61,7 +61,7 @@ source:
       selector: attributes/abstract
     - name: struttura_didattica
       label: 'La struttura didattica responsabile del percorso di studio'
-      selector: relationships/struttura_didattica/data
+      selector: relationships/struttura_didattica/data/id
 
     # Scheda "Co'è e cosa serve"
     - name: cosa_e
@@ -134,14 +134,7 @@ process:
     source: copertina
     method: process
   field_abstract: abstract
-  field_struttura_didattica:
-    - plugin: skip_on_empty
-      source: struttura_didattica
-      method: process
-    - plugin: sub_process
-      source: struttura_didattica
-      process:
-        target_id: id
+  field_struttura_didattica: struttura_didattica
 
   # Scheda "Co'è e cosa serve"
   field_cosa_e:
