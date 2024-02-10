@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-02-09
-version: '1.12.0'
+# Information added by GitHub Action packaging script on 2024-02-10
+version: '1.13.0'
 project: 'Sunchronizo'
-datestamp: 1707469886
-message: ' add demo scheda didattica'
+datestamp: 1707545043
+message: ' fix bug percorso di studio path'
