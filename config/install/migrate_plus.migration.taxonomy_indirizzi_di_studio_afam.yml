@@ -1,11 +1,11 @@
-id: taxonomy_percorsi_di_studio_secondaria_primo_grado
-label: Voci di tassonomia percorsi di studio secondaria di primo grado
+id: taxonomy_indirizzi_di_studio_afam
+label: Voci di tassonomia indirizzi di studio afam
 migration_group: scuola_taxonomy
 migration_tags:
   - json
-  - scuola
+  - afam
   - taxonomy
-  - percorsi_di_studio
+  - indirizzi_di_studio
 
 source:
   plugin: url
@@ -29,7 +29,7 @@ source:
   # track_changes: false
 
   urls:
-    - 'https://ouitoulia.github.io/krene/taxonomy/percorsi_di_studio/secondaria_primo_grado.json'
+    - 'https://ouitoulia.github.io/krene/taxonomy/indirizzi_di_studio/afam.json'
 
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
@@ -67,7 +67,7 @@ process:
       method: process
       source: parent_id
     - plugin: migration_lookup
-      migration: taxonomy_percorsi_di_studio_secondaria_primo_grado
+      migration: taxonomy_indirizzi_di_studio_afam
   parent:
     plugin: default_value
     default_value: 0

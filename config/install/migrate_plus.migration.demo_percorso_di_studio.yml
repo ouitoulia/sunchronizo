@@ -45,9 +45,9 @@ source:
     - name: title
       label: 'Il titolo del contenuto'
       selector: attributes/titolo_indirizzo_di_studio
-    - name: percorso_di_studio
+    - name: indirizzo_di_studio
       label: "Categoria dell'indirizzo di studio"
-      selector: relationships/percorso_di_studio/data/id
+      selector: relationships/indirizzo_di_studio/data/id
     - name: grado_di_istruzione
       label: "Il grado d'istruzione"
       selector: relationships/grado_di_istruzione/data/id
@@ -125,7 +125,7 @@ process:
     default_value: 1
   type: type
   title: title
-  field_percorso_di_studio: percorso_di_studio
+  field_indirizzo_di_studio: indirizzo_di_studio
   field_grado_di_istruzione: grado_di_istruzione
 
   # Scheda "Apertura"
