@@ -1,0 +1,180 @@
+id: demo_classe
+label: Tipo di contenuto Classe
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - demo
+  - demo_node
+  - demo_classe
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/classe.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: nid
+      label: 'ID del nodo'
+      selector: id
+    - name: type
+      label: 'Il tipo di contenuto'
+      selector: type
+    - name: title
+      label: 'Il titolo del contenuto'
+      selector: attributes/nome
+
+    # Apertura
+    - name: annualita_classe
+      label: "L'anno di corso"
+      selector: attributes/annualita_classe
+    - name: sezione
+      label: "L'anno di corso"
+      selector: attributes/sezione
+    - name: struttura_didattica
+      label: 'Struttura didattica / Nome della scuola'
+      selector: relationships/struttura_didattica/data/id
+    - name: percorso_di_studio
+      label: 'Percorso di studio'
+      selector: relationships/percorso_di_studio/data/id
+    - name: anno_scolastico
+      label: 'Anno scolastico'
+      selector: relationships/anno_scolastico/data/id
+
+    # Persone
+    - name: rappresentanti_genitori
+      label: 'Rappresentati dei genitori'
+      selector: attributes/rappresentanti_genitori
+    - name: rappresentanti_alunni
+      label: 'Rappresentati degli alunni'
+      selector: attributes/rappresentanti_alunni
+    - name: persona_responsabile
+      label: "Coordinatore di classe"
+      selector: relationships/persona_responsabile/data
+    - name: persone
+      label: "Insegnanti"
+      selector: relationships/persone/data
+
+    - name: orario_lezioni
+      label: 'Orario delle lezioni'
+      selector: relationships/orario_lezioni/data/id
+
+    # Footer
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: attributes/language
+    - name: published
+      label: 'Se il contenuto è pubblicato o meno'
+      selector: attributes/published
+
+  ids:
+    nid:
+      type: integer
+
+process:
+  nid: nid
+  uid:
+    plugin: default_value
+    default_value: 1
+  type: type
+  title: title
+
+  # Apertura
+  field_annualita_classe:
+    plugin: skip_on_empty
+    source: annualita_classe
+    method: process
+  field_sezione:
+    plugin: skip_on_empty
+    source: sezione
+    method: process
+  field_struttura_didattica:
+    plugin: skip_on_empty
+    source: struttura_didattica
+    method: process
+  field_percorso_di_studio:
+    plugin: skip_on_empty
+    source: percorso_di_studio
+    method: process
+  field_anno_scolastico:
+    plugin: skip_on_empty
+    source: anno_scolastico
+    method: process
+
+  # Persone
+  field_rappresentanti_genitori:
+    plugin: skip_on_empty
+    source: rappresentanti_genitori
+    method: process
+  field_rappresentanti_alunni:
+    plugin: skip_on_empty
+    source: rappresentanti_alunni
+    method: process
+  field_persona_responsabile:
+    plugin: skip_on_empty
+    source: persona_responsabile
+    method: process
+  field_persone:
+    - plugin: skip_on_empty
+      source: persone
+      method: process
+    - plugin: sub_process
+      source: persone
+      process:
+        target_id: id
+  field_orario_lezioni:
+    plugin: skip_on_empty
+    source: orario_lezioni
+    method: process
+
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  status:
+    plugin: default_value
+    source: published
+    default_value: 0
+
+destination:
+  plugin: entity:node
+  default_bundle: classe
+  translations: true
+
+migration_dependencies:
+  required:
+    - taxonomy_common
+    - demo_media
+    - demo_struttura_organizzativa
+    - demo_percorso_di_studio
+    - demo_persona
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+
