@@ -133,9 +133,13 @@ process:
     source: rappresentanti_alunni
     method: process
   field_persona_responsabile:
-    plugin: skip_on_empty
-    source: persona_responsabile
-    method: process
+    - plugin: skip_on_empty
+      source: persona_responsabile
+      method: process
+    - plugin: sub_process
+      source: persona_responsabile
+      process:
+        target_id: id
   field_persone:
     - plugin: skip_on_empty
       source: persone
