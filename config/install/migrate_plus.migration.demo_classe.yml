@@ -64,18 +64,18 @@ source:
       selector: relationships/anno_scolastico/data/id
 
     # Persone
-    - name: rappresentanti_genitori
-      label: 'Rappresentati dei genitori'
-      selector: attributes/rappresentanti_genitori
-    - name: rappresentanti_alunni
-      label: 'Rappresentati degli alunni'
-      selector: attributes/rappresentanti_alunni
     - name: persona_responsabile
       label: "Coordinatore di classe"
       selector: relationships/persona_responsabile/data
     - name: persone
       label: "Insegnanti"
       selector: relationships/persone/data
+    - name: rappresentanti_genitori
+      label: 'Rappresentati dei genitori'
+      selector: attributes/rappresentanti_genitori
+    - name: rappresentanti_alunni
+      label: 'Rappresentati degli alunni'
+      selector: attributes/rappresentanti_alunni
 
     - name: orario_lezioni
       label: 'Orario delle lezioni'
