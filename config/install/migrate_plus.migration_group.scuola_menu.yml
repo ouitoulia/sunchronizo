@@ -1,0 +1,8 @@
+id: scuola_menu
+label: Scuola - Menu
+description: Gruppo di migrazioni che importa i menu.
+source_type: JSON
+dependencies:
+  enforced:
+    module:
+      - sunchronizo

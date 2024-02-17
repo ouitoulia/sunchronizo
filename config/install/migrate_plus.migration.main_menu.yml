@@ -1,0 +1,150 @@
+id: main_menu
+label: Main menu
+migration_group: scuola_menu
+migration_tags:
+  - json
+  - scuola
+  - menu
+  - main_menu
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/menu/main.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    # menu_link_content
+    - name: id
+      label: 'ID item del menu'
+      selector: id
+    - name: uuid
+      label: 'UUID item del menu'
+      selector: uuid
+    - name: langcode
+      label: 'La lingua della voce'
+      selector: langcode
+
+    # menu_link_content_data
+    - name: label
+      label: 'La label'
+      selector: attributes/label
+    - name: description
+      label: 'La label'
+      selector: attributes/description
+    - name: type
+      label: 'Nome macchina del menu'
+      selector: attributes/type
+    - name: link_uri
+      label: 'Il campo uri'
+      selector: link/uri
+    - name: link_title
+      label: 'Attributo title del tag'
+      selector: link/title
+    - name: link_options
+      label: 'Gli attributi del tag'
+      selector: link/options
+    - name: weight
+      label: 'Peso posizione'
+      selector: attributes/weight
+    - name: expanded
+      label: 'Se la voce deve essere espansa'
+      selector: attributes/expanded
+    - name: parent
+      label: "L'eventuale voce genitore"
+      selector: parent/uuid
+
+  ids:
+    id:
+      type: integer
+
+process:
+  # menu_link_content
+  id: id
+  bundle:
+    - plugin: default_value
+      default_value: 'menu_link_content'
+  uuid: uuid
+  langcode: langcode
+
+  # menu_link_content_data
+  enabled:
+    - plugin: default_value
+      default_value: 1
+  title: label
+  description:
+    - plugin: skip_on_empty
+      source: description
+      method: process
+  menu_name:
+    - plugin: get
+      source: type
+  link/uri:
+    - plugin: get
+      source: link_uri
+  link/title:
+    - plugin: skip_on_empty
+      source: link_title
+      method: process
+    - plugin: get
+      source: link_title
+  link/options:
+    - plugin: skip_on_empty
+      source: link_options
+      method: process
+    - plugin: get
+      source: link_options
+  external:
+    plugin: default_value
+    default_value: 0
+  weight:
+    - plugin: get
+      source: weight
+  expanded:
+    - plugin: skip_on_empty
+      source: expanded
+      method: process
+  parent:
+    - plugin: skip_on_empty
+      source: parent
+      method: process
+    - plugin: concat
+      source:
+        - '@bundle'
+        - parent
+      delimiter: ':'
+
+  default_langcode:
+    - plugin: default_value
+      default_value: 1
+
+destination:
+  plugin: entity:menu_link_content
+#  no_stub: true
+migration_dependencies: {}
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
