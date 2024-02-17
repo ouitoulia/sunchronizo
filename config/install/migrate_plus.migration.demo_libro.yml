@@ -1,0 +1,139 @@
+id: demo_libro
+label: Tipo di contenuto Libro
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - demo
+  - demo_node
+  - demo_libro
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/libro.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: nid
+      label: 'ID del nodo'
+      selector: id
+    - name: type
+      label: 'Il tipo di contenuto'
+      selector: type
+    - name: title
+      label: 'Il titolo del libro'
+      selector: attributes/titolo
+
+    # Campi
+    - name: abstract
+      label: 'Descrizione breve'
+      selector: attributes/abstract
+    - name: copertina
+      label: 'Immagine di copertina'
+      selector: relationships/copertina/data/id
+    - name: autori
+      label: 'Gli autori'
+      selector: relationships/autori/data
+    - name: editori
+      label: 'Gli editori'
+      selector: relationships/editori/data
+    - name: isbn
+      label: 'Il codice ISBN'
+      selector: attributes/isbn
+    - name: body
+      label: 'Descrizione estesa'
+      selector: attributes/descrizione_estesa
+    - name: tipologia_libro
+      label: 'La tipologia del libro'
+      selector: relationships/tipologia_libro/data/id
+
+    # Footer
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: attributes/language
+    - name: published
+      label: 'Se il contenuto è pubblicato o meno'
+      selector: attributes/published
+
+  ids:
+    nid:
+      type: integer
+
+process:
+  nid: nid
+  uid:
+    plugin: default_value
+    default_value: 1
+  type: type
+  title: title
+
+  # Campi
+  field_abstract: abstract
+  field_copertina: copertina
+  field_autori:
+    - plugin: skip_on_empty
+      source: autori
+      method: process
+    - plugin: sub_process
+      source: autori
+      process:
+        target_id: id
+  field_editori:
+    - plugin: skip_on_empty
+      source: editori
+      method: process
+    - plugin: sub_process
+      source: editori
+      process:
+        target_id: id
+  field_isbn: isbn
+  body/value: body
+  field_tipologia_libro: tipologia_libro
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  status:
+    plugin: default_value
+    source: published
+    default_value: 0
+
+destination:
+  plugin: entity:node
+  default_bundle: libro
+  translations: true
+
+migration_dependencies:
+  required:
+    - demo_taxonomy
+    - demo_media
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+
