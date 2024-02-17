@@ -5,7 +5,6 @@ migration_tags:
   - json
   - scuola
   - taxonomy
-  - taxonomy_common
 
 source:
   plugin: url
@@ -33,16 +32,19 @@ source:
     - 'https://ouitoulia.github.io/krene/taxonomy/argomenti.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/attributi_dei_luoghi.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/azioni.json'
+    - 'https://ouitoulia.github.io/krene/taxonomy/autori.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/competenze.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/cosa_serve.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/destinatari.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/destinazione_uso.json'
+    - 'https://ouitoulia.github.io/krene/taxonomy/editori.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/ruoli_persona.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/stato_progetti.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_autenticazioni.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_eventi.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_incarichi.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_istituti.json'
+    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_libri.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_licenze.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_luoghi.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_posti.json'

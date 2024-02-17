@@ -273,9 +273,8 @@ destination:
 
 migration_dependencies:
   required:
-    - taxonomy_common
-    - demo_media
     - demo_taxonomy
+    - demo_media
     - demo_partner
 
 dependencies:

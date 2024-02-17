@@ -87,7 +87,7 @@ destination:
 
 migration_dependencies:
   required:
-    - taxonomy_common
+    - demo_taxonomy
 
 dependencies:
   enforced:

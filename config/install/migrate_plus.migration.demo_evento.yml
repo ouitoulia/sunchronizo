@@ -281,7 +281,7 @@ destination:
 
 migration_dependencies:
   required:
-    - taxonomy_common
+    - demo_taxonomy
     - demo_media
     - demo_persona
     - demo_luoghi

@@ -5,7 +5,7 @@ migration_tags:
   - json
   - scuola
   - demo
-  - taxonomy_demo
+  - demo_taxonomy
 
 source:
   plugin: url
@@ -30,6 +30,7 @@ source:
 
   urls:
     - 'https://ouitoulia.github.io/krene/demo/argomenti.json'
+    - 'https://ouitoulia.github.io/krene/demo/autori_editori.json'
 
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
@@ -91,7 +92,9 @@ process:
 destination:
   plugin: entity:taxonomy_term
 
-migration_dependencies: {  }
+migration_dependencies:
+  required:
+    - scuola_taxonomy.taxonomy_common
 
 dependencies:
   enforced:

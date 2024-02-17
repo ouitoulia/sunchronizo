@@ -198,7 +198,7 @@ destination:
 
 migration_dependencies:
   required:
-    - taxonomy_common
+    - demo_taxonomy
     - taxonomy_materie_secondaria_primo_grado
     - taxonomy_materie_secondaria_secondo_grado
 
