@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-02-17
-version: '2.3.0'
+version: '2.3.1'
 project: 'Sunchronizo'
-datestamp: 1708183672
-message: ' review migration pipeline'
+datestamp: 1708187261
+message: ' add demo libro'
