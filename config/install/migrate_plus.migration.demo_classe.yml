@@ -46,7 +46,7 @@ source:
       label: 'Il titolo del contenuto'
       selector: attributes/nome
 
-    # Apertura
+    # Scheda apertura
     - name: annualita_classe
       label: "L'anno di corso"
       selector: attributes/annualita_classe
@@ -63,7 +63,7 @@ source:
       label: 'Anno scolastico'
       selector: relationships/anno_scolastico/data/id
 
-    # Persone
+    # Scheda persone
     - name: persona_responsabile
       label: "Coordinatore di classe"
       selector: relationships/persona_responsabile/data
@@ -77,9 +77,13 @@ source:
       label: 'Rappresentati degli alunni'
       selector: attributes/rappresentanti_alunni
 
+    # Scheda orario e libri di testo
     - name: orario_lezioni
       label: 'Orario delle lezioni'
       selector: relationships/orario_lezioni/data/id
+    - name: libri_di_testo
+      label: 'Orario delle lezioni'
+      selector: relationships/libri_di_testo/data
 
     # Footer
     - name: language
@@ -101,7 +105,7 @@ process:
   type: type
   title: title
 
-  # Apertura
+  # Scheda apertura
   field_annualita_classe:
     plugin: skip_on_empty
     source: annualita_classe
@@ -123,7 +127,7 @@ process:
     source: anno_scolastico
     method: process
 
-  # Persone
+  # Scheda persone
   field_rappresentanti_genitori:
     plugin: skip_on_empty
     source: rappresentanti_genitori
@@ -148,11 +152,20 @@ process:
       source: persone
       process:
         target_id: id
+
+  # Scheda orario e libri di testo
   field_orario_lezioni:
     plugin: skip_on_empty
     source: orario_lezioni
     method: process
-
+  field_libri_di_testo:
+    - plugin: skip_on_empty
+      source: libri_di_testo
+      method: process
+    - plugin: sub_process
+      source: libri_di_testo
+      process:
+        target_id: id
 
   # Footer
   langcode:
