@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-02-18
-version: '2.3.2'
+version: '2.3.3'
 project: 'Sunchronizo'
-datestamp: 1708251422
-message: ' add libri_di_testo to classe'
+datestamp: 1708291881
+message: ' taxonomy tipologia_strutture uuid for views filter'
