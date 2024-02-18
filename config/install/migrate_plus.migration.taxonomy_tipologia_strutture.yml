@@ -1,5 +1,5 @@
-id: taxonomy_common
-label: Voci di tassonomia comuni a tutti i gradi di istruzione
+id: taxonomy_tipologia_strutture
+label: Voci di tassonomia con le tipologie di strutture
 migration_group: scuola_taxonomy
 migration_tags:
   - json
@@ -28,29 +28,7 @@ source:
   # track_changes: false
 
   urls:
-    - 'https://ouitoulia.github.io/krene/taxonomy/anni_scolastici.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/argomenti.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/attributi_dei_luoghi.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/azioni.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/autori.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/competenze.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/cosa_serve.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/destinatari.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/destinazione_uso.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/editori.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/ruoli_persona.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/stato_progetti.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_autenticazioni.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_eventi.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_incarichi.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_istituti.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_libri.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_licenze.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_luoghi.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_posti.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_progetti.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_servizi.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_supplenze.json'
+    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_strutture.json'
 
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
@@ -80,6 +58,9 @@ source:
     - name: parent_id
       label: 'Id del termine genitore della voce di tassonomia'
       selector: relationships/parent/data/id
+    - name: uuid
+      label: "L'UUID della voce"
+      selector: uuid
 
   ids:
     tid:
@@ -88,6 +69,7 @@ source:
 process:
   tid: tid
   vid: type
+  uuid: uuid
   name: name
   field_icona:
     plugin: skip_on_empty
