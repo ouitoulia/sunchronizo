@@ -1,0 +1,331 @@
+id: demo_documento
+label: Tipo di contenuto Documento
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - demo
+  - demo_node
+  - demo_documento
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/documento.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: nid
+      label: 'ID del nodo'
+      selector: id
+    - name: type
+      label: 'Il tipo di contenuto'
+      selector: type
+    - name: title
+      label: 'Il titolo del libro'
+      selector: attributes/titolo
+
+    # Scheda apertura
+    - name: abstract
+      label: 'Descrizione breve'
+      selector: attributes/abstract
+    - name: argomenti
+      label: 'Argomenti'
+      selector: relationships/argomenti/data
+    - name: descrizione_estesa
+      label: 'Descrizione estesa'
+      selector: attributes/descrizione_estesa
+    - name: tipologia_documento
+      label: 'Tipologia del documento'
+      selector: relationships/tipologia_documento/data/id
+
+    # Scheda immagini
+    - name: copertina
+      label: 'Immagine in evidenza'
+      selector: relationships/copertina/data/id
+    - name: galleria_immagini
+      label: 'Galleria di immagini'
+      selector: relationships/galleria_immagini/data
+
+    # Scheda autori
+    - name: persone
+      label: 'Autore/i'
+      selector: relationships/persone/data
+
+    # Scheda allegati
+    - name: document
+      label: "Allegati"
+      selector: relationships/document
+    - name: link
+      label: "Riferimenti normativi"
+      selector: attributes/link
+
+    # Scheda archiviazione
+    - name: protocollo
+      label: "Numero di protocollo"
+      selector: attributes/protocollo
+    - name: data_ora_inizio
+      label: "Data di protocollo"
+      selector: attributes/data_ora_inizio
+    - name: cig
+      label: "CIG"
+      selector: attributes/cig
+    - name: data_ora_fine
+      label: "Data di scadenza"
+      selector: attributes/data_ora_fine
+    - name: codice_identificativo
+      label: "Identificativo del documento"
+      selector: attributes/codice_identificativo
+    - name: data_oblio
+      label: "Oblio documento"
+      selector: attributes/data_oblio
+
+    # Scheda contenuti correlati
+    - name: servizi
+      label: 'Servizi correlati'
+      selector: relationships/servizi/data
+    - name: eventi
+      label: 'Eventi correlati'
+      selector: relationships/eventi/data
+    - name: progetti
+      label: 'Progetti correlati'
+      selector: relationships/progetti/data
+    - name: percorso_di_studio
+      label: 'Percorsi di studio correlati'
+      selector: relationships/percorso_di_studio/data
+    - name: notizie
+      label: 'Notizie correlate'
+      selector: relationships/notizie/data
+    - name: classi
+      label: 'Classi correlate'
+      selector: relationships/classi/data
+
+    # Scheda tempi e scadenze
+    - name: frequenza
+      label: "Frequenza di aggiornamento"
+      selector: attributes/frequenza
+
+    - name: struttura_responsabile
+      label: 'Strutture responsabili del documento'
+      selector: relationships/struttura_responsabile/data
+
+    # Footer
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: attributes/language
+    - name: published
+      label: 'Se il contenuto è pubblicato o meno'
+      selector: attributes/published
+
+  ids:
+    nid:
+      type: integer
+
+  constants:
+    documents_media_path: 'public://demo/documents/'
+
+process:
+  nid: nid
+  uid:
+    plugin: default_value
+    default_value: 1
+  type: type
+  title: title
+  _file_uid:
+    plugin: default_value
+    default_value: 1
+
+  # Scheda apertura
+  field_abstract: abstract
+  field_argomenti:
+    - plugin: skip_on_empty
+      source: argomenti
+      method: process
+    - plugin: sub_process
+      source: argomenti
+      process:
+        target_id: id
+  body/value:
+    - plugin: skip_on_empty
+      source: descrizione_estesa
+      method: process
+  body/format:
+    - plugin: default_value
+      default_value: bootstrap_italia_2
+  field_tipologia_documento: tipologia_documento
+
+  # Scheda immagini
+  field_copertina:
+    plugin: skip_on_empty
+    source: copertina
+    method: process
+  field_galleria_immagini:
+    - plugin: skip_on_empty
+      source: galleria_immagini
+      method: process
+    - plugin: sub_process
+      source: galleria_immagini
+      process:
+        target_id: id
+
+  # Scheda autori
+  field_persone:
+    - plugin: skip_on_empty
+      source: persone
+      method: process
+    - plugin: sub_process
+      source: persone
+      process:
+        target_id: id
+
+  # Scheda allegati
+  field_allegati/target_id:
+    plugin: file_import
+    source: document_url
+    destination: constants/documents_media_path
+    uid: '@_file_uid'
+    file_exists: 'replace'
+    skip_on_missing_source: true
+    id_only: true
+  field_allegati/description:
+    plugin: skip_on_empty
+    source: document/data/description
+    method: process
+  field_link:
+    plugin: skip_on_empty
+    source: link
+    method: process
+
+  # Scheda archiviazione
+  field_protocollo: protocollo
+  field_data_inizio:
+    plugin: skip_on_empty
+    source: data_ora_inizio
+    method: process
+  field_cig: cig
+  field_data_fine:
+    plugin: skip_on_empty
+    source: data_ora_fine
+    method: process
+  field_codice_identificativo: codice_identificativo
+  field_data_oblioe:
+    plugin: skip_on_empty
+    source: data_oblio
+    method: process
+
+  # Scheda contenuti correlati
+  field_servizio:
+    - plugin: skip_on_empty
+      source: servizi
+      method: process
+    - plugin: sub_process
+      source: servizi
+      process:
+        target_id: id
+  field_eventi:
+    - plugin: skip_on_empty
+      source: eventi
+      method: process
+    - plugin: sub_process
+      source: eventi
+      process:
+        target_id: id
+  field_progetti:
+    - plugin: skip_on_empty
+      source: progetti
+      method: process
+    - plugin: sub_process
+      source: progetti
+      process:
+        target_id: id
+  field_percorso_di_studio:
+    - plugin: skip_on_empty
+      source: percorso_di_studio
+      method: process
+    - plugin: sub_process
+      source: percorso_di_studio
+      process:
+        target_id: id
+  field_notizie:
+    - plugin: skip_on_empty
+      source: notizie
+      method: process
+    - plugin: sub_process
+      source: notizie
+      process:
+        target_id: id
+  field_classi:
+    - plugin: skip_on_empty
+      source: classi
+      method: process
+    - plugin: sub_process
+      source: classi
+      process:
+        target_id: id
+
+  # Scheda tempi e scadenze
+  field_frequenza: frequenza
+
+  field_struttura_responsabile:
+    - plugin: skip_on_empty
+      source: struttura_responsabile
+      method: process
+    - plugin: sub_process
+      source: struttura_responsabile
+      process:
+        target_id: id
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  status:
+    plugin: default_value
+    source: published
+    default_value: 0
+
+destination:
+  plugin: entity:node
+  default_bundle: documento
+  translations: true
+
+migration_dependencies:
+  required:
+    - demo_taxonomy
+    - demo_media
+    - demo_persone
+    - demo_struttura_organizzativa
+    - demo_servizio
+    - demo_evento
+    - demo_progetto
+    - demo_percorso_di_studio
+    - demo_notizie
+    - demo_classi
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+
