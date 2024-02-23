@@ -29,6 +29,7 @@ source:
 
   urls:
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_libri.json'
+    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_licenze.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_strutture.json'
 
   # An xpath-like selector corresponding to the items to be imported.
