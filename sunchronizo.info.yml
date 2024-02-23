@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-02-23
-version: '2.5.1'
+version: '2.6.0'
 project: 'Sunchronizo'
-datestamp: 1708700003
-message: ' fix missing term in views'
+datestamp: 1708725649
+message: ' add demo documento'
