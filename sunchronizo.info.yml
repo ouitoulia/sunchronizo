@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-02-22
-version: '2.4.0'
+# Information added by GitHub Action packaging script on 2024-02-23
+version: '2.5.0'
 project: 'Sunchronizo'
-datestamp: 1708637365
-message: ' add tipologia_documenti vocabulary'
+datestamp: 1708675137
+message: ' fix missing term in views'
