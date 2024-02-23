@@ -45,7 +45,6 @@ source:
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_eventi.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_incarichi.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_istituti.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_libri.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_licenze.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_luoghi.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_posti.json'

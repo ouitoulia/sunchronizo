@@ -1,5 +1,5 @@
-id: taxonomy_tipologia_strutture
-label: Voci di tassonomia con le tipologie di strutture
+id: taxonomy_common_uuid
+label: Voci di tassonomia comuni con uuid obbligatorio
 migration_group: scuola_taxonomy
 migration_tags:
   - json
@@ -28,6 +28,7 @@ source:
   # track_changes: false
 
   urls:
+    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_libri.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_strutture.json'
 
   # An xpath-like selector corresponding to the items to be imported.
