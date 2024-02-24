@@ -74,8 +74,11 @@ source:
       selector: relationships/persone/data
 
     # Scheda allegati
+    - name: document_url
+      label: "URL del documento"
+      selector: relationships/document/data/url
     - name: document
-      label: "Allegati"
+      label: "I metadata del documento"
       selector: relationships/document
     - name: link
       label: "Riferimenti normativi"
