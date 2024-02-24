@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-02-24
-version: '2.6.2'
+version: '2.6.3'
 project: 'Sunchronizo'
-datestamp: 1708783393
-message: ' uuid taxonomies'
+datestamp: 1708786418
+message: ' fix uuid taxonomies'
