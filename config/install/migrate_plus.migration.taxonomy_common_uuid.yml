@@ -106,7 +106,7 @@ process:
       source: parent_id
       method: process
     - plugin: migration_lookup
-      migration: taxonomy_common
+      migration: taxonomy_common_uuid
   parent:
     plugin: default_value
     default_value: 0
