@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-02-23
-version: '2.6.0'
+# Information added by GitHub Action packaging script on 2024-02-24
+version: '2.6.1'
 project: 'Sunchronizo'
-datestamp: 1708725649
-message: ' add demo documento'
+datestamp: 1708755603
+message: ' fix import document'
