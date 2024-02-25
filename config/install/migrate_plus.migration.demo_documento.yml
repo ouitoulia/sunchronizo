@@ -232,7 +232,7 @@ process:
     source: data_ora_fine
     method: process
   field_codice_identificativo: codice_identificativo
-  field_data_oblioe:
+  field_data_oblio:
     plugin: skip_on_empty
     source: data_oblio
     method: process
