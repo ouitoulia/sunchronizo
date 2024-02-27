@@ -57,6 +57,9 @@ source:
     - name: parent_id
       label: 'Id del termine genitore della voce di tassonomia'
       selector: relationships/parent/data/id
+    - name: uuid
+      label: "L'UUID della voce"
+      selector: uuid
 
   ids:
     tid:
@@ -65,6 +68,7 @@ source:
 process:
   tid: tid
   vid: type
+  uuid: uuid
   name: name
   field_miur_class_id: miur_class_id
   parent_id:
