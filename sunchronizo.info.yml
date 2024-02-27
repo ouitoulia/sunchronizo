@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-02-25
-version: '2.6.4'
+# Information added by GitHub Action packaging script on 2024-02-27
+version: '2.6.6'
 project: 'Sunchronizo'
-datestamp: 1708850340
-message: ' fix typo in documento demo migration'
+datestamp: 1709022241
+message: ' taxonomy uuid for percorsi_di_studio and materie'
