@@ -83,6 +83,9 @@ source:
     - name: uuid
       label: "L'UUID della voce"
       selector: uuid
+    - name: published
+      label: 'Se la voce è pubblicata o meno'
+      selector: attributes/published
 
   ids:
     tid:
@@ -91,7 +94,10 @@ source:
 process:
   tid: tid
   vid: type
-  uuid: uuid
+  uuid:
+    plugin: skip_on_empty
+    source: uuid
+    method: process
   name: name
   field_icona:
     plugin: skip_on_empty
@@ -122,6 +128,10 @@ process:
   description/format:
     - plugin: default_value
       default_value: bootstrap_italia_2
+  status:
+    plugin: default_value
+    source: published
+    default_value: 1
 
 destination:
   plugin: entity:taxonomy_term

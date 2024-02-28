@@ -59,6 +59,9 @@ source:
     - name: parent_id
       label: 'Id del termine genitore della voce di tassonomia'
       selector: relationships/parent/data/id
+    - name: published
+      label: 'Se la voce è pubblicata o meno'
+      selector: attributes/published
 
   ids:
     tid:
@@ -97,6 +100,10 @@ process:
   description/format:
     - plugin: default_value
       default_value: bootstrap_italia_2
+  status:
+    plugin: default_value
+    source: published
+    default_value: 1
 
 destination:
   plugin: entity:taxonomy_term
