@@ -79,6 +79,10 @@ source:
 
     # Scheda "Argomento"
 
+    - name: libri_di_testo
+      label: 'Orario delle lezioni'
+      selector: relationships/libri_di_testo/data
+
     # Scheda "Attività"
     - name: descrizione_attivita
       label: "Tempo di apprendimento"
@@ -179,6 +183,15 @@ process:
 #    - plugin: log
 
   # Scheda "Argomento"
+
+  field_libri_di_testo:
+    - plugin: skip_on_empty
+      source: libri_di_testo
+      method: process
+    - plugin: sub_process
+      source: libri_di_testo
+      process:
+        target_id: id
 
   # Scheda "Attività"
   body/value: descrizione_attivita
