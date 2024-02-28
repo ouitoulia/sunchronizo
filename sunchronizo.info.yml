@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-02-27
-version: '2.6.6'
+# Information added by GitHub Action packaging script on 2024-02-28
+version: '2.7.0'
 project: 'Sunchronizo'
-datestamp: 1709022241
-message: ' taxonomy uuid for percorsi_di_studio and materie'
+datestamp: 1709099899
+message: ' add circolare demo'
