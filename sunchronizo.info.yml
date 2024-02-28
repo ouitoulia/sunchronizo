@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-02-28
-version: '2.7.2'
+version: '2.7.3'
 project: 'Sunchronizo'
-datestamp: 1709113299
-message: ' add materiali_didattici field to demo libro'
+datestamp: 1709137746
+message: ' add status field to taxonomy common'
