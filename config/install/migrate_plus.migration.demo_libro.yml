@@ -68,6 +68,12 @@ source:
     - name: tipologia_libro
       label: 'La tipologia del libro'
       selector: relationships/tipologia_libro/data/id
+    - name: document_url
+      label: "URL del materiale didattico"
+      selector: relationships/document/data/url
+    - name: document
+      label: "I metadata del materiale didattico"
+      selector: relationships/document
 
     # Footer
     - name: language
@@ -81,6 +87,9 @@ source:
     nid:
       type: integer
 
+  constants:
+    documents_media_path: 'public://demo/documents/'
+
 process:
   nid: nid
   uid:
@@ -88,6 +97,9 @@ process:
     default_value: 1
   type: type
   title: title
+  _file_uid:
+    plugin: default_value
+    default_value: 1
 
   # Campi
   field_abstract: abstract
@@ -111,6 +123,18 @@ process:
   field_isbn: isbn
   body/value: body
   field_tipologia_libro: tipologia_libro
+  field_materiali_didattici/target_id:
+    plugin: file_import
+    source: document_url
+    destination: constants/documents_media_path
+    uid: '@_file_uid'
+    file_exists: 'replace'
+    skip_on_missing_source: true
+    id_only: true
+  field_materiali_didattici/description:
+    plugin: skip_on_empty
+    source: document/data/description
+    method: process
 
   # Footer
   langcode:
