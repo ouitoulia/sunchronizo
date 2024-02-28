@@ -1,0 +1,181 @@
+id: demo_circolare
+label: Tipo di contenuto Circolare
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - demo
+  - demo_node
+  - demo_circolare
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/circolare.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: nid
+      label: 'ID del nodo'
+      selector: id
+    - name: type
+      label: 'Il tipo di contenuto'
+      selector: type
+    - name: title
+      label: 'Il titolo del libro'
+      selector: attributes/titolo
+    - name: numero_circolare
+      label: 'Il numero della circolare'
+      selector: attributes/numero_circolare
+    - name: anno_scolastico
+      label: 'Anno scolastico'
+      selector: relationships/anno_scolastico/data/id
+
+    # Scheda apertura
+    - name: abstract
+      label: 'Oggetto della circolare'
+      selector: attributes/abstract
+    - name: argomenti
+      label: 'Argomenti'
+      selector: relationships/argomenti/data
+    - name: destinatari
+      label: 'Destinatari circolare'
+      selector: relationships/destinatari/data
+
+    # Scheda allegati e riferimenti
+    - name: data_oblio
+      label: "Oblio documento"
+      selector: attributes/data_oblio
+    - name: eventi
+      label: 'Eventi correlati'
+      selector: relationships/eventi/data
+
+
+    - name: testo_circolare
+      label: 'Testo della circolare'
+      selector: attributes/testo_circolare
+    - name: persona_responsabile
+      label: 'Autori'
+      selector: relationships/persona_responsabile/data
+
+    # Footer
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: attributes/language
+    - name: published
+      label: 'Se il contenuto è pubblicato o meno'
+      selector: attributes/published
+
+  ids:
+    nid:
+      type: integer
+
+process:
+  nid: nid
+  uid:
+    plugin: default_value
+    default_value: 1
+  type: type
+  title: title
+  field_numero_circolare: numero_circolare
+  field_anno_scolastico:
+    plugin: skip_on_empty
+    source: anno_scolastico
+    method: process
+
+  # Scheda apertura
+  field_abstract: abstract
+  field_argomenti:
+    - plugin: skip_on_empty
+      source: argomenti
+      method: process
+    - plugin: sub_process
+      source: argomenti
+      process:
+        target_id: id
+  field_destinatari:
+    - plugin: skip_on_empty
+      source: destinatari
+      method: process
+    - plugin: sub_process
+      source: destinatari
+      process:
+        target_id: id
+
+  # Scheda allegati e riferimenti
+  field_data_oblio:
+    plugin: skip_on_empty
+    source: data_oblio
+    method: process
+  field_eventi:
+    - plugin: skip_on_empty
+      source: eventi
+      method: process
+    - plugin: sub_process
+      source: eventi
+      process:
+        target_id: id
+
+  body/value:
+    - plugin: skip_on_empty
+      source: testo_circolare
+      method: process
+  body/format:
+    - plugin: default_value
+      default_value: bootstrap_italia_2
+  field_persona_responsabile:
+    - plugin: skip_on_empty
+      source: persona_responsabile
+      method: process
+    - plugin: sub_process
+      source: persona_responsabile
+      process:
+        target_id: id
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+  status:
+    plugin: default_value
+    source: published
+    default_value: 0
+
+destination:
+  plugin: entity:node
+  default_bundle: circolare
+  translations: true
+
+migration_dependencies:
+  required:
+    - demo_taxonomy
+    - demo_persona
+    - demo_evento
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+
