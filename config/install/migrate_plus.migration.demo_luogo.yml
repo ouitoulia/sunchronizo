@@ -82,15 +82,20 @@ source:
     - name: orario_pubblico
       label: 'Gli orari di apertura del luogo'
       selector: attributes/orario_pubblico
-    - name: email
-      label: 'Email'
-      selector: attributes/email
-    - name: telefono
-      label: 'Telefono'
-      selector: attributes/telefono
     - name: attributi_luogo
       label: 'Modalità di accesso'
       selector: relationships/attributi_luogo/data
+
+    # Scheda contatti
+    - name: email
+      label: 'Email'
+      selector: attributes/email
+    - name: pec
+      label: 'PEC'
+      selector: attributes/pec
+    - name: telefono
+      label: 'Telefono'
+      selector: attributes/telefono
 
     # Scheda ulteriori informazioni
     - name: struttura_esterna
@@ -132,6 +137,23 @@ source:
     - name: volume
       label: "Volume"
       selector: attributes/volume
+
+    # Scheda sede legale
+    - name: sede_legale
+      label: "Indica se il luogo è la sede legale della scuola"
+      selector: attributes/sede_legale
+    - name: codice_meccanografico
+      label: "Il codice meccanografico"
+      selector: attributes/codice_meccanografico
+    - name: codice_fiscale
+      label: "Il codice fiscale della scuola"
+      selector: attributes/codice_fiscale
+    - name: ipa
+      label: "Il codice ipa"
+      selector: attributes/ipa
+    - name: codice_cuf
+      label: "Il codice unico di fatturazione"
+      selector: attributes/codice_cuf
 
     # Footer
     - name: language
@@ -216,8 +238,6 @@ process:
     plugin: skip_on_empty
     source: orario_pubblico
     method: process
-  field_email: email
-  field_telefono: telefono
   field_attributi_luogo:
     - plugin: skip_on_empty
       source: attributi_luogo
@@ -226,6 +246,20 @@ process:
       source: attributi_luogo
       process:
         target_id: id
+
+  # Scheda contatti
+  field_email:
+    plugin: skip_on_empty
+    source: email
+    method: process
+  field_telefono:
+    plugin: skip_on_empty
+    source: telefono
+    method: process
+  field_pec:
+    plugin: skip_on_empty
+    source: pec
+    method: process
 
   # Scheda ulteriori informazioni
   field_struttura_esterna:
@@ -236,13 +270,34 @@ process:
       source: struttura_esterna
       process:
         target_id: id
-  field_prenotabile: prenotabile
-  field_posti: posti
-  field_anno_costruzione: anno_costruzione
-  field_numero_piani: numero_piani
-  field_codice_identificativo: codice_identificativo
-  field_codice_catastale_comune: codice_catastale_comune
-  field_uso_scolastico: uso_scolastico
+  field_prenotabile:
+    plugin: skip_on_empty
+    source: prenotabile
+    method: process
+  field_posti:
+    plugin: skip_on_empty
+    source: posti
+    method: process
+  field_anno_costruzione:
+    plugin: skip_on_empty
+    source: anno_costruzione
+    method: process
+  field_numero_piani:
+    plugin: skip_on_empty
+    source: numero_piani
+    method: process
+  field_codice_identificativo:
+    plugin: skip_on_empty
+    source: codice_identificativo
+    method: process
+  field_codice_catastale_comune:
+    plugin: skip_on_empty
+    source: codice_catastale_comune
+    method: process
+  field_uso_scolastico:
+    plugin: skip_on_empty
+    source: uso_scolastico
+    method: process
   field_destinazione_uso:
     - plugin: skip_on_empty
       source: destinazione_uso
@@ -251,10 +306,44 @@ process:
       source: destinazione_uso
       process:
         target_id: id
-  field_anno_adattamento: anno_adattamento
-  field_superficie_area_totale: superficie_area_totale
-  field_superficie_area_libera: superficie_area_libera
-  field_volume: volume
+  field_anno_adattamento:
+    plugin: skip_on_empty
+    source: anno_adattamento
+    method: process
+  field_superficie_area_totale:
+    plugin: skip_on_empty
+    source: superficie_area_totale
+    method: process
+  field_superficie_area_libera:
+    plugin: skip_on_empty
+    source: superficie_area_libera
+    method: process
+  field_volume:
+    plugin: skip_on_empty
+    source: volume
+    method: process
+
+  # Scheda ulteriori informazioni
+  field_sede_legale:
+    plugin: skip_on_empty
+    source: sede_legale
+    method: process
+  field_codice_meccanografico:
+    plugin: skip_on_empty
+    source: codice_meccanografico
+    method: process
+  field_codice_fiscale:
+    plugin: skip_on_empty
+    source: codice_fiscale
+    method: process
+  field_ipa:
+    plugin: skip_on_empty
+    source: ipa
+    method: process
+  field_codice_cuf:
+    plugin: skip_on_empty
+    source: codice_cuf
+    method: process
 
   # Footer
   langcode:
