@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-03-01
-version: '2.7.4'
+# Information added by GitHub Action packaging script on 2024-03-03
+version: '2.8.0'
 project: 'Sunchronizo'
-datestamp: 1709300428
-message: ' update demo luogo'
+datestamp: 1709460537
+message: ' add menu migration'
