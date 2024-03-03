@@ -106,7 +106,13 @@ process:
     plugin: skip_on_empty
     source: copertina
     method: process
-  body/value: corpo
+  body/value:
+    plugin: skip_on_empty
+    source: corpo
+    method: process
+  body/format:
+    - plugin: default_value
+      default_value: bootstrap_italia_2
   field_persone:
     - plugin: skip_on_empty
       source: persone

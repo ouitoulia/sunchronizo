@@ -30,6 +30,7 @@ source:
 
   urls:
     - 'https://ouitoulia.github.io/krene/demo/link_esterni.json'
+    - 'https://ouitoulia.github.io/krene/demo/small_print.json'
 
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
@@ -142,7 +143,9 @@ process:
 destination:
   plugin: entity:menu_link_content
 #  no_stub: true
-migration_dependencies: {}
+migration_dependencies:
+  required:
+    - demo_page
 
 dependencies:
   enforced:

@@ -1,12 +1,12 @@
-id: demo_partner
-label: Tipo di contenuto Partner
+id: demo_page
+label: Tipo di contenuto Pagina Singola
 migration_group: scuola_demo
 migration_tags:
   - json
   - scuola
   - demo
   - demo_node
-  - demo_partner
+  - demo_page
 
 source:
   plugin: url
@@ -30,7 +30,7 @@ source:
   # track_changes: false
 
   urls:
-    - 'https://ouitoulia.github.io/krene/demo/partner.json'
+    - 'https://ouitoulia.github.io/krene/demo/page.json'
 
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
@@ -44,7 +44,7 @@ source:
       selector: type
     - name: title
       label: 'Il titolo del contenuto'
-      selector: attributes/nome
+      selector: attributes/titolo
 
     # Campi
     - name: copertina
@@ -56,21 +56,6 @@ source:
     - name: body
       label: 'Descrizione estesa'
       selector: attributes/descrizione_estesa
-    - name: email
-      label: 'Email'
-      selector: attributes/email
-    - name: telefono
-      label: 'Telefono'
-      selector: attributes/telefono
-    - name: indirizzo
-      label: 'Indirizzo del luogo'
-      selector: attributes/indirizzo
-    - name: coordinate_geografiche
-      label: 'Coordinate geografiche del luogo'
-      selector: attributes/coordinate_geografiche
-    - name: link
-      label: "Eventuali siti web del partner"
-      selector: attributes/link
 
     # Footer
     - name: language
@@ -102,40 +87,7 @@ process:
   body/format:
     - plugin: default_value
       default_value: bootstrap_italia_2
-  field_email: email
-  field_telefono: telefono
-  field_indirizzo:
-    - plugin: skip_on_empty
-      source: indirizzo
-      method: process
-    - plugin: sub_process
-      source: indirizzo
-      process:
-        country_code: nazione
-        administrative_area: provincia
-        locality: comune
-        postal_code: cap
-        address_line1: indirizzo
-  field_coordinate_geografiche:
-    - plugin: skip_on_empty
-      source: coordinate_geografiche
-      method: process
-    - plugin: sub_process
-      source: coordinate_geografiche
-      process:
-        value: value
-        geo_type: geo_type
-        lat: lat
-        lon: lon
-        left: left
-        top: top
-        right: right
-        bottom: bottom
-        geohash: geohash
-  field_link:
-    plugin: skip_on_empty
-    source: link
-    method: process
+
 
   # Footer
   langcode:
@@ -149,12 +101,11 @@ process:
 
 destination:
   plugin: entity:node
-  default_bundle: partner
+  default_bundle: page
   translations: true
 
 migration_dependencies:
   required:
-    - demo_taxonomy
     - demo_media
 
 dependencies:
