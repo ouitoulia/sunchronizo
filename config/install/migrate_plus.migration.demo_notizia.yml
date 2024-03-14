@@ -47,6 +47,9 @@ source:
       selector: attributes/titolo
 
     # Campi
+    - name: tipologia_notizia
+      label: 'Tipologia notizia'
+      selector: relationships/tipologia_notizia/data/id
     - name: abstract
       label: 'Descrizione breve'
       selector: attributes/abstract
@@ -93,6 +96,10 @@ process:
   title: title
 
   # Campi
+  field_tipologia_notizia:
+    plugin: skip_on_empty
+    source: tipologia_notizia
+    method: process
   field_abstract: abstract
   field_argomenti:
     - plugin: skip_on_empty
