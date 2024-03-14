@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-03-14
-version: '2.10.0'
+version: '2.10.1'
 project: 'Sunchronizo'
-datestamp: 1710414028
-message: ' add tipologia_notizie vocabulary'
+datestamp: 1710415234
+message: ' update demo_notizia with tipologia_notizie vocabulary'
