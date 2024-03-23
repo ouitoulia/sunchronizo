@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-03-14
-version: '2.10.1'
+# Information added by GitHub Action packaging script on 2024-03-23
+version: '2.11.0'
 project: 'Sunchronizo'
-datestamp: 1710415234
-message: ' update demo_notizia with tipologia_notizie vocabulary'
+datestamp: 1711184949
+message: ' aggiunta numero classi e alunni a demo luogo'
