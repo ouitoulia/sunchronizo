@@ -98,6 +98,12 @@ source:
       selector: attributes/telefono
 
     # Scheda ulteriori informazioni
+    - name: numero_alunni
+      label: "Numero alunni"
+      selector: attributes/numero_alunni
+    - name: numero_classi
+      label: "Numero classi"
+      selector: attributes/numero_classi
     - name: struttura_esterna
       label: 'Eventuali gestori esterni o terzi'
       selector: relationships/struttura_esterna/data
@@ -154,6 +160,9 @@ source:
     - name: codice_cuf
       label: "Il codice unico di fatturazione"
       selector: attributes/codice_cuf
+    - name: link
+      label: "Collegamento con Scuola in chiaro"
+      selector: attributes/link
 
     # Footer
     - name: language
@@ -262,6 +271,14 @@ process:
     method: process
 
   # Scheda ulteriori informazioni
+  field_numero_alunni:
+    plugin: skip_on_empty
+    source: numero_alunni
+    method: process
+  field_numero_classi:
+    plugin: skip_on_empty
+    source: numero_classi
+    method: process
   field_struttura_esterna:
     - plugin: skip_on_empty
       source: struttura_esterna
@@ -343,6 +360,10 @@ process:
   field_codice_cuf:
     plugin: skip_on_empty
     source: codice_cuf
+    method: process
+  field_link:
+    plugin: skip_on_empty
+    source: link
     method: process
 
   # Footer
