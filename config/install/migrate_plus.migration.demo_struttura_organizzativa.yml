@@ -62,6 +62,9 @@ source:
     - name: cosa_fa
       label: 'Cosa fa'
       selector: attributes/cosa_fa
+    - name: codice_meccanografico
+      label: "Il codice meccanografico"
+      selector: attributes/codice_meccanografico
 
     # Scheda "Organizzazione"
     - name: struttura_organizzativa
@@ -127,6 +130,10 @@ process:
       process:
         target_id: id
   body/value: cosa_fa
+  field_codice_meccanografico:
+    plugin: skip_on_empty
+    source: codice_meccanografico
+    method: process
 
   # Scheda organizzazione
   field_struttura_organizzativa:
