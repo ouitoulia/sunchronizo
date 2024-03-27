@@ -56,8 +56,19 @@ source:
     - name: body
       label: 'Descrizione estesa'
       selector: attributes/descrizione_estesa
+    - name: extra_info
+      label: "Le sezioni della pagina"
+      selector: relationships/extra_info/data/paragraph
+
+    # Impostazioni
+    - name: tipologia_sezione
+      label: "Tipologia sezione"
+      selector: attributes/tipologia_sezione
 
     # Footer
+    - name: path
+      label: "Path alias"
+      selector: attributes/path
     - name: language
       label: 'La lingua del contenuto'
       selector: attributes/language
@@ -87,9 +98,25 @@ process:
   body/format:
     - plugin: default_value
       default_value: bootstrap_italia_2
+  _extra_info:
+    plugin: migration_lookup
+    migration: demo_paragraph_extra_info
+    source: extra_info
+  field_extra_info:
+    plugin: sub_process
+    source: '@_extra_info'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
 
+ # Impostazioni
+  field_tipologia_sezione:
+    plugin: skip_on_empty
+    source: tipologia_sezione
+    method: process
 
   # Footer
+  path: path
   langcode:
     plugin: default_value
     source: language
@@ -107,6 +134,7 @@ destination:
 migration_dependencies:
   required:
     - demo_media
+    - demo_paragraph_page_sezioni
 
 dependencies:
   enforced:

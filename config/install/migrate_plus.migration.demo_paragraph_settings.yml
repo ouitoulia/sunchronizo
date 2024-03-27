@@ -1,0 +1,135 @@
+id: demo_paragraph_settings
+label: Paragrafo Settings
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - demo
+  - demo_paragraph
+  - demo_paragraph_settings
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/paragraph_settings.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: id
+      label: 'ID del paragrafo'
+      selector: id
+    - name: type
+      label: 'Il tipo di paragrafo'
+      selector: type
+
+    # Campi
+    - name: full_width
+      label: "Opzione full width"
+      selector: attributes/full_width
+    - name: enable_container
+      label: "Opzione enable container"
+      selector: attributes/enable_container
+    - name: background_color
+      label: "Colore di sfondo"
+      selector: attributes/background_color
+    - name: background_image
+      label: "Immagine di sfondo"
+      selector: attributes/background_image
+    - name: background_image_fixed
+      label: "Opzione per impostare l'immagine fixed"
+      selector: attributes/background_image_fixed
+    - name: background_blend_mode
+      label: "Opzioni di fusione dello sfondo"
+      selector: attributes/background_blend_mode
+    - name: container_classes
+      label: "Classi da aggiungere al container principale"
+      selector: attributes/container_classes
+    - name: inline_style
+      label: "Stili personalizzati"
+      selector: attributes/inline_style
+
+    # Footer
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: language
+
+  ids:
+    id:
+      type: integer
+
+process:
+  id: id
+  type: type
+
+  # Campi
+  field_full_width:
+    plugin: skip_on_empty
+    source: full_width
+    method: process
+  field_enable_container:
+    plugin: skip_on_empty
+    source: enable_container
+    method: process
+  field_background_color:
+    plugin: skip_on_empty
+    source: background_color
+    method: process
+  field_background_image:
+    plugin: skip_on_empty
+    source: background_image
+    method: process
+  field_background_image_fixed:
+    plugin: skip_on_empty
+    source: background_image_fixed
+    method: process
+  field_background_blend_mode:
+    plugin: skip_on_empty
+    source: background_blend_mode
+    method: process
+  field_container_classes:
+    plugin: skip_on_empty
+    source: container_classes
+    method: process
+  field_inline_style:
+    plugin: skip_on_empty
+    source: inline_style
+    method: process
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: settings
+
+migration_dependencies: { }
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+

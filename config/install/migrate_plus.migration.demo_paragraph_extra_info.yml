@@ -1,0 +1,127 @@
+id: demo_paragraph_extra_info
+label: Paragrafi Sezione del content type page
+migration_group: scuola_demo
+migration_tags:
+  - json
+  - scuola
+  - demo
+  - demo_paragraph
+  - demo_paragraph_extra_info
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  headers:
+    Accept: 'application/json; charset=utf-8'
+    Content-Type: 'application/json'
+
+  # The data_parser normally limits the fields passed on to the source plugin
+  # to fields configured to be used as part of the migration. To support more
+  # dynamic migrations, the JSON data parser supports including the original
+  # data for the current row. Simply include the 'include_raw_data' flag set
+  # to `true` to enable this. This option is disabled by default to minimize
+  # memory footprint for migrations that do not need this capability.
+  # include_raw_data: false
+
+  # Flags whether to track changes to incoming data. If TRUE, we will maintain
+  # hashed source rows to determine whether incoming data has changed.
+  # track_changes: false
+
+  urls:
+    - 'https://ouitoulia.github.io/krene/demo/paragraph_history_carousel.json'
+
+  # An xpath-like selector corresponding to the items to be imported.
+  item_selector: data
+
+  fields:
+    - name: id
+      label: 'ID del paragrafo'
+      selector: id
+    - name: type
+      label: 'Il tipo di paragrafo'
+      selector: type
+
+    # Campi Comuni
+    - name: title
+      label: "Il titolo"
+      selector: attributes/title
+    - name: title_tag
+      label: "L'heading tag da usare"
+      selector: attributes/title_tag
+
+    - name: settings
+      label: "Il paragrafo con le impostazioni"
+      selector: relationships/settings/data/paragraph
+
+    # Campi specifici history carousel
+    - name: history_carousel_item
+      label: "I paragrafi history item collegati"
+      selector: relationships/history_carousel_item/data/paragraph
+
+    # Footer
+    - name: language
+      label: 'La lingua del contenuto'
+      selector: language
+
+  ids:
+    id:
+      type: integer
+
+process:
+  id: id
+  type: type
+
+  # Campi comuni
+  field_title:
+    plugin: skip_on_empty
+    source: title
+    method: process
+  field_title_tag:
+    plugin: skip_on_empty
+    source: title_tag
+    method: process
+
+  _settings:
+    plugin: migration_lookup
+    migration: demo_paragraph_settings
+    source: settings
+  field_settings:
+    plugin: sub_process
+    source: '@_settings'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
+  # Campi specifici history carousel
+  _history_carousel_item:
+    plugin: migration_lookup
+    migration: demo_paragraph_history_carousel_item
+    source: history_carousel_item
+  field_history_carousel_item:
+    plugin: sub_process
+    source: '@_history_carousel_item'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
+  # Footer
+  langcode:
+    plugin: default_value
+    source: language
+    default_value: "und"
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+
+migration_dependencies:
+  required:
+    - demo_paragraph_history_carousel_item
+    - demo_paragraph_settings
+
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
+
