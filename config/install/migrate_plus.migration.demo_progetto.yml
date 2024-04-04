@@ -103,6 +103,9 @@ source:
     - name: language
       label: 'La lingua del contenuto'
       selector: attributes/language
+    - name: promote
+      label: 'Se il contenuto è promosso alla prima pagina'
+      selector: attributes/promote
     - name: published
       label: 'Se il contenuto è pubblicato o meno'
       selector: attributes/published
@@ -202,6 +205,10 @@ process:
     plugin: default_value
     source: language
     default_value: "und"
+  promote:
+    plugin: default_value
+    source: promote
+    default_value: 0
   status:
     plugin: default_value
     source: published
