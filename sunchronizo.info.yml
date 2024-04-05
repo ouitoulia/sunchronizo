@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-04-04
-version: '2.14.0'
+# Information added by GitHub Action packaging script on 2024-04-05
+version: '2.15.0'
 project: 'Sunchronizo'
-datestamp: 1712225500
-message: ' update demo field promote'
+datestamp: 1712298677
+message: ' update demo field sticky'
