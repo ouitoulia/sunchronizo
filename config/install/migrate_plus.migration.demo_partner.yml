@@ -79,6 +79,9 @@ source:
     - name: promote
       label: 'Se il contenuto è promosso alla prima pagina'
       selector: attributes/promote
+    - name: sticky
+      label: 'Se il contenuto è in cima agli elenchi'
+      selector: attributes/sticky
     - name: published
       label: 'Se il contenuto è pubblicato o meno'
       selector: attributes/published
@@ -148,6 +151,10 @@ process:
   promote:
     plugin: default_value
     source: promote
+    default_value: 0
+  sticky:
+    plugin: default_value
+    source: sticky
     default_value: 0
   status:
     plugin: default_value
