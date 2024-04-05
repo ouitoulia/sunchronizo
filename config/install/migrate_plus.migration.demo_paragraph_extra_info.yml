@@ -31,6 +31,8 @@ source:
 
   urls:
     - 'https://ouitoulia.github.io/krene/demo/paragraph_history_carousel.json'
+    - 'https://ouitoulia.github.io/krene/demo/paragraph_section.json'
+    - 'https://ouitoulia.github.io/krene/demo/paragraph_attachments.json'
 
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
@@ -55,10 +57,20 @@ source:
       label: "Il paragrafo con le impostazioni"
       selector: relationships/settings/data/paragraph
 
+    # Campi specifici attachments
+    - name: file_managed
+      label: 'File da media'
+      selector: relationships/file_managed/data
+
     # Campi specifici history carousel
     - name: history_carousel_item
       label: "I paragrafi history item collegati"
       selector: relationships/history_carousel_item/data/paragraph
+
+    # Campi specifici section
+    - name: section_content
+      label: "Il contenuto della sezione"
+      selector: attributes/section_content
 
     # Footer
     - name: language
@@ -94,6 +106,16 @@ process:
       target_id: '0'
       target_revision_id: '1'
 
+  # Campi specifici attachments
+  field_file_managed:
+    - plugin: skip_on_empty
+      source: file_managed
+      method: process
+    - plugin: sub_process
+      source: file_managed
+      process:
+        target_id: id
+
   # Campi specifici history carousel
   _history_carousel_item:
     plugin: migration_lookup
@@ -106,6 +128,12 @@ process:
       target_id: '0'
       target_revision_id: '1'
 
+  # Campi specifici section
+  field_section_content:
+    plugin: skip_on_empty
+    source: section_content
+    method: process
+
   # Footer
   langcode:
     plugin: default_value
@@ -117,6 +145,7 @@ destination:
 
 migration_dependencies:
   required:
+    - demo_media
     - demo_paragraph_history_carousel_item
     - demo_paragraph_settings
 
