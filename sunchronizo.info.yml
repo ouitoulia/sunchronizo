@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-04-05
-version: '2.16.0'
+# Information added by GitHub Action packaging script on 2024-04-12
+version: '2.17.0'
 project: 'Sunchronizo'
-datestamp: 1712350466
-message: ' add demo section and attachments'
+datestamp: 1712911081
+message: ' add demo_finanziamento https://github.com/ouitoulia/diagraphe/issues/15'
