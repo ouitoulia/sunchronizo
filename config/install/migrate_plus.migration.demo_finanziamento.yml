@@ -47,6 +47,9 @@ source:
       selector: attributes/titolo
 
     # Scheda "Apertura"
+    - name: tipologia_progetto
+      label: "Tipologia progetto"
+      selector: relationships/tipologia_progetto/data/id
     - name: abstract
       label: 'Descrizione breve'
       selector: attributes/abstract
@@ -126,6 +129,7 @@ process:
   title: title
 
   # Scheda "Apertura"
+  field_tipologia_progetto: tipologia_progetto
   field_abstract: abstract
   field_argomenti:
     - plugin: skip_on_empty
