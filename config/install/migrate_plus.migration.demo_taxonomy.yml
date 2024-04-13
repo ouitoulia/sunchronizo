@@ -29,8 +29,9 @@ source:
   # track_changes: false
 
   urls:
-    - 'https://ouitoulia.github.io/krene/demo/argomenti.json'
-    - 'https://ouitoulia.github.io/krene/demo/autori_editori.json'
+    - 'https://ouitoulia.github.io/krene/demo/tassonomia_argomenti.json'
+    - 'https://ouitoulia.github.io/krene/demo/tassonomia_autori_editori.json'
+    - 'https://ouitoulia.github.io/krene/demo/tassonomia_custom_override.json'
 
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
@@ -54,6 +55,9 @@ source:
     - name: weight
       label: 'Il peso della voce di tassonomia'
       selector: attributes/weight
+    - name: copertina
+      label: 'Immagine di copertina'
+      selector: relationships/copertina/data/id
     - name: parent_id
       label: 'Id del termine genitore della voce di tassonomia'
       selector: relationships/parent/data/id
@@ -88,6 +92,10 @@ process:
     - plugin: skip_on_empty
       method: process
       source: description
+  field_copertina:
+    plugin: skip_on_empty
+    source: copertina
+    method: process
 
 destination:
   plugin: entity:taxonomy_term

@@ -81,6 +81,9 @@ source:
     - name: parent_id
       label: 'Id del termine genitore della voce di tassonomia'
       selector: relationships/parent/data/id
+    - name: copertina
+      label: 'Immagine di copertina'
+      selector: relationships/copertina/data/id
     - name: uuid
       label: "L'UUID della voce"
       selector: uuid
@@ -129,10 +132,15 @@ process:
   description/format:
     - plugin: default_value
       default_value: bootstrap_italia_2
-  status:
-    plugin: default_value
-    source: published
-    default_value: 1
+  field_copertina:
+    plugin: skip_on_empty
+    source: copertina
+    method: process
+# Ho commentato questo campo per non sovrascrivere l'eventuale stato modificato
+#  status:
+#    plugin: default_value
+#    source: published
+#    default_value: 1
 
 destination:
   plugin: entity:taxonomy_term
