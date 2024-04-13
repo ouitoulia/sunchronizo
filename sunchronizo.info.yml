@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-04-13
-version: '2.18.0'
+version: '2.19.0'
 project: 'Sunchronizo'
-datestamp: 1713011529
-message: ' fix version ouitoulia/diagraphe#15'
+datestamp: 1713014225
+message: ' fix taxonomy migration ouitoulia/diagraphe#15'
