@@ -59,6 +59,9 @@ source:
     - name: codice_cup
       label: "Il codice CUP"
       selector: attributes/codice_cup
+    - name: codice_identificativo
+      label: "Il codice dell'intervento"
+      selector: attributes/codice_identificativo
     - name: importo_finanziamento
       label: "Importo finanziato"
       selector: attributes/importo_finanziamento
@@ -139,8 +142,18 @@ process:
       source: argomenti
       process:
         target_id: id
-  field_codice_cup: codice_cup
-  field_importo_finanziamento: importo_finanziamento
+  field_codice_cup:
+    plugin: skip_on_empty
+    source: codice_cup
+    method: process
+  field_codice_identificativo:
+    plugin: skip_on_empty
+    source: codice_identificativo
+    method: process
+  field_importo_finanziamento:
+    plugin: skip_on_empty
+    source: importo_finanziamento
+    method: process
   field_stato_progetto: stato_progetto
   field_copertina:
     plugin: skip_on_empty
