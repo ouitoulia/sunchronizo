@@ -123,6 +123,9 @@ source:
     - name: classi
       label: 'Classi correlate'
       selector: relationships/classi/data
+    - name: finanziamenti
+      label: 'Classi correlate'
+      selector: relationships/finanziamenti/data
 
     # Scheda tempi e scadenze
     - name: frequenza
@@ -290,6 +293,14 @@ process:
       method: process
     - plugin: sub_process
       source: classi
+      process:
+        target_id: id
+  field_finanziamenti:
+    - plugin: skip_on_empty
+      source: finanziamenti
+      method: process
+    - plugin: sub_process
+      source: finanziamenti
       process:
         target_id: id
 
