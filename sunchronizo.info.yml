@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-04-15
-version: '2.20.0'
+# Information added by GitHub Action packaging script on 2024-04-18
+version: '2.21.0'
 project: 'Sunchronizo'
-datestamp: 1713173288
-message: ' add field_finanziamenti to demo_documento ouitoulia/diagraphe#15'
+datestamp: 1713436047
+message: ' add tipologia_finanziamenti taxonomy and taxonomy customization feature ouitoulia/diagraphe#15'
