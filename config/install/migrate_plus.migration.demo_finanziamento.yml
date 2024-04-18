@@ -47,9 +47,9 @@ source:
       selector: attributes/titolo
 
     # Scheda "Apertura"
-    - name: tipologia_progetto
+    - name: tipologia_finanziamento
       label: "Tipologia progetto"
-      selector: relationships/tipologia_progetto/data/id
+      selector: relationships/tipologia_finanziamento/data/id
     - name: abstract
       label: 'Descrizione breve'
       selector: attributes/abstract
@@ -132,7 +132,7 @@ process:
   title: title
 
   # Scheda "Apertura"
-  field_tipologia_progetto: tipologia_progetto
+  field_tipologia_finanziamento: tipologia_finanziamento
   field_abstract: abstract
   field_argomenti:
     - plugin: skip_on_empty
