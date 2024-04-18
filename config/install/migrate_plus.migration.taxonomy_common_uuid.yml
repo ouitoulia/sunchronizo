@@ -41,6 +41,7 @@ source:
     - 'https://ouitoulia.github.io/krene/taxonomy/stato_progetti.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_autenticazioni.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_eventi.json'
+    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_finanziamenti.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_incarichi.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_istituti.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_libri.json'
@@ -136,11 +137,10 @@ process:
     plugin: skip_on_empty
     source: copertina
     method: process
-# Ho commentato questo campo per non sovrascrivere l'eventuale stato modificato
-#  status:
-#    plugin: default_value
-#    source: published
-#    default_value: 1
+  status:
+    plugin: default_value
+    source: published
+    default_value: 1
 
 destination:
   plugin: entity:taxonomy_term

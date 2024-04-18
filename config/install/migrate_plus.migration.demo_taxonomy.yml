@@ -49,18 +49,24 @@ source:
     - name: icon
       label: 'Icona'
       selector: attributes/icon
+    - name: element_type
+      label: 'Tipo di elemento'
+      selector: attributes/type
     - name: description
       label: 'La descrizione della voce di tassonomia'
       selector: attributes/description
     - name: weight
       label: 'Il peso della voce di tassonomia'
       selector: attributes/weight
-    - name: copertina
-      label: 'Immagine di copertina'
-      selector: relationships/copertina/data/id
     - name: parent_id
       label: 'Id del termine genitore della voce di tassonomia'
       selector: relationships/parent/data/id
+    - name: copertina
+      label: 'Immagine di copertina'
+      selector: relationships/copertina/data/id
+    - name: published
+      label: 'Se la voce è pubblicata o meno'
+      selector: attributes/published
 
   ids:
     tid:
@@ -74,6 +80,10 @@ process:
     - plugin: skip_on_empty
       method: process
       source: icon
+  field_type:
+    plugin: skip_on_empty
+    source: element_type
+    method: process
   parent_id:
     - plugin: skip_on_empty
       method: process
@@ -88,14 +98,18 @@ process:
     plugin: default_value
     source: weight
     default_value: 0
-  description:
+  description/value:
     - plugin: skip_on_empty
-      method: process
       source: description
+      method: process
+  description/format:
+    - plugin: default_value
+      default_value: bootstrap_italia_2
   field_copertina:
     plugin: skip_on_empty
     source: copertina
     method: process
+  status: published
 
 destination:
   plugin: entity:taxonomy_term

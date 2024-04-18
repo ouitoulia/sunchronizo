@@ -107,11 +107,10 @@ process:
     plugin: skip_on_empty
     source: copertina
     method: process
-# Ho commentato questo campo per non sovrascrivere l'eventuale stato modificato
-#  status:
-#    plugin: default_value
-#    source: published
-#    default_value: 1
+  status:
+    plugin: default_value
+    source: published
+    default_value: 1
 
 destination:
   plugin: entity:taxonomy_term
