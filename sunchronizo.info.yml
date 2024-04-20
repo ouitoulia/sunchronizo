@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-04-18
-version: '2.22.0'
+# Information added by GitHub Action packaging script on 2024-04-20
+version: '2.23.0'
 project: 'Sunchronizo'
-datestamp: 1713443695
-message: ' change field tipologia_finanziamento ouitoulia/diagraphe#15'
+datestamp: 1713625859
+message: ' add mandatory field to ct servizio'
