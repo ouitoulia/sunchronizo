@@ -1,5 +1,5 @@
 id: demo_paragraph_extra_info
-label: Paragrafi Sezione del content type page
+label: Paragrafi per field extra_info
 migration_group: scuola_demo
 migration_tags:
   - json
@@ -30,6 +30,7 @@ source:
   # track_changes: false
 
   urls:
+    - 'https://ouitoulia.github.io/krene/demo/paragraph_content.json'
     - 'https://ouitoulia.github.io/krene/demo/paragraph_history_carousel.json'
     - 'https://ouitoulia.github.io/krene/demo/paragraph_section.json'
     - 'https://ouitoulia.github.io/krene/demo/paragraph_attachments.json'
@@ -52,6 +53,9 @@ source:
     - name: title_tag
       label: "L'heading tag da usare"
       selector: attributes/title_tag
+    - name: text
+      label: "Campo di testo"
+      selector: attributes/text
 
     - name: settings
       label: "Il paragrafo con le impostazioni"
@@ -93,6 +97,10 @@ process:
   field_title_tag:
     plugin: skip_on_empty
     source: title_tag
+    method: process
+  field_text:
+    plugin: skip_on_empty
+    source: text
     method: process
 
   _settings:

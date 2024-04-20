@@ -126,8 +126,14 @@ source:
       selector: attributes/ipa
 
     # Scheda "Tempi e scadenze"
+    - name: timeline
+      label: "Timeline field"
+      selector: relationships/timeline/data/paragraph
 
     # Scheda "Ulteriori informazioni"
+    - name: extra_info
+      label: "Ulteriori informazioni"
+      selector: relationships/extra_info/data/paragraph
 
     - name: tipologia_licenza
       label: 'Tipologia di licenza del contenuto'
@@ -286,8 +292,28 @@ process:
     method: process
 
   # Scheda "Tempi e scadenze"
+  _timeline:
+    plugin: migration_lookup
+    migration: demo_paragraph_timeline
+    source: timeline
+  field_timeline:
+    plugin: sub_process
+    source: '@_timeline'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
 
   # Scheda "Ulteriori informazioni"
+  _extra_info:
+    plugin: migration_lookup
+    migration: demo_paragraph_extra_info
+    source: extra_info
+  field_extra_info:
+    plugin: sub_process
+    source: '@_extra_info'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
 
   field_tipologia_licenza:
     - plugin: skip_on_empty
@@ -326,6 +352,8 @@ migration_dependencies:
     - demo_struttura_organizzativa
     - demo_partner
     - demo_paragraph_call_to_action
+    - demo_paragraph_extra_info
+    - demo_paragraph_timeline
 
 dependencies:
   enforced:

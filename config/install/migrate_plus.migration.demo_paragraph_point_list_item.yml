@@ -1,12 +1,12 @@
-id: demo_paragraph_piano_di_studi
-label: Paragrafo piano di studi
+id: demo_paragraph_point_list_item
+label: Paragrafo point list item
 migration_group: scuola_demo
 migration_tags:
   - json
   - scuola
   - demo
   - demo_paragraph
-  - demo_paragraph_piano_di_studi
+  - demo_paragraph_point_list_item
 
 source:
   plugin: url
@@ -30,7 +30,7 @@ source:
   # track_changes: false
 
   urls:
-    - 'https://ouitoulia.github.io/krene/demo/paragraph_piano_di_studi.json'
+    - 'https://ouitoulia.github.io/krene/demo/paragraph_point_list_item.json'
 
   # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
@@ -44,21 +44,18 @@ source:
       selector: type
 
     # Campi
-    - name: tipo_periodo
-      label: "Il tipo di periodo"
-      selector: attributes/tipo_periodo
-    - name: periodo
-      label: "Il periodo"
-      selector: attributes/periodo
+    - name: title
+      label: "Il testo"
+      selector: attributes/title
     - name: kicker
-      label: "L'intestazione'"
+      label: "La data da visualizzare"
       selector: attributes/kicker
-    - name: text
-      label: "Le note"
-      selector: attributes/text
-    - name: piano_di_studi_item
-      label: "I paragrafi piano di studi item collegati"
-      selector: relationships/piano_di_studi_item/data/paragraph
+    - name: data_element
+      label: "L'eventuale data-element"
+      selector: attributes/data_element
+    - name: variants
+      label: "La variante colore"
+      selector: attributes/variants
 
     # Footer
     - name: language
@@ -74,20 +71,22 @@ process:
   type: type
 
   # Campi
-  field_tipo_periodo: tipo_periodo
-  field_periodo: periodo
-  field_kicker: kicker
-  field_text: text
-  _piano_di_studi_item:
-    plugin: migration_lookup
-    migration: demo_paragraph_piano_di_studi_item
-    source: piano_di_studi_item
-  field_piano_di_studi_item:
-    plugin: sub_process
-    source: '@_piano_di_studi_item'
-    process:
-      target_id: '0'
-      target_revision_id: '1'
+  field_title:
+    plugin: skip_on_empty
+    source: title
+    method: process
+  field_kicker:
+    plugin: skip_on_empty
+    source: kicker
+    method: process
+  field_data_element:
+    plugin: skip_on_empty
+    source: data_element
+    method: process
+  field_variants:
+    plugin: skip_on_empty
+    source: variants
+    method: process
 
   # Footer
   langcode:
@@ -97,12 +96,9 @@ process:
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
-  default_bundle: piano_di_studi
+  default_bundle: point_list_item
 
-migration_dependencies:
-  required:
-    - demo_taxonomy
-    - demo_paragraph_piano_di_studi_item
+migration_dependencies: { }
 
 dependencies:
   enforced:
