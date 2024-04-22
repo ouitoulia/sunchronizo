@@ -109,7 +109,10 @@ process:
     plugin: skip_on_empty
     source: copertina
     method: process
-  status: published
+  status:
+    plugin: default_value
+    source: published
+    default_value: 1
 
 destination:
   plugin: entity:taxonomy_term
