@@ -67,6 +67,12 @@ source:
     - name: data_oblio
       label: "Oblio documento"
       selector: attributes/data_oblio
+    - name: document_url
+      label: "URL del documento"
+      selector: relationships/document/data/url
+    - name: document
+      label: "I metadata del documento"
+      selector: relationships/document
     - name: eventi
       label: 'Eventi correlati'
       selector: relationships/eventi/data
@@ -133,6 +139,18 @@ process:
   field_data_oblio:
     plugin: skip_on_empty
     source: data_oblio
+    method: process
+  field_allegati/target_id:
+    plugin: file_import
+    source: document_url
+    destination: constants/documents_media_path
+    uid: '@_file_uid'
+    file_exists: 'replace'
+    skip_on_missing_source: true
+    id_only: true
+  field_allegati/description:
+    plugin: skip_on_empty
+    source: document/data/description
     method: process
   field_eventi:
     - plugin: skip_on_empty
