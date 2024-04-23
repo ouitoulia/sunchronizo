@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-04-22
-version: '2.20.1'
+# Information added by GitHub Action packaging script on 2024-04-23
+version: '2.20.2'
 project: 'Sunchronizo'
-datestamp: 1713782111
-message: ' fix status demo_taxonomy'
+datestamp: 1713904422
+message: ' add field_allegati to circolare_demo'
