@@ -73,6 +73,9 @@ source:
     - name: document
       label: "I metadata del documento"
       selector: relationships/document
+    - name: link
+      label: "Riferimenti normativi"
+      selector: attributes/link
     - name: eventi
       label: 'Eventi correlati'
       selector: relationships/eventi/data
@@ -151,6 +154,10 @@ process:
   field_allegati/description:
     plugin: skip_on_empty
     source: document/data/description
+    method: process
+  field_link:
+    plugin: skip_on_empty
+    source: link
     method: process
   field_eventi:
     - plugin: skip_on_empty
