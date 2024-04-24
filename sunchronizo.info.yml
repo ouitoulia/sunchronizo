@@ -13,7 +13,7 @@ dependencies:
   - migrate_file:migrate_file
 
 # Information added by GitHub Action packaging script on 2024-04-24
-version: '2.20.3'
+version: '2.20.3 '
 project: 'Sunchronizo'
 datestamp: 1713953556
 message: ' add field_link to ct Circolare'
