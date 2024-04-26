@@ -98,10 +98,13 @@ process:
     plugin: skip_on_empty
     source: title_tag
     method: process
-  field_text:
+  field_text/value:
     plugin: skip_on_empty
     source: text
     method: process
+  field_text/format:
+    - plugin: default_value
+      default_value: bootstrap_italia_2
 
   _settings:
     plugin: migration_lookup
