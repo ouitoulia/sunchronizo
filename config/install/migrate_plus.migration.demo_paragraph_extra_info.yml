@@ -1,95 +1,81 @@
+langcode: it
+status: true
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
 id: demo_paragraph_extra_info
-label: Paragrafi per field extra_info
-migration_group: scuola_demo
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
   - json
   - scuola
   - demo
   - demo_paragraph
   - demo_paragraph_extra_info
-
+migration_group: scuola_demo
+label: 'Paragrafi per field extra_info'
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: json
-
   headers:
     Accept: 'application/json; charset=utf-8'
-    Content-Type: 'application/json'
-
-  # The data_parser normally limits the fields passed on to the source plugin
-  # to fields configured to be used as part of the migration. To support more
-  # dynamic migrations, the JSON data parser supports including the original
-  # data for the current row. Simply include the 'include_raw_data' flag set
-  # to `true` to enable this. This option is disabled by default to minimize
-  # memory footprint for migrations that do not need this capability.
-  # include_raw_data: false
-
-  # Flags whether to track changes to incoming data. If TRUE, we will maintain
-  # hashed source rows to determine whether incoming data has changed.
-  # track_changes: false
-
+    Content-Type: application/json
   urls:
     - 'https://ouitoulia.github.io/krene/demo/paragraph_content.json'
     - 'https://ouitoulia.github.io/krene/demo/paragraph_history_carousel.json'
     - 'https://ouitoulia.github.io/krene/demo/paragraph_section.json'
     - 'https://ouitoulia.github.io/krene/demo/paragraph_attachments.json'
-
-  # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
-
   fields:
-    - name: id
+    -
+      name: id
       label: 'ID del paragrafo'
       selector: id
-    - name: type
+    -
+      name: type
       label: 'Il tipo di paragrafo'
       selector: type
-
-    # Campi Comuni
-    - name: title
-      label: "Il titolo"
+    -
+      name: title
+      label: 'Il titolo'
       selector: attributes/title
-    - name: title_tag
+    -
+      name: title_tag
       label: "L'heading tag da usare"
       selector: attributes/title_tag
-    - name: text
-      label: "Campo di testo"
+    -
+      name: text
+      label: 'Campo di testo'
       selector: attributes/text
-
-    - name: settings
-      label: "Il paragrafo con le impostazioni"
+    -
+      name: settings
+      label: 'Il paragrafo con le impostazioni'
       selector: relationships/settings/data/paragraph
-
-    # Campi specifici attachments
-    - name: file_managed
+    -
+      name: file_managed
       label: 'File da media'
       selector: relationships/file_managed/data
-
-    # Campi specifici history carousel
-    - name: history_carousel_item
-      label: "I paragrafi history item collegati"
+    -
+      name: history_carousel_item
+      label: 'I paragrafi history item collegati'
       selector: relationships/history_carousel_item/data/paragraph
-
-    # Campi specifici section
-    - name: section_content
-      label: "Il contenuto della sezione"
+    -
+      name: section_content
+      label: 'Il contenuto della sezione'
       selector: attributes/section_content
-
-    # Footer
-    - name: language
+    -
+      name: language
       label: 'La lingua del contenuto'
       selector: language
-
   ids:
     id:
       type: integer
-
 process:
   id: id
   type: type
-
-  # Campi comuni
   field_title:
     plugin: skip_on_empty
     source: title
@@ -103,9 +89,9 @@ process:
     source: text
     method: process
   field_text/format:
-    - plugin: default_value
+    -
+      plugin: default_value
       default_value: bootstrap_italia_2
-
   _settings:
     plugin: migration_lookup
     migration: demo_paragraph_settings
@@ -116,18 +102,16 @@ process:
     process:
       target_id: '0'
       target_revision_id: '1'
-
-  # Campi specifici attachments
   field_file_managed:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: file_managed
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: file_managed
       process:
         target_id: id
-
-  # Campi specifici history carousel
   _history_carousel_item:
     plugin: migration_lookup
     migration: demo_paragraph_history_carousel_item
@@ -138,30 +122,18 @@ process:
     process:
       target_id: '0'
       target_revision_id: '1'
-
-  # Campi specifici section
   field_section_content:
     plugin: skip_on_empty
     source: section_content
     method: process
-
-  # Footer
   langcode:
     plugin: default_value
     source: language
-    default_value: "und"
-
+    default_value: und
 destination:
   plugin: 'entity_reference_revisions:paragraph'
-
 migration_dependencies:
   required:
     - demo_media
     - demo_paragraph_history_carousel_item
     - demo_paragraph_settings
-
-dependencies:
-  enforced:
-    module:
-      - sunchronizo
-

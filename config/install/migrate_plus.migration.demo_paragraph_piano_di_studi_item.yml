@@ -1,93 +1,72 @@
+langcode: it
+status: true
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
 id: demo_paragraph_piano_di_studi_item
-label: Paragrafo piano di studi item
-migration_group: scuola_demo
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
   - json
   - scuola
   - demo
   - demo_paragraph
   - demo_paragraph_piano_di_studi_item
-
+migration_group: scuola_demo
+label: 'Paragrafo piano di studi item'
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: json
-
   headers:
     Accept: 'application/json; charset=utf-8'
-    Content-Type: 'application/json'
-
-  # The data_parser normally limits the fields passed on to the source plugin
-  # to fields configured to be used as part of the migration. To support more
-  # dynamic migrations, the JSON data parser supports including the original
-  # data for the current row. Simply include the 'include_raw_data' flag set
-  # to `true` to enable this. This option is disabled by default to minimize
-  # memory footprint for migrations that do not need this capability.
-  # include_raw_data: false
-
-  # Flags whether to track changes to incoming data. If TRUE, we will maintain
-  # hashed source rows to determine whether incoming data has changed.
-  # track_changes: false
-
+    Content-Type: application/json
   urls:
     - 'https://ouitoulia.github.io/krene/demo/paragraph_piano_di_studi_item.json'
-
-  # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
-
   fields:
-    - name: id
+    -
+      name: id
       label: 'ID del paragrafo'
       selector: id
-    - name: type
+    -
+      name: type
       label: 'Il tipo di paragrafo'
       selector: type
-
-    # Campi
-    - name: materia
-      label: "La materia collegata alla tassonomia"
+    -
+      name: materia
+      label: 'La materia collegata alla tassonomia'
       selector: relationships/materia/data/id
-    - name: ore_settimanali
-      label: "Le ore settimanali"
+    -
+      name: ore_settimanali
+      label: 'Le ore settimanali'
       selector: attributes/ore_settimanali
-    - name: monte_ore
-      label: "Il monte ore annuale"
+    -
+      name: monte_ore
+      label: 'Il monte ore annuale'
       selector: attributes/monte_ore
-
-    # Footer
-    - name: language
+    -
+      name: language
       label: 'La lingua del contenuto'
       selector: language
-
   ids:
     id:
       type: integer
-
 process:
   id: id
   type: type
-
-  # Campi
   field_materia: materia
   field_ore_settimanali: ore_settimanali
   field_monte_ore: monte_ore
-
-  # Footer
   langcode:
     plugin: default_value
     source: language
-    default_value: "und"
-
+    default_value: und
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: piano_di_studi_item
-
 migration_dependencies:
   required:
     - demo_taxonomy
-
-dependencies:
-  enforced:
-    module:
-      - sunchronizo
-

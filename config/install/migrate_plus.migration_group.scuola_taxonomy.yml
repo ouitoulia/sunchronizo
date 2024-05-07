@@ -1,8 +1,12 @@
-id: scuola_taxonomy
-label: Scuola - Voci di tassonomia
-description: Gruppo di migrazioni che importa le voci di tassonomia utilizzate dalle scuole.
-source_type: JSON
+langcode: it
+status: true
 dependencies:
   enforced:
     module:
       - sunchronizo
+id: scuola_taxonomy
+label: 'Scuola - Voci di tassonomia'
+description: 'Gruppo di migrazioni che importa le voci di tassonomia utilizzate dalle scuole.'
+source_type: JSON
+module: null
+shared_configuration: null

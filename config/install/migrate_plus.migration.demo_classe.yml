@@ -1,108 +1,107 @@
+langcode: it
+status: true
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
 id: demo_classe
-label: Tipo di contenuto Classe
-migration_group: scuola_demo
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
   - json
   - scuola
   - demo
   - demo_node
   - demo_classe
-
+migration_group: scuola_demo
+label: 'Tipo di contenuto Classe'
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: json
-
   headers:
     Accept: 'application/json; charset=utf-8'
-    Content-Type: 'application/json'
-
-  # The data_parser normally limits the fields passed on to the source plugin
-  # to fields configured to be used as part of the migration. To support more
-  # dynamic migrations, the JSON data parser supports including the original
-  # data for the current row. Simply include the 'include_raw_data' flag set
-  # to `true` to enable this. This option is disabled by default to minimize
-  # memory footprint for migrations that do not need this capability.
-  # include_raw_data: false
-
-  # Flags whether to track changes to incoming data. If TRUE, we will maintain
-  # hashed source rows to determine whether incoming data has changed.
-  # track_changes: false
-
+    Content-Type: application/json
   urls:
     - 'https://ouitoulia.github.io/krene/demo/classe.json'
-
-  # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
-
   fields:
-    - name: nid
+    -
+      name: nid
       label: 'ID del nodo'
       selector: id
-    - name: type
+    -
+      name: type
       label: 'Il tipo di contenuto'
       selector: type
-    - name: title
+    -
+      name: title
       label: 'Il titolo del contenuto'
       selector: attributes/nome
-
-    # Scheda apertura
-    - name: annualita_classe
+    -
+      name: annualita_classe
       label: "L'anno di corso"
       selector: attributes/annualita_classe
-    - name: sezione
+    -
+      name: sezione
       label: "L'anno di corso"
       selector: attributes/sezione
-    - name: struttura_didattica
+    -
+      name: struttura_didattica
       label: 'Struttura didattica / Nome della scuola'
       selector: relationships/struttura_didattica/data/id
-    - name: percorso_di_studio
+    -
+      name: percorso_di_studio
       label: 'Percorso di studio'
       selector: relationships/percorso_di_studio/data/id
-    - name: anno_scolastico
+    -
+      name: anno_scolastico
       label: 'Anno scolastico'
       selector: relationships/anno_scolastico/data/id
-
-    # Scheda persone
-    - name: persona_responsabile
-      label: "Coordinatore di classe"
+    -
+      name: persona_responsabile
+      label: 'Coordinatore di classe'
       selector: relationships/persona_responsabile/data
-    - name: persone
-      label: "Insegnanti"
+    -
+      name: persone
+      label: Insegnanti
       selector: relationships/persone/data
-    - name: rappresentanti_genitori
+    -
+      name: rappresentanti_genitori
       label: 'Rappresentati dei genitori'
       selector: attributes/rappresentanti_genitori
-    - name: rappresentanti_alunni
+    -
+      name: rappresentanti_alunni
       label: 'Rappresentati degli alunni'
       selector: attributes/rappresentanti_alunni
-
-    # Scheda orario e libri di testo
-    - name: orario_lezioni
+    -
+      name: orario_lezioni
       label: 'Orario delle lezioni'
       selector: relationships/orario_lezioni/data/id
-    - name: libri_di_testo
+    -
+      name: libri_di_testo
       label: 'Orario delle lezioni'
       selector: relationships/libri_di_testo/data
-
-    # Footer
-    - name: language
+    -
+      name: language
       label: 'La lingua del contenuto'
       selector: attributes/language
-    - name: promote
+    -
+      name: promote
       label: 'Se il contenuto è promosso alla prima pagina'
       selector: attributes/promote
-    - name: sticky
+    -
+      name: sticky
       label: 'Se il contenuto è in cima agli elenchi'
       selector: attributes/sticky
-    - name: published
+    -
+      name: published
       label: 'Se il contenuto è pubblicato o meno'
       selector: attributes/published
-
   ids:
     nid:
       type: integer
-
 process:
   nid: nid
   uid:
@@ -110,8 +109,6 @@ process:
     default_value: 1
   type: type
   title: title
-
-  # Scheda apertura
   field_annualita_classe:
     plugin: skip_on_empty
     source: annualita_classe
@@ -132,8 +129,6 @@ process:
     plugin: skip_on_empty
     source: anno_scolastico
     method: process
-
-  # Scheda persone
   field_rappresentanti_genitori:
     plugin: skip_on_empty
     source: rappresentanti_genitori
@@ -143,41 +138,43 @@ process:
     source: rappresentanti_alunni
     method: process
   field_persona_responsabile:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: persona_responsabile
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: persona_responsabile
       process:
         target_id: id
   field_persone:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: persone
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: persone
       process:
         target_id: id
-
-  # Scheda orario e libri di testo
   field_orario_lezioni:
     plugin: skip_on_empty
     source: orario_lezioni
     method: process
   field_libri_di_testo:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: libri_di_testo
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: libri_di_testo
       process:
         target_id: id
-
-  # Footer
   langcode:
     plugin: default_value
     source: language
-    default_value: "und"
+    default_value: und
   promote:
     plugin: default_value
     source: promote
@@ -190,12 +187,10 @@ process:
     plugin: default_value
     source: published
     default_value: 0
-
 destination:
-  plugin: entity:node
+  plugin: 'entity:node'
   default_bundle: classe
   translations: true
-
 migration_dependencies:
   required:
     - demo_taxonomy
@@ -203,9 +198,3 @@ migration_dependencies:
     - demo_struttura_organizzativa
     - demo_percorso_di_studio
     - demo_persona
-
-dependencies:
-  enforced:
-    module:
-      - sunchronizo
-

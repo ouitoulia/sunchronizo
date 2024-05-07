@@ -1,75 +1,74 @@
+langcode: it
+status: true
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
 id: taxonomy_common
-label: Voci di tassonomia comuni a tutti i gradi di istruzione
-migration_group: scuola_taxonomy
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
   - json
   - scuola
   - taxonomy
-
+migration_group: scuola_taxonomy
+label: 'Voci di tassonomia comuni a tutti i gradi di istruzione'
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: json
-
   headers:
     Accept: 'application/json; charset=utf-8'
-    Content-Type: 'application/json'
-
-  # The data_parser normally limits the fields passed on to the source plugin
-  # to fields configured to be used as part of the migration. To support more
-  # dynamic migrations, the JSON data parser supports including the original
-  # data for the current row. Simply include the 'include_raw_data' flag set
-  # to `true` to enable this. This option is disabled by default to minimize
-  # memory footprint for migrations that do not need this capability.
-  # include_raw_data: false
-
-  # Flags whether to track changes to incoming data. If TRUE, we will maintain
-  # hashed source rows to determine whether incoming data has changed.
-  # track_changes: false
-
+    Content-Type: application/json
   urls:
     - 'https://ouitoulia.github.io/krene/taxonomy/argomenti.json'
     - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_documenti.json'
-
-  # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
-
   fields:
-    - name: type
+    -
+      name: type
       label: 'Il tipo di vocabolario'
       selector: type
-    - name: tid
+    -
+      name: tid
       label: 'ID del termine di tassonomia'
       selector: id
-    - name: name
+    -
+      name: name
       label: 'Il nome della voce di tassonomia'
       selector: attributes/name
-    - name: icon
-      label: 'Icona'
+    -
+      name: icon
+      label: Icona
       selector: attributes/icon
-    - name: element_type
+    -
+      name: element_type
       label: 'Tipo di elemento'
       selector: attributes/type
-    - name: description
+    -
+      name: description
       label: 'La descrizione della voce di tassonomia'
       selector: attributes/description
-    - name: weight
+    -
+      name: weight
       label: 'Il peso della voce di tassonomia'
       selector: attributes/weight
-    - name: parent_id
+    -
+      name: parent_id
       label: 'Id del termine genitore della voce di tassonomia'
       selector: relationships/parent/data/id
-    - name: copertina
+    -
+      name: copertina
       label: 'Immagine di copertina'
       selector: relationships/copertina/data/id
-    - name: published
+    -
+      name: published
       label: 'Se la voce è pubblicata o meno'
       selector: attributes/published
-
   ids:
     tid:
       type: integer
-
 process:
   tid: tid
   vid: type
@@ -83,10 +82,12 @@ process:
     source: element_type
     method: process
   parent_id:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: parent_id
       method: process
-    - plugin: migration_lookup
+    -
+      plugin: migration_lookup
       migration: taxonomy_common
   parent:
     plugin: default_value
@@ -97,11 +98,13 @@ process:
     source: weight
     default_value: 0
   description/value:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: description
       method: process
   description/format:
-    - plugin: default_value
+    -
+      plugin: default_value
       default_value: bootstrap_italia_2
   field_copertina:
     plugin: skip_on_empty
@@ -111,14 +114,6 @@ process:
     plugin: default_value
     source: published
     default_value: 1
-
 destination:
-  plugin: entity:taxonomy_term
-
+  plugin: 'entity:taxonomy_term'
 migration_dependencies: {  }
-
-dependencies:
-  enforced:
-    module:
-      - sunchronizo
-

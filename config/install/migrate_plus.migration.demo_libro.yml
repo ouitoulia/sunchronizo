@@ -1,101 +1,101 @@
+langcode: it
+status: true
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
 id: demo_libro
-label: Tipo di contenuto Libro
-migration_group: scuola_demo
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
   - json
   - scuola
   - demo
   - demo_node
   - demo_libro
-
+migration_group: scuola_demo
+label: 'Tipo di contenuto Libro'
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: json
-
   headers:
     Accept: 'application/json; charset=utf-8'
-    Content-Type: 'application/json'
-
-  # The data_parser normally limits the fields passed on to the source plugin
-  # to fields configured to be used as part of the migration. To support more
-  # dynamic migrations, the JSON data parser supports including the original
-  # data for the current row. Simply include the 'include_raw_data' flag set
-  # to `true` to enable this. This option is disabled by default to minimize
-  # memory footprint for migrations that do not need this capability.
-  # include_raw_data: false
-
-  # Flags whether to track changes to incoming data. If TRUE, we will maintain
-  # hashed source rows to determine whether incoming data has changed.
-  # track_changes: false
-
+    Content-Type: application/json
   urls:
     - 'https://ouitoulia.github.io/krene/demo/libro.json'
-
-  # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
-
   fields:
-    - name: nid
+    -
+      name: nid
       label: 'ID del nodo'
       selector: id
-    - name: type
+    -
+      name: type
       label: 'Il tipo di contenuto'
       selector: type
-    - name: title
+    -
+      name: title
       label: 'Il titolo del libro'
       selector: attributes/titolo
-
-    # Campi
-    - name: abstract
+    -
+      name: abstract
       label: 'Descrizione breve'
       selector: attributes/abstract
-    - name: copertina
+    -
+      name: copertina
       label: 'Immagine di copertina'
       selector: relationships/copertina/data/id
-    - name: autori
+    -
+      name: autori
       label: 'Gli autori'
       selector: relationships/autori/data
-    - name: editori
+    -
+      name: editori
       label: 'Gli editori'
       selector: relationships/editori/data
-    - name: isbn
+    -
+      name: isbn
       label: 'Il codice ISBN'
       selector: attributes/isbn
-    - name: body
+    -
+      name: body
       label: 'Descrizione estesa'
       selector: attributes/descrizione_estesa
-    - name: tipologia_libro
+    -
+      name: tipologia_libro
       label: 'La tipologia del libro'
       selector: relationships/tipologia_libro/data/id
-    - name: document_url
-      label: "URL del materiale didattico"
+    -
+      name: document_url
+      label: 'URL del materiale didattico'
       selector: relationships/document/data/url
-    - name: document
-      label: "I metadata del materiale didattico"
+    -
+      name: document
+      label: 'I metadata del materiale didattico'
       selector: relationships/document
-
-    # Footer
-    - name: language
+    -
+      name: language
       label: 'La lingua del contenuto'
       selector: attributes/language
-    - name: promote
+    -
+      name: promote
       label: 'Se il contenuto è promosso alla prima pagina'
       selector: attributes/promote
-    - name: sticky
+    -
+      name: sticky
       label: 'Se il contenuto è in cima agli elenchi'
       selector: attributes/sticky
-    - name: published
+    -
+      name: published
       label: 'Se il contenuto è pubblicato o meno'
       selector: attributes/published
-
   ids:
     nid:
       type: integer
-
   constants:
     documents_media_path: 'public://demo/documents/'
-
 process:
   nid: nid
   uid:
@@ -106,23 +106,25 @@ process:
   _file_uid:
     plugin: default_value
     default_value: 1
-
-  # Campi
   field_abstract: abstract
   field_copertina: copertina
   field_autori:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: autori
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: autori
       process:
         target_id: id
   field_editori:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: editori
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: editori
       process:
         target_id: id
@@ -134,19 +136,17 @@ process:
     source: document_url
     destination: constants/documents_media_path
     uid: '@_file_uid'
-    file_exists: 'replace'
+    file_exists: replace
     skip_on_missing_source: true
     id_only: true
   field_materiali_didattici/description:
     plugin: skip_on_empty
     source: document/data/description
     method: process
-
-  # Footer
   langcode:
     plugin: default_value
     source: language
-    default_value: "und"
+    default_value: und
   promote:
     plugin: default_value
     source: promote
@@ -159,19 +159,11 @@ process:
     plugin: default_value
     source: published
     default_value: 0
-
 destination:
-  plugin: entity:node
+  plugin: 'entity:node'
   default_bundle: libro
   translations: true
-
 migration_dependencies:
   required:
     - demo_taxonomy
     - demo_media
-
-dependencies:
-  enforced:
-    module:
-      - sunchronizo
-

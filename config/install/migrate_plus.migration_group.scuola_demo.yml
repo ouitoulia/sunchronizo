@@ -1,8 +1,12 @@
-id: scuola_demo
-label: Scuola - Contenuti demo
-description: Gruppo di migrazioni che importa i contenuti demo dei content type.
-source_type: JSON
+langcode: it
+status: true
 dependencies:
   enforced:
     module:
       - sunchronizo
+id: scuola_demo
+label: 'Scuola - Contenuti demo'
+description: 'Gruppo di migrazioni che importa i contenuti demo dei content type.'
+source_type: JSON
+module: null
+shared_configuration: null

@@ -1,98 +1,99 @@
+langcode: it
+status: true
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
 id: demo_notizia
-label: Tipo di contenuto Evento
-migration_group: scuola_demo
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
   - json
   - scuola
   - demo
   - demo_node
   - demo_notizia
-
+migration_group: scuola_demo
+label: 'Tipo di contenuto Evento'
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: json
-
   headers:
     Accept: 'application/json; charset=utf-8'
-    Content-Type: 'application/json'
-
-  # The data_parser normally limits the fields passed on to the source plugin
-  # to fields configured to be used as part of the migration. To support more
-  # dynamic migrations, the JSON data parser supports including the original
-  # data for the current row. Simply include the 'include_raw_data' flag set
-  # to `true` to enable this. This option is disabled by default to minimize
-  # memory footprint for migrations that do not need this capability.
-  # include_raw_data: false
-
-  # Flags whether to track changes to incoming data. If TRUE, we will maintain
-  # hashed source rows to determine whether incoming data has changed.
-  # track_changes: false
-
+    Content-Type: application/json
   urls:
     - 'https://ouitoulia.github.io/krene/demo/notizia.json'
-
-  # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
-
   fields:
-    - name: nid
+    -
+      name: nid
       label: 'ID del nodo'
       selector: id
-    - name: type
+    -
+      name: type
       label: 'Il tipo di contenuto'
       selector: type
-    - name: title
+    -
+      name: title
       label: 'Il titolo del contenuto'
       selector: attributes/titolo
-
-    # Campi
-    - name: tipologia_notizia
+    -
+      name: tipologia_notizia
       label: 'Tipologia notizia'
       selector: relationships/tipologia_notizia/data/id
-    - name: abstract
+    -
+      name: abstract
       label: 'Descrizione breve'
       selector: attributes/abstract
-    - name: argomenti
-      label: 'Argomenti'
+    -
+      name: argomenti
+      label: Argomenti
       selector: relationships/argomenti/data
-    - name: copertina
+    -
+      name: copertina
       label: 'Immagine di copertina'
       selector: relationships/copertina/data/id
-    - name: corpo
+    -
+      name: corpo
       label: 'Corpo della notizia'
       selector: attributes/corpo
-    - name: autori
-      label: "Gli autori della notizia"
+    -
+      name: autori
+      label: 'Gli autori della notizia'
       selector: relationships/autori/data
-    - name: persone
+    -
+      name: persone
       label: "Le persone che parteciperanno all'evento"
       selector: relationships/persone/data
-    - name: luoghi
+    -
+      name: luoghi
       label: 'I luoghi citati dalla notizia'
       selector: relationships/luoghi/data
-    - name: eventi
+    -
+      name: eventi
       label: 'Gli eventi correlati'
       selector: relationships/eventi/data
-
-    # Footer
-    - name: language
+    -
+      name: language
       label: 'La lingua del contenuto'
       selector: attributes/language
-    - name: promote
+    -
+      name: promote
       label: 'Se il contenuto è promosso alla prima pagina'
       selector: attributes/promote
-    - name: sticky
+    -
+      name: sticky
       label: 'Se il contenuto è in cima agli elenchi'
       selector: attributes/sticky
-    - name: published
+    -
+      name: published
       label: 'Se il contenuto è pubblicato o meno'
       selector: attributes/published
-
   ids:
     nid:
       type: integer
-
 process:
   nid: nid
   uid:
@@ -100,18 +101,18 @@ process:
     default_value: 1
   type: type
   title: title
-
-  # Campi
   field_tipologia_notizia:
     plugin: skip_on_empty
     source: tipologia_notizia
     method: process
   field_abstract: abstract
   field_argomenti:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: argomenti
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: argomenti
       process:
         target_id: id
@@ -124,47 +125,55 @@ process:
     source: corpo
     method: process
   body/format:
-    - plugin: default_value
+    -
+      plugin: default_value
       default_value: bootstrap_italia_2
   field_persone:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: persone
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: persone
       process:
         target_id: id
   field_persona_responsabile:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: autori
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: autori
       process:
         target_id: id
   field_luoghi:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: luoghi
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: luoghi
       process:
         target_id: id
   field_eventi:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: eventi
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: eventi
       process:
         target_id: id
-    - plugin: log
-
-  # Footer
+    -
+      plugin: log
   langcode:
     plugin: default_value
     source: language
-    default_value: "und"
+    default_value: und
   promote:
     plugin: default_value
     source: promote
@@ -177,12 +186,10 @@ process:
     plugin: default_value
     source: published
     default_value: 0
-
 destination:
-  plugin: entity:node
+  plugin: 'entity:node'
   default_bundle: notizia
   translations: true
-
 migration_dependencies:
   required:
     - demo_taxonomy
@@ -190,9 +197,3 @@ migration_dependencies:
     - demo_persona
     - demo_luogo
     - demo_evento
-
-dependencies:
-  enforced:
-    module:
-      - sunchronizo
-

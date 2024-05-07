@@ -1,162 +1,167 @@
+langcode: it
+status: true
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
 id: demo_servizio
-label: Tipo di contenuto Servizio
-migration_group: scuola_demo
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
   - json
   - scuola
   - demo
   - demo_node
   - demo_servizio
-
+migration_group: scuola_demo
+label: 'Tipo di contenuto Servizio'
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: json
-
   headers:
     Accept: 'application/json; charset=utf-8'
-    Content-Type: 'application/json'
-
-  # The data_parser normally limits the fields passed on to the source plugin
-  # to fields configured to be used as part of the migration. To support more
-  # dynamic migrations, the JSON data parser supports including the original
-  # data for the current row. Simply include the 'include_raw_data' flag set
-  # to `true` to enable this. This option is disabled by default to minimize
-  # memory footprint for migrations that do not need this capability.
-  # include_raw_data: false
-
-  # Flags whether to track changes to incoming data. If TRUE, we will maintain
-  # hashed source rows to determine whether incoming data has changed.
-  # track_changes: false
-
+    Content-Type: application/json
   urls:
     - 'https://ouitoulia.github.io/krene/demo/servizio.json'
-
-  # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
-
   fields:
-    - name: nid
+    -
+      name: nid
       label: 'ID del nodo'
       selector: id
-    - name: type
+    -
+      name: type
       label: 'Il tipo di contenuto'
       selector: type
-    - name: title
+    -
+      name: title
       label: 'Il titolo del contenuto'
       selector: attributes/titolo
-
-    # Scheda "Organizzazione"
-    - name: tipologia_servizio
+    -
+      name: tipologia_servizio
       label: 'La tipologia di servizio'
       selector: relationships/tipologia_servizio/data/id
-    - name: codice_identificativo
+    -
+      name: codice_identificativo
       label: "L'eventuale codice identificativo del servizio"
       selector: attributes/codice_identificativo
-    - name: attivo
-      label: "Lo stato del servizio"
+    -
+      name: attivo
+      label: 'Lo stato del servizio'
       selector: attributes/attivo
-    - name: servizio_non_attivo
-      label: "Breve descrizione del motivo per cui il servizio non è attivo"
+    -
+      name: servizio_non_attivo
+      label: 'Breve descrizione del motivo per cui il servizio non è attivo'
       selector: attributes/servizio_non_attivo
-    - name: copertina
+    -
+      name: copertina
       label: 'Logo o immagine del servizio'
       selector: relationships/copertina/data/id
-    - name: argomenti
-      label: 'Argomenti'
+    -
+      name: argomenti
+      label: Argomenti
       selector: relationships/argomenti/data
-    - name: abstract
+    -
+      name: abstract
       label: 'Descrizione breve'
       selector: attributes/abstract
-
-    # Scheda "Cos'è"
-    - name: cosa_e
+    -
+      name: cosa_e
       label: "Illustra cos'è il servizio"
       selector: attributes/cosa_e
-    - name: a_cosa_serve
-      label: "IIllustra nel dettaglio a cosa serve il servizio"
+    -
+      name: a_cosa_serve
+      label: 'IIllustra nel dettaglio a cosa serve il servizio'
       selector: attributes/a_cosa_serve
-
-    # Scheda "Come si accede"
-    - name: come_si_accede
-      label: "La procedura da seguire per usufruire del Servizio"
+    -
+      name: come_si_accede
+      label: 'La procedura da seguire per usufruire del Servizio'
       selector: attributes/come_si_accede
-    - name: procedure_collegate_esito
-      label: "Esplicita cosa bisogna fare per continuare ad usufruire del servizio."
+    -
+      name: procedure_collegate_esito
+      label: 'Esplicita cosa bisogna fare per continuare ad usufruire del servizio.'
       selector: attributes/procedure_collegate_esito
-    - name: servizio_online
-      label: "Indicazioni ai visitatori su come utilizzare il canale digitale di erogazione del servizio."
+    -
+      name: servizio_online
+      label: 'Indicazioni ai visitatori su come utilizzare il canale digitale di erogazione del servizio.'
       selector: attributes/servizio_online
-    - name: azione
-      label: "Azione che il visitatore deve compiere per poter usufruire del servizio"
+    -
+      name: azione
+      label: 'Azione che il visitatore deve compiere per poter usufruire del servizio'
       selector: relationships/azione/data/paragraph
-    - name: tipologia_autenticazione
+    -
+      name: tipologia_autenticazione
       label: 'Tipologie di autenticazioni supportate'
       selector: relationships/tipologia_autenticazione/data
-    - name: sede_canale_fisico
-      label: "Breve testo che illustra cosa bisogna fare per poter fruire del servizio ed esplicita se serve prendere un appuntamento."
+    -
+      name: sede_canale_fisico
+      label: 'Breve testo che illustra cosa bisogna fare per poter fruire del servizio ed esplicita se serve prendere un appuntamento.'
       selector: attributes/sede_canale_fisico
-    - name: luoghi
+    -
+      name: luoghi
       label: 'I luoghi in cui viene erogato il servizio'
       selector: relationships/luoghi/data
-
-    # Scheda "Cosa serve e casi particolari"
-    - name: cosa_serve
+    -
+      name: cosa_serve
       label: 'Cosa serve per usufruire del servizio'
       selector: relationships/cosa_serve/data
-    - name: casi_particolari
+    -
+      name: casi_particolari
       label: "Eventuali casi particolari riferiti all'ottenimento del servizio."
       selector: attributes/casi_particolari
-
-    # Scheda "Riferimenti e contatti"
-    - name: telefono
-      label: 'Telefono'
+    -
+      name: telefono
+      label: Telefono
       selector: attributes/telefono
-    - name: email
-      label: 'Email'
+    -
+      name: email
+      label: Email
       selector: attributes/email
-    - name: persona_responsabile
+    -
+      name: persona_responsabile
       label: 'Le persone da contattare'
       selector: relationships/persona_responsabile/data
-    - name: struttura_responsabile
+    -
+      name: struttura_responsabile
       label: 'Eventualmente la struttura o le strutture responsabili'
       selector: relationships/struttura_responsabile/data
-    - name: ipa
+    -
+      name: ipa
       label: 'Codice ente erogatore'
       selector: attributes/ipa
-
-    # Scheda "Tempi e scadenze"
-    - name: timeline
-      label: "Timeline field"
+    -
+      name: timeline
+      label: 'Timeline field'
       selector: relationships/timeline/data/paragraph
-
-    # Scheda "Ulteriori informazioni"
-    - name: extra_info
-      label: "Ulteriori informazioni"
+    -
+      name: extra_info
+      label: 'Ulteriori informazioni'
       selector: relationships/extra_info/data/paragraph
-
-    - name: tipologia_licenza
+    -
+      name: tipologia_licenza
       label: 'Tipologia di licenza del contenuto'
       selector: relationships/tipologia_licenza/data/id
-
-    # Footer
-    - name: language
+    -
+      name: language
       label: 'La lingua del contenuto'
       selector: attributes/language
-    - name: promote
+    -
+      name: promote
       label: 'Se il contenuto è promosso alla prima pagina'
       selector: attributes/promote
-    - name: sticky
+    -
+      name: sticky
       label: 'Se il contenuto è in cima agli elenchi'
       selector: attributes/sticky
-    - name: published
+    -
+      name: published
       label: 'Se il contenuto è pubblicato o meno'
       selector: attributes/published
-
   ids:
     nid:
       type: integer
-
 process:
   nid: nid
   uid:
@@ -164,8 +169,6 @@ process:
     default_value: 1
   type: type
   title: title
-
-  # Scheda "Organizzazione"
   field_tipologia_servizio: tipologia_servizio
   field_codice_identificativo:
     plugin: skip_on_empty
@@ -184,16 +187,16 @@ process:
     source: copertina
     method: process
   field_argomenti:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: argomenti
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: argomenti
       process:
         target_id: id
   field_abstract: abstract
-
-  # Scheda "Cos'è"
   field_cosa_e:
     plugin: skip_on_empty
     source: cosa_e
@@ -202,8 +205,6 @@ process:
     plugin: skip_on_empty
     source: a_cosa_serve
     method: process
-
-  # Scheda "Come si accede"
   field_come_si_accede:
     plugin: skip_on_empty
     source: come_si_accede
@@ -227,10 +228,12 @@ process:
       target_id: '0'
       target_revision_id: '1'
   field_tipologia_autenticazione:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: tipologia_autenticazione
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: tipologia_autenticazione
       process:
         target_id: id
@@ -239,20 +242,22 @@ process:
     source: sede_canale_fisico
     method: process
   field_luoghi:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: luoghi
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: luoghi
       process:
         target_id: id
-
-  # Scheda "Cosa serve e casi particolari"
   field_cosa_serve:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: cosa_serve
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: cosa_serve
       process:
         target_id: id
@@ -260,8 +265,6 @@ process:
     plugin: skip_on_empty
     source: casi_particolari
     method: process
-
-  # Scheda "Riferimenti e contatti"
   field_telefono:
     plugin: skip_on_empty
     source: telefono
@@ -271,18 +274,22 @@ process:
     source: email
     method: process
   field_persona_responsabile:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: persona_responsabile
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: persona_responsabile
       process:
         target_id: id
   field_struttura_responsabile:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: struttura_responsabile
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: struttura_responsabile
       process:
         target_id: id
@@ -290,8 +297,6 @@ process:
     plugin: skip_on_empty
     source: ipa
     method: process
-
-  # Scheda "Tempi e scadenze"
   _timeline:
     plugin: migration_lookup
     migration: demo_paragraph_timeline
@@ -302,8 +307,6 @@ process:
     process:
       target_id: '0'
       target_revision_id: '1'
-
-  # Scheda "Ulteriori informazioni"
   _extra_info:
     plugin: migration_lookup
     migration: demo_paragraph_extra_info
@@ -314,17 +317,15 @@ process:
     process:
       target_id: '0'
       target_revision_id: '1'
-
   field_tipologia_licenza:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: tipologia_licenza
       method: process
-
-  # Footer
   langcode:
     plugin: default_value
     source: language
-    default_value: "und"
+    default_value: und
   promote:
     plugin: default_value
     source: promote
@@ -337,12 +338,10 @@ process:
     plugin: default_value
     source: published
     default_value: 0
-
 destination:
-  plugin: entity:node
+  plugin: 'entity:node'
   default_bundle: servizio
   translations: true
-
 migration_dependencies:
   required:
     - demo_taxonomy
@@ -354,9 +353,3 @@ migration_dependencies:
     - demo_paragraph_call_to_action
     - demo_paragraph_extra_info
     - demo_paragraph_timeline
-
-dependencies:
-  enforced:
-    module:
-      - sunchronizo
-

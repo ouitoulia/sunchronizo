@@ -1,128 +1,129 @@
+langcode: it
+status: true
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
 id: demo_persona
-label: Tipo di contenuto Persona
-migration_group: scuola_demo
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
   - json
   - scuola
   - demo
   - demo_node
   - demo_persona
-
+migration_group: scuola_demo
+label: 'Tipo di contenuto Persona'
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: json
-
   headers:
     Accept: 'application/json; charset=utf-8'
-    Content-Type: 'application/json'
-
-  # The data_parser normally limits the fields passed on to the source plugin
-  # to fields configured to be used as part of the migration. To support more
-  # dynamic migrations, the JSON data parser supports including the original
-  # data for the current row. Simply include the 'include_raw_data' flag set
-  # to `true` to enable this. This option is disabled by default to minimize
-  # memory footprint for migrations that do not need this capability.
-  # include_raw_data: false
-
-  # Flags whether to track changes to incoming data. If TRUE, we will maintain
-  # hashed source rows to determine whether incoming data has changed.
-  # track_changes: false
-
+    Content-Type: application/json
   urls:
     - 'https://ouitoulia.github.io/krene/demo/persona.json'
-
-  # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
-
   fields:
-    - name: nid
+    -
+      name: nid
       label: 'ID del nodo'
       selector: id
-    - name: type
+    -
+      name: type
       label: 'Il tipo di contenuto'
       selector: type
-    - name: title
+    -
+      name: title
       label: 'Il titolo del contenuto'
       selector: attributes/title
-
-    # Scheda biografia
-    - name: ritratto_url
+    -
+      name: ritratto_url
       label: 'URL foto della persona'
       selector: relationships/ritratto/data/url
-    - name: ritratto
+    -
+      name: ritratto
       label: 'Foto della persona'
       selector: relationships/ritratto
-    - name: nome
-      label: 'Nome'
+    -
+      name: nome
+      label: Nome
       selector: attributes/nome
-    - name: cognome
-      label: 'Cognome'
+    -
+      name: cognome
+      label: Cognome
       selector: attributes/cognome
-    - name: abstract
+    -
+      name: abstract
       label: 'Descrizione breve'
       selector: attributes/abstract
-
-    # Scheda Contatti
-    - name: telefono
-      label: 'Telefono'
+    -
+      name: telefono
+      label: Telefono
       selector: attributes/telefono
-    - name: email
-      label: 'Email'
+    -
+      name: email
+      label: Email
       selector: attributes/email
-
-    # Scheda Contratto
-    - name: ruolo_persona
+    -
+      name: ruolo_persona
       label: 'Il ruolo della persona'
       selector: relationships/ruolo_persona/data/id
-    - name: tipologia_posto
+    -
+      name: tipologia_posto
       label: 'Posto comune o sostegno'
       selector: relationships/tipologia_posto/data/id
-    - name: tipologia_incarico
-      label: 'Determinato/Indeterminato'
+    -
+      name: tipologia_incarico
+      label: Determinato/Indeterminato
       selector: relationships/tipologia_incarico/data/id
-    - name: tipologia_supplenza
+    -
+      name: tipologia_supplenza
       label: 'La tipologia di supplenza'
       selector: relationships/tipologia_supplenza/data/id
-    - name: data_fine_incarico
+    -
+      name: data_fine_incarico
       label: 'La data di fine incarico'
       selector: relationships/data_fine_incarico/data/id
-    - name: materie
+    -
+      name: materie
       label: 'Le materie che insegna la persona'
       selector: relationships/materie/data
-
-    # Scheda Anagrafica
-    - name: data_nascita
+    -
+      name: data_nascita
       label: 'Data di nascita della persona'
       selector: attributes/birthdate
-    - name: genere
+    -
+      name: genere
       label: 'Il genere della persona'
       selector: attributes/genere
-    - name: codice_fiscale
+    -
+      name: codice_fiscale
       label: 'Il codice fiscale della persona'
       selector: attributes/codice_fiscale
-
-    # Footer
-    - name: language
+    -
+      name: language
       label: 'La lingua del contenuto'
       selector: attributes/language
-    - name: promote
+    -
+      name: promote
       label: 'Se il contenuto è promosso alla prima pagina'
       selector: attributes/promote
-    - name: sticky
+    -
+      name: sticky
       label: 'Se il contenuto è in cima agli elenchi'
       selector: attributes/sticky
-    - name: published
+    -
+      name: published
       label: 'Se il contenuto è pubblicato o meno'
       selector: attributes/published
-
   ids:
     nid:
       type: integer
-
   constants:
     ritratto_path: 'public://demo/persona/ritratto/'
-
 process:
   nid: nid
   uid:
@@ -130,8 +131,6 @@ process:
     default_value: 1
   type: type
   title: title
-
-  # Scheda biografia
   _file_uid:
     plugin: default_value
     default_value: 1
@@ -140,19 +139,15 @@ process:
     source: ritratto_url
     destination: constants/ritratto_path
     uid: '@_file_uid'
-    file_exists: 'replace'
+    file_exists: replace
     skip_on_missing_source: true
     id_only: true
   field_ritratto/alt: ritratto/data/description
   field_nome: nome
   field_cognome: cognome
   field_abstract: abstract
-
-  # Scheda Contatti
   field_telefono: telefono
   field_email: email
-
-  # Scheda Contratto
   field_ruolo_persona: ruolo_persona
   field_tipologia_posto:
     plugin: skip_on_empty
@@ -168,15 +163,15 @@ process:
     source: data_fine_incarico
     method: process
   field_materie:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: materie
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: materie
       process:
         target_id: id
-
-  # Scheda Anagrafica
   field_data_nascita:
     plugin: skip_on_empty
     source: data_nascita
@@ -186,12 +181,10 @@ process:
     source: genere
     method: process
   field_codice_fiscale: codice_fiscale
-
-  # Footer
   langcode:
     plugin: default_value
     source: language
-    default_value: "und"
+    default_value: und
   promote:
     plugin: default_value
     source: promote
@@ -204,20 +197,12 @@ process:
     plugin: default_value
     source: published
     default_value: 0
-
 destination:
-  plugin: entity:node
+  plugin: 'entity:node'
   default_bundle: persona
   translations: true
-
 migration_dependencies:
   required:
     - demo_taxonomy
     - taxonomy_materie_secondaria_primo_grado
     - taxonomy_materie_secondaria_secondo_grado
-
-dependencies:
-  enforced:
-    module:
-      - sunchronizo
-

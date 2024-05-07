@@ -1,187 +1,207 @@
+langcode: it
+status: true
+dependencies:
+  enforced:
+    module:
+      - sunchronizo
 id: demo_luogo
-label: Tipo di contenuto Luogo
-migration_group: scuola_demo
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
   - json
   - scuola
   - demo
   - demo_node
   - demo_luogo
-
+migration_group: scuola_demo
+label: 'Tipo di contenuto Luogo'
 source:
   plugin: url
   data_fetcher_plugin: http
   data_parser_plugin: json
-
   headers:
     Accept: 'application/json; charset=utf-8'
-    Content-Type: 'application/json'
-
-  # The data_parser normally limits the fields passed on to the source plugin
-  # to fields configured to be used as part of the migration. To support more
-  # dynamic migrations, the JSON data parser supports including the original
-  # data for the current row. Simply include the 'include_raw_data' flag set
-  # to `true` to enable this. This option is disabled by default to minimize
-  # memory footprint for migrations that do not need this capability.
-  # include_raw_data: false
-
-  # Flags whether to track changes to incoming data. If TRUE, we will maintain
-  # hashed source rows to determine whether incoming data has changed.
-  # track_changes: false
-
+    Content-Type: application/json
   urls:
     - 'https://ouitoulia.github.io/krene/demo/luogo.json'
-
-  # An xpath-like selector corresponding to the items to be imported.
   item_selector: data
-
   fields:
-    - name: nid
+    -
+      name: nid
       label: 'ID del nodo'
       selector: id
-    - name: type
+    -
+      name: type
       label: 'Il tipo di contenuto'
       selector: type
-    - name: title
+    -
+      name: title
       label: 'Il titolo del contenuto'
       selector: attributes/nome
-
-    # Scheda descrizione
-    - name: abstract
+    -
+      name: abstract
       label: 'Descrizione breve'
       selector: attributes/abstract
-    - name: argomenti
-      label: 'Argomenti'
+    -
+      name: argomenti
+      label: Argomenti
       selector: relationships/argomenti/data
-    - name: tipologia_luogo
+    -
+      name: tipologia_luogo
       label: 'Il tipo di luogo'
       selector: relationships/tipologia_luogo/data/id
-    - name: copertina
+    -
+      name: copertina
       label: 'Immagine di copertina'
       selector: relationships/copertina/data/id
-    - name: video
+    -
+      name: video
       label: 'Video del luogo'
       selector: relationships/video/data/id
-    - name: galleria_immagini
+    -
+      name: galleria_immagini
       label: 'Galleria di immagini'
       selector: relationships/galleria_immagini/data
-    - name: body
+    -
+      name: body
       label: 'Descrizione estesa'
       selector: attributes/descrizione_estesa
-
-    # Scheda dove si trova
-    - name: fa_parte_di
+    -
+      name: fa_parte_di
       label: 'Se il luogo fa parte di un altro luogo'
       selector: relationships/fa_parte_di/data/id
-    - name: indirizzo
+    -
+      name: indirizzo
       label: 'Indirizzo del luogo'
       selector: attributes/indirizzo
-    - name: coordinate_geografiche
+    -
+      name: coordinate_geografiche
       label: 'Coordinate geografiche del luogo'
       selector: attributes/coordinate_geografiche
-    - name: orario_pubblico
+    -
+      name: orario_pubblico
       label: 'Gli orari di apertura del luogo'
       selector: attributes/orario_pubblico
-    - name: attributi_luogo
+    -
+      name: attributi_luogo
       label: 'Modalità di accesso'
       selector: relationships/attributi_luogo/data
-
-    # Scheda contatti
-    - name: email
-      label: 'Email'
+    -
+      name: email
+      label: Email
       selector: attributes/email
-    - name: pec
-      label: 'PEC'
+    -
+      name: pec
+      label: PEC
       selector: attributes/pec
-    - name: telefono
-      label: 'Telefono'
+    -
+      name: telefono
+      label: Telefono
       selector: attributes/telefono
-
-    # Scheda ulteriori informazioni
-    - name: numero_alunni
-      label: "Numero alunni"
+    -
+      name: numero_alunni
+      label: 'Numero alunni'
       selector: attributes/numero_alunni
-    - name: numero_classi
-      label: "Numero classi"
+    -
+      name: numero_classi
+      label: 'Numero classi'
       selector: attributes/numero_classi
-    - name: struttura_esterna
+    -
+      name: struttura_esterna
       label: 'Eventuali gestori esterni o terzi'
       selector: relationships/struttura_esterna/data
-    - name: prenotabile
+    -
+      name: prenotabile
       label: 'Se il luogo è prenotabile'
       selector: attributes/prenotabile
-    - name: posti
+    -
+      name: posti
       label: 'Posti a sedere'
       selector: attributes/posti
-    - name: anno_costruzione
+    -
+      name: anno_costruzione
       label: "L'anno di costruzione"
       selector: attributes/anno_costruzione
-    - name: numero_piani
-      label: "Numero di piani"
+    -
+      name: numero_piani
+      label: 'Numero di piani'
       selector: attributes/numero_piani
-    - name: codice_identificativo
-      label: "Il codice identificativo"
+    -
+      name: codice_identificativo
+      label: 'Il codice identificativo'
       selector: attributes/codice_identificativo
-    - name: codice_catastale_comune
-      label: "Codice comune"
+    -
+      name: codice_catastale_comune
+      label: 'Codice comune'
       selector: attributes/codice_catastale_comune
-    - name: uso_scolastico
-      label: "Se il luogo è ad uso scolastico"
+    -
+      name: uso_scolastico
+      label: 'Se il luogo è ad uso scolastico'
       selector: attributes/uso_scolastico
-    - name: destinazione_uso
+    -
+      name: destinazione_uso
       label: 'Destinazione uso'
       selector: relationships/destinazione_uso/data
-    - name: anno_adattamento
-      label: "Anno di adattamento"
+    -
+      name: anno_adattamento
+      label: 'Anno di adattamento'
       selector: attributes/anno_adattamento
-    - name: superficie_area_totale
-      label: "Superficie area totale"
+    -
+      name: superficie_area_totale
+      label: 'Superficie area totale'
       selector: attributes/superficie_area_totale
-    - name: superficie_area_libera
-      label: "Superficie area libera"
+    -
+      name: superficie_area_libera
+      label: 'Superficie area libera'
       selector: attributes/superficie_area_libera
-    - name: volume
-      label: "Volume"
+    -
+      name: volume
+      label: Volume
       selector: attributes/volume
-
-    # Scheda sede legale
-    - name: sede_legale
-      label: "Indica se il luogo è la sede legale della scuola"
+    -
+      name: sede_legale
+      label: 'Indica se il luogo è la sede legale della scuola'
       selector: attributes/sede_legale
-    - name: codice_meccanografico
-      label: "Il codice meccanografico"
+    -
+      name: codice_meccanografico
+      label: 'Il codice meccanografico'
       selector: attributes/codice_meccanografico
-    - name: codice_fiscale
-      label: "Il codice fiscale della scuola"
+    -
+      name: codice_fiscale
+      label: 'Il codice fiscale della scuola'
       selector: attributes/codice_fiscale
-    - name: ipa
-      label: "Il codice ipa"
+    -
+      name: ipa
+      label: 'Il codice ipa'
       selector: attributes/ipa
-    - name: codice_cuf
-      label: "Il codice unico di fatturazione"
+    -
+      name: codice_cuf
+      label: 'Il codice unico di fatturazione'
       selector: attributes/codice_cuf
-    - name: link
-      label: "Collegamento con Scuola in chiaro"
+    -
+      name: link
+      label: 'Collegamento con Scuola in chiaro'
       selector: attributes/link
-
-    # Footer
-    - name: language
+    -
+      name: language
       label: 'La lingua del contenuto'
       selector: attributes/language
-    - name: promote
+    -
+      name: promote
       label: 'Se il contenuto è promosso alla prima pagina'
       selector: attributes/promote
-    - name: sticky
+    -
+      name: sticky
       label: 'Se il contenuto è in cima agli elenchi'
       selector: attributes/sticky
-    - name: published
+    -
+      name: published
       label: 'Se il contenuto è pubblicato o meno'
       selector: attributes/published
-
   ids:
     nid:
       type: integer
-
 process:
   nid: nid
   uid:
@@ -189,14 +209,14 @@ process:
     default_value: 1
   type: type
   title: title
-
-  # Scheda descrizione
   field_abstract: abstract
   field_argomenti:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: argomenti
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: argomenti
       process:
         target_id: id
@@ -207,25 +227,27 @@ process:
     source: video
     method: process
   field_galleria_immagini:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: galleria_immagini
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: galleria_immagini
       process:
-       target_id: id
+        target_id: id
   body/value: body
-
-  # Scheda dove si trova
   field_luoghi:
     plugin: skip_on_empty
     source: fa_parte_di
     method: process
   field_indirizzo:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: indirizzo
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: indirizzo
       process:
         country_code: nazione
@@ -234,10 +256,12 @@ process:
         postal_code: cap
         address_line1: indirizzo
   field_coordinate_geografiche:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: coordinate_geografiche
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: coordinate_geografiche
       process:
         value: value
@@ -254,15 +278,15 @@ process:
     source: orario_pubblico
     method: process
   field_attributi_luogo:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: attributi_luogo
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: attributi_luogo
       process:
         target_id: id
-
-  # Scheda contatti
   field_email:
     plugin: skip_on_empty
     source: email
@@ -275,8 +299,6 @@ process:
     plugin: skip_on_empty
     source: pec
     method: process
-
-  # Scheda ulteriori informazioni
   field_numero_alunni:
     plugin: skip_on_empty
     source: numero_alunni
@@ -286,10 +308,12 @@ process:
     source: numero_classi
     method: process
   field_struttura_esterna:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: struttura_esterna
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: struttura_esterna
       process:
         target_id: id
@@ -322,10 +346,12 @@ process:
     source: uso_scolastico
     method: process
   field_destinazione_uso:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: destinazione_uso
       method: process
-    - plugin: sub_process
+    -
+      plugin: sub_process
       source: destinazione_uso
       process:
         target_id: id
@@ -345,8 +371,6 @@ process:
     plugin: skip_on_empty
     source: volume
     method: process
-
-  # Scheda ulteriori informazioni
   field_sede_legale:
     plugin: skip_on_empty
     source: sede_legale
@@ -371,12 +395,10 @@ process:
     plugin: skip_on_empty
     source: link
     method: process
-
-  # Footer
   langcode:
     plugin: default_value
     source: language
-    default_value: "und"
+    default_value: und
   promote:
     plugin: default_value
     source: promote
@@ -389,20 +411,12 @@ process:
     plugin: default_value
     source: published
     default_value: 0
-
 destination:
-  plugin: entity:node
+  plugin: 'entity:node'
   default_bundle: luogo
   translations: true
-
 migration_dependencies:
   required:
     - demo_taxonomy
     - demo_media
     - demo_partner
-
-dependencies:
-  enforced:
-    module:
-      - sunchronizo
-
