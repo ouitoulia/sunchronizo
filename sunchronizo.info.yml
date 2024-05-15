@@ -12,8 +12,8 @@ dependencies:
   - drupal:migrate_tools
   - migrate_file:migrate_file
 
-# Information added by GitHub Action packaging script on 2024-05-07
-version: '2.26.0'
+# Information added by GitHub Action packaging script on 2024-05-15
+version: '2.27.0'
 project: 'Sunchronizo'
-datestamp: 1715072396
-message: ' update to new syntax'
+datestamp: 1715784402
+message: ' aggiunte migrazioni per materie infanzia e primaria ouitoulia/diagraphe#30'
