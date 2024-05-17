@@ -44,7 +44,7 @@ source:
       selector: attributes/label
     -
       name: description
-      label: 'La label'
+      label: 'La descrizione'
       selector: attributes/description
     -
       name: type
