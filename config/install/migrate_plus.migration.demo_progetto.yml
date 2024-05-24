@@ -100,6 +100,10 @@ source:
       label: 'Collaborazioni con altri enti, associazioni, ecc'
       selector: relationships/collaborazioni/data
     -
+      name: finanziamenti
+      label: 'Progetto finanziato con'
+      selector: relationships/finanziamenti/data
+    -
       name: language
       label: 'La lingua del contenuto'
       selector: attributes/language
@@ -205,6 +209,16 @@ process:
     -
       plugin: sub_process
       source: collaborazioni
+      process:
+        target_id: id
+  field_finanziamenti:
+    -
+      plugin: skip_on_empty
+      source: finanziamenti
+      method: process
+    -
+      plugin: sub_process
+      source: finanziamenti
       process:
         target_id: id
   langcode:
