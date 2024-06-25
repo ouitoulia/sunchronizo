@@ -23,7 +23,6 @@ source:
     Content-Type: application/json
   urls:
     - 'https://ouitoulia.github.io/krene/taxonomy/argomenti.json'
-    - 'https://ouitoulia.github.io/krene/taxonomy/tipologia_documenti.json'
   item_selector: data
   fields:
     -
