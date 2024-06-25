@@ -18,11 +18,11 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "drupal/core-recommended": "^10",
+        "drupal/core-recommended": ">=10.3",
         "drupal/migrate_file": ">=2.1",
-        "ouitoulia/lexika": "^2",
-        "ouitoulia/themethla": "^3",
         "drupal/migrate_plus": "^6",
-        "drupal/migrate_tools": "^6"
+        "drupal/migrate_tools": "^6",
+        "ouitoulia/lexika": ">=3",
+        "ouitoulia/themethla": "^4"
     }
 }
