@@ -12,8 +12,8 @@ dependencies:
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
 
-# Information added by GitHub Action packaging script on 2024-06-08
-version: '2.29.0'
+# Information added by GitHub Action packaging script on 2024-06-25
+version: '2.30.0'
 project: 'Sunchronizo'
-datestamp: 1717854930
-message: ' fix dependencies'
+datestamp: 1719312705
+message: ' add uuid to tipologia_documenti'
