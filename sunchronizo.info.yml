@@ -13,7 +13,7 @@ dependencies:
   - migrate_tools:migrate_tools
 
 # Information added by GitHub Action packaging script on 2024-06-25
-version: '2.30.0'
+version: '3.0.0'
 project: 'Sunchronizo'
-datestamp: 1719312705
-message: ' add uuid to tipologia_documenti'
+datestamp: 1719334153
+message: ' up to drupal 10.3'
