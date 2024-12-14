@@ -12,8 +12,8 @@ dependencies:
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
 
-# Information added by GitHub Action packaging script on 2024-06-25
-version: '3.0.0'
+# Information added by GitHub Action packaging script on 2024-12-14
+version: '3.1.0'
 project: 'Sunchronizo'
-datestamp: 1719334153
-message: ' up to drupal 10.3'
+datestamp: 1734135241
+message: ' fix compatibility'
