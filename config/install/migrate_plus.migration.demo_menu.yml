@@ -25,6 +25,7 @@ source:
   urls:
     - 'https://ouitoulia.github.io/krene/demo/link_esterni.json'
     - 'https://ouitoulia.github.io/krene/demo/small_print.json'
+    - 'https://ouitoulia.github.io/krene/demo/navigazione_secondaria.json'
   item_selector: data
   fields:
     -
