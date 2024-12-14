@@ -3,7 +3,7 @@ description: Sunchronìzo è un modulo Drupal che importa dati nella distribuzio
 package: "Ouitoulía"
 
 type: module
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^10.3 || ^11
 dependencies:
   - ouitoulia:lexika
   - ouitoulia:themethla
