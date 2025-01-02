@@ -168,8 +168,6 @@ process:
       source: eventi
       process:
         target_id: id
-    -
-      plugin: log
   langcode:
     plugin: default_value
     source: language
