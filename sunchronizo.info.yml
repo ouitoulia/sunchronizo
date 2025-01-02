@@ -12,8 +12,8 @@ dependencies:
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
 
-# Information added by GitHub Action packaging script on 2024-12-14
-version: '3.2.0'
+# Information added by GitHub Action packaging script on 2025-01-02
+version: '3.2.1'
 project: 'Sunchronizo'
-datestamp: 1734177058
-message: ' add mene-secondario demo'
+datestamp: 1735795271
+message: ' remove plugin log'
