@@ -12,8 +12,8 @@ dependencies:
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
 
-# Information added by GitHub Action packaging script on 2025-01-02
-version: '3.2.1'
+# Information added by GitHub Action packaging script on 2025-01-30
+version: '3.3.0'
 project: 'Sunchronizo'
-datestamp: 1735795271
-message: ' remove plugin log'
+datestamp: 1738242551
+message: ' update deps'
