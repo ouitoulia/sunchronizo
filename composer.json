@@ -23,6 +23,6 @@
         "drupal/migrate_plus": "^6",
         "drupal/migrate_tools": "^6",
         "ouitoulia/lexika": ">=3",
-        "ouitoulia/themethla": "^4"
+        "ouitoulia/themethla": ">=5"
     }
 }
