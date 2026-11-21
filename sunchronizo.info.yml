@@ -12,7 +12,7 @@ dependencies:
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
 
-# Information added by GitHub Action packaging script on 2025-04-12
-version: '3.3.1'
+# Information added by GitHub Action packaging script on 2026-11-21
+version: '3.4.0'
 project: 'Sunchronizo'
-datestamp: 1744473093
+datestamp: 1795251700
