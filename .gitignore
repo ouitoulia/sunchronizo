@@ -60,3 +60,7 @@
 /drush
 /drupal.phar
 /drupal
+
+# editor
+.vscode
+.idea
