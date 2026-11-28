@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: scuola_roles
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -59,3 +60,4 @@ process:
 destination:
   plugin: 'entity:user_role'
 migration_dependencies: {  }
+include: null

@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: demo_media
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -159,3 +160,4 @@ destination:
   plugin: 'entity:media'
   translations: true
 migration_dependencies: {  }
+include: null

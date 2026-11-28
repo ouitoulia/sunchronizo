@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: demo_paragraph_settings
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -117,3 +118,4 @@ destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: settings
 migration_dependencies: {  }
+include: null

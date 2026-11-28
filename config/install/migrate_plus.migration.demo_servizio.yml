@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: demo_servizio
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -353,3 +354,4 @@ migration_dependencies:
     - demo_paragraph_call_to_action
     - demo_paragraph_extra_info
     - demo_paragraph_timeline
+include: null

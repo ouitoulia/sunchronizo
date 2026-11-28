@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: demo_paragraph_history_carousel_item
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -93,3 +94,4 @@ destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: history_carousel_item
 migration_dependencies: {  }
+include: null

@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: demo_classe
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -198,3 +199,4 @@ migration_dependencies:
     - demo_struttura_organizzativa
     - demo_percorso_di_studio
     - demo_persona
+include: null

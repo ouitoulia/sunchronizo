@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: demo_finanziamento
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -250,3 +251,4 @@ migration_dependencies:
     - demo_persona
     - demo_struttura_organizzativa
     - demo_partner
+include: null

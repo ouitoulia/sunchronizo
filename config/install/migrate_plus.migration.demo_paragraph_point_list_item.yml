@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: demo_paragraph_point_list_item
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -85,3 +86,4 @@ destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: point_list_item
 migration_dependencies: {  }
+include: null

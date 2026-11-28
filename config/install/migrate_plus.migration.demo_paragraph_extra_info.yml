@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: demo_paragraph_extra_info
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -137,3 +138,4 @@ migration_dependencies:
     - demo_media
     - demo_paragraph_history_carousel_item
     - demo_paragraph_settings
+include: null

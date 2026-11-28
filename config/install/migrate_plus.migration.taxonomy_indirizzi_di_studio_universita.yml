@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: taxonomy_indirizzi_di_studio_universita
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -86,3 +87,4 @@ process:
 destination:
   plugin: 'entity:taxonomy_term'
 migration_dependencies: {  }
+include: null

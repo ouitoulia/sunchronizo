@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: demo_paragraph_piano_di_studi
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -90,3 +91,4 @@ migration_dependencies:
   required:
     - demo_taxonomy
     - demo_paragraph_piano_di_studi_item
+include: null

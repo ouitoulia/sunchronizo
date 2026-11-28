@@ -6,6 +6,7 @@ dependencies:
       - sunchronizo
 id: demo_partner
 class: null
+idMap: {  }
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
@@ -169,3 +170,4 @@ migration_dependencies:
   required:
     - demo_taxonomy
     - demo_media
+include: null
